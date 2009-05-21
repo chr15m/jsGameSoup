@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="js/processing.js"></script>
+	<script src="js/jquery.js"></script>
+	<script>
+	
+	$(document).ready(function(){
+		$.get("http://txtfish.mccormick.cx/view/cQSvTG/", {}, function(d, x) {
+			Processing("canvas", d);
+		}, "text");
+	});
+	
+	if ( window.addEventListener ) {
+		window.addEventListener("load", function() {
+		}, false);
+	}
+	</script>
+<body>
+<canvas width="100%" height="100%" id='canvas'></canvas>
+</body>
+</html>
