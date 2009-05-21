@@ -1,22 +1,74 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="js/processing.js"></script>
 	<script src="js/jquery.js"></script>
+	<script src="js/processing.js"></script>
 	<script>
+	// any entity which wants to be run every frame
+	// must have a .update() and a .draw() method
+	entities = [];
+	
+	// any entity which can collide with other entities
+	// should provide a .getBoundingBox() method and can
+	// possibly provide a .getPoly() method
+	// each of which define the entity's bounds for collinding
+	colliders = [];
+	
+	// the canvas will be stored in this variable, after document load
+	surface = null;
+	
+	// logging function nicked from processingjs.org
+	function log() {
+		try {
+			console.log.apply( console, arguments );
+		} catch(e) {
+			try {
+			opera.postError.apply( opera, arguments );
+			} catch(e){}
+		}
+	}
+	
+	// regularly fetch new code from our remote location, to run
+	function refreshCode() {
+		try {
+			$.getScript("http://txtfish.mccormick.cx/view/cQSvTI/", function(){
+				setTimeout("refreshCode();", 30000 );
+			});
+		} catch(err) {
+			log(err);
+		}
+	}
+	
+	// the main loop
+	function doUpdate(fps) {
+		// run .update() on every entity in our list
+		for (o in entities) {
+			entities[o].update();
+		}
+		
+		// clear the canvas
+		surface.clearRect(0, 0, surface.width, surface.height);
+		surface.fillStyle = "rgb(" + Math.floor(Math.random()*255) + ", " + Math.floor(Math.random()*255) + ", " + Math.floor(Math.random()*255) + ")";
+		surface.fillRect (0, 0, surface.width, surface.height);
+		
+		// run .draw() on every entity in our list
+		for (o in entities) {
+			entities[o].draw();
+		}
+		setTimeout("doUpdate(" + fps + ");", 1000 / parseInt(fps));
+	}
 	
 	$(document).ready(function(){
-		$.get("http://txtfish.mccormick.cx/view/cQSvTG/", {}, function(d, x) {
-			Processing("canvas", d);
-		}, "text");
+		var canvas = document.getElementById('canvas');
+		surface = canvas.getContext('2d');
+		surface.width = canvas.width - 0;
+		surface.height = canvas.height - 0;
+		refreshCode();
+		doUpdate(15);
 	});
-	
-	if ( window.addEventListener ) {
-		window.addEventListener("load", function() {
-		}, false);
-	}
 	</script>
 <body>
 <canvas width="100%" height="100%" id='canvas'></canvas>
 </body>
 </html>
+
