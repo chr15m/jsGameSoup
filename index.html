@@ -1,74 +1,62 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="js/jquery.js"></script>
 	<script src="js/processing.js"></script>
-	<script>
+	<script src="js/init.js"></script>
+<body style="height: 100%; margin: 0; overflow: hidden;">
+
+<script type="application/processing">
+	function A(start) {
+		this.x = 100;
+		this.y = start || 100;
+		this.draw = function draw(){
+			stroke(255);
+			this.y = this.y - 1; 
+			if (this.y < 0) { this.y = height; } 
+			line(this.x - 50, this.y, this.x + 50, this.y);  
+		}
+	}
+	
+	size(curElement.width, curElement.height);
+	background(102);
+	
 	// any entity which wants to be run every frame
-	// must have a .update() and a .draw() method
-	entities = [];
+	// must implement an .update() method
+	// any entity which wants to be drawn, must implement
+ 	// a .draw() method
+	entities = [new A(200), new A(50)];
 	
 	// any entity which can collide with other entities
 	// should provide a .getBoundingBox() method and can
-	// possibly provide a .getPoly() method
-	// each of which define the entity's bounds for collinding
+	// possibly provide a .getPoly() method for finer grained collisions
+	// .getBoundingBox() should return an array which looks like [x, y, width, height]
+	// .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
 	colliders = [];
 	
-	// the canvas will be stored in this variable, after document load
-	surface = null;
-	
-	// logging function nicked from processingjs.org
-	function log() {
-		try {
-			console.log.apply( console, arguments );
-		} catch(e) {
-			try {
-			opera.postError.apply( opera, arguments );
-			} catch(e){}
-		}
-	}
-	
-	// regularly fetch new code from our remote location, to run
-	function refreshCode() {
-		try {
-			$.getScript("http://txtfish.mccormick.cx/view/cQSvTI/", function(){
-				setTimeout("refreshCode();", 30000 );
-			});
-		} catch(err) {
-			log(err);
-		}
-	}
-	
-	// the main loop
-	function doUpdate(fps) {
+	function draw() {
 		// run .update() on every entity in our list
 		for (o in entities) {
-			entities[o].update();
+			if (entities[o].update) {
+				entities[o].update();
+			}
 		}
 		
-		// clear the canvas
-		surface.clearRect(0, 0, surface.width, surface.height);
-		surface.fillStyle = "rgb(" + Math.floor(Math.random()*255) + ", " + Math.floor(Math.random()*255) + ", " + Math.floor(Math.random()*255) + ")";
-		surface.fillRect (0, 0, surface.width, surface.height);
+		// clear the background
+		background(102);
 		
 		// run .draw() on every entity in our list
 		for (o in entities) {
-			entities[o].draw();
+			if (entities[o].draw) {
+				pushMatrix();
+				entities[o].draw();
+				popMatrix();
+			}
 		}
-		setTimeout("doUpdate(" + fps + ");", 1000 / parseInt(fps));
 	}
-	
-	$(document).ready(function(){
-		var canvas = document.getElementById('canvas');
-		surface = canvas.getContext('2d');
-		surface.width = canvas.width - 0;
-		surface.height = canvas.height - 0;
-		refreshCode();
-		doUpdate(15);
-	});
-	</script>
-<body>
-<canvas width="100%" height="100%" id='canvas'></canvas>
+</script>
+
+<canvas width="800" height="450" style="width: 800px; height: 450px; margin-left: auto; margin-right: auto;"></canvas>
+
 </body>
 </html>
 
