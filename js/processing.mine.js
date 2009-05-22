@@ -1810,8 +1810,8 @@ function buildProcessing( curElement ){
   };
   
   p.inject = function inject(code){
-    (function(Processing){with (p){        
-      eval(parse(code, p));        
+    (function(Processing){with (p){
+      eval(parse(code, p));
     }})(p);
   }
   

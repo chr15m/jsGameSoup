@@ -52,6 +52,10 @@
 				popMatrix();
 			}
 		}
+		
+		if (frameCount == 100) {
+			inject("delete entities[entities.length - 1];");
+		}
 	}
 </script>
 
