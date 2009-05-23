@@ -6,10 +6,12 @@
 <body style="height: 100%; margin: 0; overflow: hidden;">
 
 <script type="application/processing">
+	size(curElement.width, curElement.height);
+	
 	function A(start) {
 		this.x = 100;
 		this.y = start || 100;
-		this.draw = function draw(){
+		this.draw = function(){
 			stroke(255);
 			this.y = this.y - 1; 
 			if (this.y < 0) { this.y = height; } 
@@ -17,55 +19,18 @@
 		}
 	}
 	
-	size(curElement.width, curElement.height);
-	background(102);
-	
-	// any entity which wants to be run every frame
-	// must implement an .update() method
-	// any entity which wants to be drawn, must implement
- 	// a .draw() method
-	entities = [new A(200), new A(50)];
-	
-	// any entity which can collide with other entities
-	// should provide a .getBoundingBox() method and can
-	// possibly provide a .getPoly() method for finer grained collisions
-	// .getBoundingBox() should return an array which looks like [x, y, width, height]
-	// .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
-	colliders = [];
-	
-	setInterval(function looper() {
-		// clear the background
-		background(102);
-		
-		// run .update() on every entity in our list
-		for (o in entities) {
-			if (entities[o].update) {
-				entities[o].update();
-			}
+	function World() {
+		this.update = function() {
+			if (frameCount == 30 || frameCount == 100 || frameCount == 150)
+				entities[entities.length] = new A(10);
 		}
-		
-		// run .draw() on every entity in our list
-		for (o in entities) {
-			if (entities[o].draw) {
-				pushMatrix();
-				entities[o].draw();
-				popMatrix();
-			}
-		}
-		
-		if (frameCount == 50) {
-			//delete entities[entities.length - 1];
-			entities[entities.length] = new A(100);
-		}
-		frameCount += 1;
-	}, 100);
+	}
 	
-	//setInterval("proc.looper();", 80);
-	//looper();
+	entities = [new World()];
 </script>
-
+<div></div>
 <canvas width="800" height="450" style="width: 800px; height: 450px; margin-left: auto; margin-right: auto;"></canvas>
-
+<div></div>
 </body>
 </html>
 

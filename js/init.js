@@ -4,8 +4,6 @@
  * It is useful to smooth the process of adding Processing code in your page and starting
  * the Processing.js engine.
  */
-proc = null;
-
 if ( window.addEventListener ) {
 	window.addEventListener("load", function() {
 		var scripts = document.getElementsByTagName("script");
@@ -23,8 +21,10 @@ if ( window.addEventListener ) {
 
 				if ( canvas ) {
 					proc = Processing(canvas, scripts[i].text);
+					proc.launch();
 				}
 			}
 		}
 	}, false);
 }
+
