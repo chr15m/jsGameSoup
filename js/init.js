@@ -21,7 +21,6 @@ if ( window.addEventListener ) {
 
 				if ( canvas ) {
 					proc = Processing(canvas, scripts[i].text);
-					proc.launch();
 				}
 			}
 		}

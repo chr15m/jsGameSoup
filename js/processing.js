@@ -17,7 +17,10 @@ this.Processing = function Processing( aElement, aCode) {
 
   if ( aCode )
     p.init( aCode );
-
+  
+  // launch the concurrency loop
+  p.launch();
+  
   return p;
 };
 
@@ -1323,47 +1326,6 @@ function buildProcessing( curElement ){
     loopStarted = true;
   };
   
-
-// any entity which wants to be run every frame
-// must implement an .update() method
-// any entity which wants to be drawn, must implement
-// a .draw() method
-p.entities = [];
-// any entity which can collide with other entities
-// should provide a .getBoundingBox() method and can
-// possibly provide a .getPoly() method for finer grained collisions
-// .getBoundingBox() should return an array which looks like [x, y, width, height]
-// .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
-p.colliders = [];
-
-// this is our custom loop
-p.simloop = function simloop() {
-	// clear the background
-	p.background(102);
-	
-	// run .update() on every entity in our list
-	for (o in p.entities) {
-		if (p.entities[o].update) {
-			p.entities[o].update();
-		}
-	}
-	
-	// run .draw() on every entity in our list
-	for (o in p.entities) {
-		if (p.entities[o].draw) {
-			p.pushMatrix();
-			p.entities[o].draw();
-			p.popMatrix();
-		}
-	}
-	p.frameCount += 1;
-}
-
-p.launch = function launch() {
-	// launch our custom loop
-	setInterval(p.simloop, 1000 / curFrameRate);
-}
-
   p.frameRate = function frameRate( aRate ) {
     curFrameRate = aRate;
   };
@@ -1989,6 +1951,52 @@ p.launch = function launch() {
 
   };
 
+  // any entity which wants to be run every frame
+  // must implement an .update() method
+  // any entity which wants to be drawn, must implement
+  // a .draw() method
+  p.entities = [];
+  // any entity which can collide with other entities
+  // should provide a .getBoundingBox() method and can
+  // possibly provide a .getPoly() method for finer grained collisions
+  // .getBoundingBox() should return an array which looks like [x, y, width, height]
+  // .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
+  p.colliders = [];
+
+  // this is our custom loop
+  p.simloop = function simloop() {
+    // clear the background
+    p.background(102);
+    
+    // run .update() on every entity in our list
+    for (o in p.entities) {
+      if (p.entities[o].update) {
+        p.entities[o].update();
+      }
+    }
+    
+    // run .draw() on every entity in our list
+    for (o in p.entities) {
+      if (p.entities[o].draw) {
+        p.pushMatrix();
+        p.entities[o].draw();
+        p.popMatrix();
+      }
+    }
+    p.frameCount += 1;
+  }
+  
+  p.launch = function launch() {
+    // launch our custom loop
+    setInterval(p.simloop, 1000 / curFrameRate);
+  }
+  
+  p.inject = function inject(code) {
+    (function(Processing){with (p){        
+      eval(parse(code, p));        
+    }})(p);      
+  }
+  
   return p;
 }
 
