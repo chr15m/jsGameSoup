@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<script src="js/processing.js"></script>
+	<script src="js/init.js"></script>
+	<style>
+		body { height: 100%; margin: 0; }
+	</style>
+<body>
+<script type="application/processing">
+	size(800, 450);
+	
+	function Asteroid(r, x, y) {
+		// variables
+		this.x = x || random(0, width);
+		this.y = y || random(0, height);
+		this.angle = random(0, PI);
+		// velocities
+		this.angleV = random(-0.1, 0.1);
+		this.xV = random(-0.5, 0.5);
+		this.yV = random(-0.5, 0.5);
+		// structure of this shape
+		this.points = [[-50, -50], [50, -50], [50, 50], [-50, 50]];
+		this.width = 100;
+		this.height = 100;
+		this.drawpoints = [];
+		
+		this.update = function() {
+			// update all our state variables
+			this.angle += this.angleV;
+			this.x = (this.x + this.xV) % width;
+			this.y = (this.y + this.yV) % height;
+			// update our shape definition
+			for (n=0; n<this.points.length; n++) {
+				this.drawpoints[n] = [this.points[n][0] * cos(this.angle) - this.points[n][1] * sin(this.angle) + this.x, this.points[n][0] * sin(this.angle) + this.points[n][1] * cos(this.angle) + this.y];
+			}
+		}
+		
+		this.draw = function() {
+			stroke(255);
+			/*noFill();
+			beginShape();
+			for (n=0; n<this.drawpoints.length; n++) {
+				vertex(this.drawpoints[n][0], this.drawpoints[n][1]);
+			}
+			endShape(CLOSE);*/
+			polygon(this.drawpoints);
+		}
+	}
+	
+	entities = [new Asteroid(), new Asteroid(), new Asteroid(), new Asteroid(), new Asteroid()];
+</script>
+<canvas></canvas>
+</body>
+</html>
+

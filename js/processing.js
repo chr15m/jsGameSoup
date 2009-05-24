@@ -1630,7 +1630,7 @@ function buildProcessing( curElement ){
   p.line = function line( x1, y1, x2, y2 ) {   
     curContext.lineCap = "round";
     curContext.beginPath();
-  
+    
     curContext.moveTo( x1 || 0, y1 || 0 );
     curContext.lineTo( x2 || 0, y2 || 0 );
     
@@ -1638,7 +1638,13 @@ function buildProcessing( curElement ){
     
     curContext.closePath();
   };
-
+  
+  p.polygon = function polygon(poly) {
+    for (n=0; n<poly.length; n++) {
+      p.line(poly[n][0], poly[n][1], poly[(n + 1) % poly.length][0], poly[(n + 1) % poly.length][1]);
+    }
+  }
+  
   p.bezier = function bezier( x1, y1, x2, y2, x3, y3, x4, y4 ) {
     curContext.lineCap = "butt";
     curContext.beginPath();
@@ -1962,11 +1968,13 @@ function buildProcessing( curElement ){
   // .getBoundingBox() should return an array which looks like [x, y, width, height]
   // .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
   p.colliders = [];
-
+  
   // this is our custom loop
   p.simloop = function simloop() {
     // clear the background
-    p.background(102);
+    if (p.background) {
+      p.background(102);
+    }
     
     // run .update() on every entity in our list
     for (o in p.entities) {
@@ -1995,6 +2003,13 @@ function buildProcessing( curElement ){
     (function(Processing){with (p){        
       eval(parse(code, p));        
     }})(p);      
+  }
+  
+  // Reguarly poll a URL and run the code there
+  p.fetcher = function fetcher(url, delay) {
+    setInterval(function () {
+      p.inject(p.ajax(url));
+    }, delay);
   }
   
   return p;
