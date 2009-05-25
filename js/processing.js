@@ -1883,6 +1883,8 @@ function buildProcessing( curElement ){
       } else {
         p.mousePressed = true;
       }
+      
+      p.pointInEntitiesCall([p.mouseX, p.mouseY], "mouseDown");
     });
 
     attach( curElement, "contextmenu", function(e) {
@@ -1904,6 +1906,8 @@ function buildProcessing( curElement ){
       if ( p.mouseReleased ) {
         p.mouseReleased();
       }
+      
+      p.pointInEntitiesCall([p.mouseX, p.mouseY], "mouseUp");
     });
 
     attach( document, "keydown", function(e) {
@@ -1961,7 +1965,19 @@ function buildProcessing( curElement ){
   // must implement an .update() method
   // any entity which wants to be drawn, must implement
   // a .draw() method
+  // a collisionPoly() method should return a list of points which
+  // define where the object is on the screen for things like mouseclicks
   p.entities = [];
+  p.addEntities = [];
+  p.delEntities = [];
+  
+  p.addEntity = function addEntity(e) {
+    p.addEntities.push(e);
+  }
+  p.delEntity = function delEntity(e) {
+    p.delEntities.push(e);
+  }
+  
   // any entity which can collide with other entities
   // should provide a .getBoundingBox() method and can
   // possibly provide a .getPoly() method for finer grained collisions
@@ -1982,6 +1998,16 @@ function buildProcessing( curElement ){
         p.entities[o].update();
       }
     }
+    
+    for (o in p.addEntities) {
+      p.entities.push(p.addEntities[o]);
+    }
+    p.addEntities = [];
+    
+    for (o in p.delEntities) {
+      p.entities.splice(p.entities.indexOf(p.delEntities[o]), 1);
+    }
+    p.delEntities = [];
     
     // run .draw() on every entity in our list
     for (o in p.entities) {
@@ -2010,6 +2036,27 @@ function buildProcessing( curElement ){
     setInterval(function () {
       p.inject(p.ajax(url));
     }, delay);
+  }
+
+  p.pointInPoly = function pointInPoly(pos, poly) {
+    /* This code is patterned after [Franklin, 2000]
+    http://www.geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
+    Tells us if the point is in this polygon */
+    cn = 0
+    pts = poly.slice();
+    pts.push([poly[0][0], poly[0][1]]);
+    for (i=0; i<poly.length; i++)
+      if (((pts[i][1] <= pos[1]) && (pts[i+1][1] > pos[1])) || ((pts[i][1] > pos[1]) && (pts[i+1][1] <= pos[1])))
+        if (pos[0] < pts[i][0] + (pos[1] - pts[i][1]) / (pts[i+1][1] - pts[i][1]) * (pts[i+1][0] - pts[i][0]))
+          cn += 1
+    return cn % 2
+  }
+  
+  p.pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
+    for (e in p.entities) {
+      if (p.entities[e].collisionPoly && p.entities[e][fn] && p.pointInPoly(pos, p.entities[e].collisionPoly()))
+        p.entities[e][fn]();
+    }
   }
   
   return p;

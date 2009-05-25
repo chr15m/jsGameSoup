@@ -10,8 +10,12 @@ if ( window.addEventListener ) {
 		
 		for ( var i = 0; i < scripts.length; i++ ) {
 			if ( scripts[i].type == "application/processing" ) {
-				var src = scripts[i].src, canvas = scripts[i].nextSibling;
-	
+				var src = scripts[i].src;
+				if (scripts[i].getAttribute("target"))
+					canvas = document.getElementById(scripts[i].getAttribute("target"));
+				else
+					canvas = scripts[i].nextSibling;
+				
 				if ( src && src.indexOf("#") ) {
 					canvas = document.getElementById( src.substr( src.indexOf("#") + 1 ) );
 				} else {
