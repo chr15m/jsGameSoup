@@ -1859,7 +1859,7 @@ function buildProcessing( curElement ){
         p.mouseX = ev.layerX - curElement.offsetLeft;
         p.mouseY = ev.layerY - curElement.offsetTop;
       } else if (ev.offsetX || ev.offsetX == 0) { // Opera
-        p.mouseX = ev.offsetX - ;
+        p.mouseX = ev.offsetX;
         p.mouseY = ev.offsetY;
       } else {
         p.mouseX = e.clientX - curElement.offsetLeft + scrollX;
@@ -1895,7 +1895,6 @@ function buildProcessing( curElement ){
         p.mousePressed = true;
       }
       
-      log([p.mouseX, p.mouseY]);
       p.pointInEntitiesCall([p.mouseX, p.mouseY], "mouseDown");
     });
 
