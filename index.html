@@ -1,36 +1,45 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="js/processing.js"></script>
-	<script src="js/init.js"></script>
+	<script src="js/explorercanvas/excanvas.js"></script>
+	<script src="js/jsgamesoup.js"></script>
 <body style="height: 100%; margin: 0; overflow: hidden;">
 
-<script type="application/processing">
-	size(curElement.width, curElement.height);
-	
-	function A(start) {
-		this.x = 100;
-		this.y = start || 100;
-		this.draw = function(){
-			stroke(255);
-			this.y = this.y - 1; 
-			if (this.y < 0) { this.y = height; } 
-			line(this.x - 50, this.y, this.x + 50, this.y);  
+<script>
+if ( window.addEventListener ) {
+	window.addEventListener("load", function() {
+		gs = new JSGameSoup("surface", 15);
+		
+		function A(start) {
+			this.x = 100;
+			this.y = start || 100;
+			this.draw = function(c, gs) {
+				c.strokeStyle = 'rgba(150, 150, 150, 1.0)';
+				this.y = this.y - 1;
+				if (this.y < 0) {
+					this.y = gs.canvas.height;
+				}
+				c.moveTo(this.x - 50, this.y);
+				c.lineTo(this.x + 50, this.y);
+			}
 		}
-	}
-	
-	function World() {
-		this.update = function() {
-			if (frameCount == 30 || frameCount == 100 || frameCount == 150)
-				entities[entities.length] = new A(10);
+		
+		function World() {
+			alert('world');
+			this.update = function(gs) {
+				if (gs.frameCount == 30 || gs.frameCount == 100 || gs.frameCount == 150)
+				{
+					gs.addEntity(new A(10));
+				}
+			}
 		}
-	}
-	
-	entities = [new World()];
+		
+		entities = gs.addEntity(new World());
+		gs.launch();
+	}, false);
+}
 </script>
-<div></div>
-<canvas width="800" height="450" style="width: 800px; height: 450px; margin-left: auto; margin-right: auto;"></canvas>
-<div></div>
+<canvas id='surface'></canvas>
 </body>
 </html>
 
