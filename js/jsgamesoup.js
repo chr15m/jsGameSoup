@@ -63,6 +63,7 @@ function JSGameSoup(canvas, framerate) {
 	this.gameSoupLoop = function gameSoupLoop() {
 		// clear the background
 		// background(102);
+		this.clear();
 		
 		// run .update() on every entity in our list
 		for (o in entities) {
