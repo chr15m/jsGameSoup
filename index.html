@@ -19,16 +19,16 @@ if ( window.addEventListener ) {
 				if (this.y < 0) {
 					this.y = gs.canvas.height;
 				}
+				c.beginPath();
 				c.moveTo(this.x - 50, this.y);
 				c.lineTo(this.x + 50, this.y);
+				c.stroke();
 			}
 		}
 		
 		function World() {
-			alert('world');
 			this.update = function(gs) {
-				if (gs.frameCount == 30 || gs.frameCount == 100 || gs.frameCount == 150)
-				{
+				if (gs.frameCount == 30 || gs.frameCount == 100 || gs.frameCount == 150) {
 					gs.addEntity(new A(10));
 				}
 			}

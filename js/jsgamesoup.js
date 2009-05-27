@@ -10,6 +10,15 @@ function JSGameSoup(canvas, framerate) {
 		this.canvas = canvas;
 	this.ctx = this.canvas.getContext('2d');
 	
+	/*
+	 *	Graphics assistance routines.
+	 */
+	this.clear = function clear() {
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.ctx.fillStyle = 'rgba(0,0,0,0.4)';
+		this.ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+	}
+	
 	this.init = function init() {
 		
 	}
