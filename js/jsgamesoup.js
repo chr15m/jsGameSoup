@@ -9,6 +9,7 @@ function JSGameSoup(canvas, framerate) {
 	else
 		this.canvas = canvas;
 	this.ctx = this.canvas.getContext('2d');
+	this.ctx.translate(0.5, 0.5);
 	
 	/*
 	 *	Graphics assistance routines.
@@ -61,10 +62,6 @@ function JSGameSoup(canvas, framerate) {
 	
 	// this is our custom loop
 	this.gameSoupLoop = function gameSoupLoop() {
-		// clear the background
-		// background(102);
-		this.clear();
-		
 		// run .update() on every entity in our list
 		for (o in entities) {
 			if (entities[o].update) {
@@ -84,6 +81,8 @@ function JSGameSoup(canvas, framerate) {
 		}
 		delEntities = [];
 		
+		// clear the background
+		this.clear();
 		// run .draw() on every entity in our list
 		for (o in entities) {
 			if (entities[o].draw) {
