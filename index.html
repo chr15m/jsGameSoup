@@ -1,13 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<script src="js/explorercanvas/excanvas.js"></script>
+	<!--[if IE]><script src="js/explorercanvas/excanvas.js"></script><![endif]-->
 	<script src="js/jsgamesoup.js"></script>
-<body style="height: 100%; margin: 0; overflow: hidden;">
-
 <script>
-if ( window.addEventListener ) {
-	window.addEventListener("load", function() {
+function startGame() {
 		gs = new JSGameSoup("surface", 15);
 		
 		function A(start) {
@@ -36,9 +33,10 @@ if ( window.addEventListener ) {
 		
 		entities = gs.addEntity(new World());
 		gs.launch();
-	}, false);
 }
 </script>
+<body onload="startGame();" style="height: 100%; margin: 0; overflow: hidden;">
+
 <canvas id='surface'></canvas>
 </body>
 </html>
