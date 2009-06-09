@@ -4,9 +4,7 @@
 	<!--[if IE]><script src="js/explorercanvas/excanvas.js"></script><![endif]-->
 	<script src="js/jsgamesoup.js"></script>
 <script>
-function startGame() {
-		gs = new JSGameSoup("surface", 15);
-		
+function startGame(gs) {
 		function A(start) {
 			this.x = 100;
 			this.y = start || 100;
@@ -25,7 +23,7 @@ function startGame() {
 		
 		function World() {
 			this.update = function(gs) {
-				if (gs.frameCount == 30 || gs.frameCount == 100 || gs.frameCount == 150) {
+				if (gs.frameCount == 1 || gs.frameCount == 100 || gs.frameCount == 150) {
 					gs.addEntity(new A(10));
 				}
 			}
@@ -35,9 +33,8 @@ function startGame() {
 		gs.launch();
 }
 </script>
-<body onload="startGame();" style="height: 100%; margin: 0; overflow: hidden;">
-
-<canvas id='surface'></canvas>
+<body style="height: 100%; margin: 0; overflow: hidden;">
+<canvas id='surface' jsgs='startGame'></canvas>
 </body>
 </html>
 

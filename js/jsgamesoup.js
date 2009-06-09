@@ -102,7 +102,7 @@ function JSGameSoup(canvas, framerate) {
 		looping = setInterval(function() {
 			try {
 				GS.gameSoupLoop()
-      			} catch(e) {
+			} catch(e) {
 				clearInterval(looping);
 				throw e;
 			}
@@ -133,3 +133,77 @@ function JSGameSoup(canvas, framerate) {
 		}
 	}
 }
+
+/*
+ *	Finds all canvas tags in the document:
+ *	> calls the function named in the attribute 'jsgs'
+ *	> passes a new JSGameSoup instance to that function
+ *	> fps is set in the attribute called 'fps'
+ *
+ */
+
+function FindAndLaunchCanvasJSGS() {
+	var canvases = document.getElementsByTagName("canvas");
+	for ( var i = 0; i < canvases.length; i++ ) {
+		var launchfn = null;
+		var launchfps = 15;
+		if (canvases[i].getAttribute) {
+			if (canvases[i].getAttribute('jsgs'))
+				launchfn = canvases[i].getAttribute('jsgs');
+			if (canvases[i].getAttribute('fps'))
+				launchfps = canvases[i].getAttribute('fps');
+		} else {
+			if (canvases[i].jsgs)
+				launchfn = canvases[i].jsgs;
+			if (canvases[i].fps)
+				launchfps = canvases[i].fps;
+		}
+		if (launchfn)
+			this[launchfn](new JSGameSoup(canvases[i], launchfps));
+	}
+}
+
+// Crossplatform document.ready from here:
+// http://dean.edwards.name/weblog/2006/06/again/#comment335794
+function JSGS_init() {
+  if (arguments.callee.done) return;
+  arguments.callee.done = true;
+  // do your thing
+  FindAndLaunchCanvasJSGS();
+}
+if (document.addEventListener) {
+  document.addEventListener('DOMContentLoaded', JSGS_init, false);
+}
+(function() {
+  /*@cc_on
+  if (document.body) {
+    try {
+      document.createElement('div').doScroll('left');
+      return JSGS_init();
+    } catch(e) {}
+  }
+  /*@if (false) @*/
+  if (/loaded|complete/.test(document.readyState)) return JSGS_init();
+  /*@end @*/
+  if (!JSGS_init.done) setTimeout(arguments.callee, 50);
+})();
+_prevOnload = window.onload;
+window.onload = function() {
+  if (typeof _prevOnload === 'function') _prevOnload();
+  JSGS_init();
+};
+
+// cross platform multiple onload event attach as a last resort
+// from http://simonwillison.net/2004/May/26/addLoadEvent/
+var oldonload = window.onload;
+if (typeof window.onload != 'function') {
+	window.onload = func;
+} else {
+	window.onload = function() {
+		if (oldonload) {
+			oldonload();
+		}
+		JSGS_init();
+	}
+}
+
