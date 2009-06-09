@@ -29,6 +29,9 @@ Getting Started
 Documentation
 -------------
 
+http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png
+http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element
+
 JSGameSoup
 	Accepts two parameters - canvas and fps. Canvas should be the id of a <canvas> element, or else a reference to it from getElementById(). Fps is the number of frames per second at which to run our game.
 

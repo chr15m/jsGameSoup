@@ -29,10 +29,11 @@ function startGame(gs) {
 			}
 		}
 		
-		entities = gs.addEntity(new World());
+		gs.addEntity(new World());
 		gs.launch();
 }
 </script>
+</head>
 <body style="height: 100%; margin: 0; overflow: hidden;">
 <canvas id='surface' jsgs='startGame'></canvas>
 </body>

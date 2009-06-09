@@ -10,23 +10,74 @@ function JSGameSoup(canvas, framerate) {
 		this.canvas = canvas;
 	this.ctx = this.canvas.getContext('2d');
 	this.ctx.translate(0.5, 0.5);
+	var JSGS = this;
+	this.width = this.canvas.width;
+	this.height = this.canvas.height;
 	
 	/*
 	 *	Graphics assistance routines.
 	 */
 	this.clear = function clear() {
-		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		this.ctx.fillStyle = 'rgba(0,0,0,0.4)';
-		this.ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+		//this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		//this.ctx.fillStyle = 'rgba(0,0,0,0.4)';
+		//this.ctx.strokeStyle = 'rgba(0,153,255,0.4)';
 	}
 	
-	this.init = function init() {
-		
+	this.polygon = function polygon(poly) {
+		this.ctx.save();
+		this.ctx.moveTo(poly[0][0], poly[0][1]);
+		this.ctx.beginPath();
+		for (n = 0; n < poly.length; n++) {
+			this.ctx.lineTo(poly[n][0], poly[n][1]);
+		}
+		this.ctx.lineTo(poly[0][0], poly[0][1]);
+		this.ctx.stroke();
+		this.ctx.restore();
+	}
+	
+	this.background = function background(color) {
+		this.ctx.save();
+		this.ctx.fillStyle = color;
+		this.ctx.fillRect(0, 0, this.width, this.height);
+		this.ctx.restore();
+	}
+	
+	/*
+	 *	Other good functions.
+	 */
+	// get a random integer
+	this.random = function random(start, end) {
+		return Math.random() * (end - start) + start;
 	}
 	
 	// TODO: get canvas size like processingjs
 	
-	// TODO: attach event callbacks to our canvas
+	// TODO: attach event callbacks to our canvas mousedown, mouseup, keyboard
+	this.onmousedown = function onmousedown(ev) {
+		if (!ev) {
+			ev = window.event;
+		}
+		// Get the mouse position relative to the canvas element.
+		if (ev.layerX || ev.layerX == 0) { // Firefox
+			mouseX = ev.layerX - canvas.offsetLeft;
+			mouseY = ev.layerY - canvas.offsetTop;
+		} else if (ev.offsetX || ev.offsetX == 0) { // Opera
+			mouseX = ev.offsetX;
+			mouseY = ev.offsetY;
+		} else {
+			mouseX = e.clientX - canvas.offsetLeft + scrollX;
+			mouseY = e.clientY - canvas.offsetTop + scrollY;
+		}
+		JSGS.pointInEntitiesCall([mouseX, mouseY], "mouseDown");
+	}
+	
+	if ( document.addEventListener ) {
+		document.addEventListener("mousedown", this.onmousedown, false);
+	} else if ( document.attachEvent ) {
+		document.attachEvent("mousedown", this.onmousedown);
+	} else {
+		this.canvas.onmousedown = this.onmousedown;
+	}
 	
 	//this.pointInEntitiesCall([mouseX, mouseY], "mousePressed");
 	//pointInEntitiesCall([mouseX, mouseY], "mouseReleased");
@@ -40,6 +91,7 @@ function JSGameSoup(canvas, framerate) {
 	// if 'priority' is defined in the entity, it will be used to order the update/draw
 	// greater priority will be run first
 	// TODO: sort entities according to e.priority after adding or removing
+	// TODO: make lists of drawables and updateables to make the loops tighter
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
@@ -72,6 +124,9 @@ function JSGameSoup(canvas, framerate) {
 		// add any new entities which the user has added
 		for (o in addEntities) {
 			entities.push(addEntities[o]);
+			if (addEntities[o].update) {
+				addEntities[o].update(this);
+			}
 		}
 		addEntities = [];
 		
@@ -82,7 +137,7 @@ function JSGameSoup(canvas, framerate) {
 		delEntities = [];
 		
 		// clear the background
-		this.clear();
+		//this.clear();
 		// run .draw() on every entity in our list
 		for (o in entities) {
 			if (entities[o].draw) {
@@ -126,9 +181,9 @@ function JSGameSoup(canvas, framerate) {
 	
 	// call an entity on a method if the point is inside the entity's polygon
 	// used in mouse events to send mouseDown and mouseUp events into the entity
-	pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
+	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
 		for (e in entities) {
-			if (entities[e].collisionPoly && entities[e][fn] && pointInPoly(pos, entities[e].collisionPoly()))
+			if (entities[e].collisionPoly && entities[e][fn] && this.pointInPoly(pos, entities[e].collisionPoly()))
 				entities[e][fn]();
 		}
 	}
