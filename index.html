@@ -27,6 +27,10 @@ function startGame(gs) {
 					gs.addEntity(new A(10));
 				}
 			}
+			
+			this.draw = function() {
+				gs.background('rgba(255, 255, 255, 1.0)');
+			}
 		}
 		
 		gs.addEntity(new World());
