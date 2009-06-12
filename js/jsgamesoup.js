@@ -18,19 +18,18 @@ function JSGameSoup(canvas, framerate) {
 	 *	Graphics assistance routines.
 	 */
 	this.clear = function clear() {
-		//this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
-		//this.ctx.fillStyle = 'rgba(0,0,0,0.4)';
-		//this.ctx.strokeStyle = 'rgba(0,153,255,0.4)';
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 	
 	this.polygon = function polygon(poly) {
 		this.ctx.save();
-		this.ctx.moveTo(poly[0][0], poly[0][1]);
 		this.ctx.beginPath();
+		this.ctx.moveTo(poly[0][0], poly[0][1]);
 		for (n = 0; n < poly.length; n++) {
 			this.ctx.lineTo(poly[n][0], poly[n][1]);
 		}
 		this.ctx.lineTo(poly[0][0], poly[0][1]);
+		this.ctx.closePath();
 		this.ctx.stroke();
 		this.ctx.restore();
 	}
@@ -57,6 +56,7 @@ function JSGameSoup(canvas, framerate) {
 		if (!ev) {
 			ev = window.event;
 		}
+		
 		// Get the mouse position relative to the canvas element.
 		if (ev.layerX || ev.layerX == 0) { // Firefox
 			mouseX = ev.layerX - canvas.offsetLeft;
@@ -74,7 +74,7 @@ function JSGameSoup(canvas, framerate) {
 	if ( document.addEventListener ) {
 		document.addEventListener("mousedown", this.onmousedown, false);
 	} else if ( document.attachEvent ) {
-		document.attachEvent("mousedown", this.onmousedown);
+		document.attachEvent("onmousedown", this.onmousedown);
 	} else {
 		this.canvas.onmousedown = this.onmousedown;
 	}
@@ -260,5 +260,33 @@ if (typeof window.onload != 'function') {
 		}
 		JSGS_init();
 	}
+}
+
+/*
+ *	Random stuff to support IE.
+ */
+// this is from here:
+// https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/indexOf
+if (!Array.prototype.indexOf)
+{
+  Array.prototype.indexOf = function(elt /*, from*/)
+  {
+    var len = this.length >>> 0;
+
+    var from = Number(arguments[1]) || 0;
+    from = (from < 0)
+         ? Math.ceil(from)
+         : Math.floor(from);
+    if (from < 0)
+      from += len;
+
+    for (; from < len; from++)
+    {
+      if (from in this &&
+          this[from] === elt)
+        return from;
+    }
+    return -1;
+  };
 }
 

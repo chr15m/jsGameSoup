@@ -49,13 +49,14 @@ function startAsteroids(gs) {
 		}
 		
 		this.draw = function() {
-			gs.ctx.strokeStyle = 'rgba(150, 150, 150, 1.0)';
+			gs.ctx.strokeStyle = 'rgba(255, 255, 255, 1.0)';
 			gs.polygon(this.poly);
 		}
 	}
 	
 	function World() {
 		this.draw = function() {
+			gs.clear();
 			gs.background('rgba(100, 100, 100, 1.0)');
 		}
 	}
@@ -70,9 +71,8 @@ function startAsteroids(gs) {
 }
 </script>
 </head>
-</body>
-<canvas id='asteroids' jsgs="startAsteroids" fps="30"></canvas>
-</div>
+<body>
+<canvas id='asteroids' jsgs="startAsteroids" fps="40"></canvas>
 </body>
 </html>
 
