@@ -3,14 +3,14 @@ JSGameSoup Documentation
 
 JSGameSoup is copyright Chris McCormick, 2009
 
-JSGameSoup is licensed to you under the terms of the LGPL. Please see the file LGPL for details.
+JSGameSoup is licensed to you under the terms of the LGPL. Please see the file COPYING for details.
 
-JSGameSoup is a framework for making video games on the web that don't require proprietary technologies like Flash.
+JSGameSoup is a cross-browser framework for making video games on the web that don't require proprietary technologies like Flash. It's currently tested and runs under new versions of Firefox, Canvas, and IE 6.0 and IE 7.0.
 
 Getting Started
 ---------------
 
-	<script src='js/excanvas.js'></script>
+	<!--[if IE]><script src="js/explorercanvas/excanvas.js"></script><![endif]-->
 	<script src='js/jsgamesoup.js'></script>
 	<script>
 	// initialise with a canvas and 25 fps
@@ -25,12 +25,17 @@ Getting Started
 	
 	gs.addEntity(new Thingy());
 	</script>
+	<canvas id='surface' jsgs='startGame'></canvas>
 
 Documentation
 -------------
 
 http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png
 http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element
+
+The main component of the framework is the JSGameSoup object. The JSGameSoup object is the engine of the system. When the jsgamesoup.js script is loaded, it will attach a JSGameSoup engine to every canvas which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frames rate of the game engine for that canvas.
+
+Once the JSGameSoup engine has been attached to the canvas it starts running immediately. The JSGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
 
 JSGameSoup
 	Accepts two parameters - canvas and fps. Canvas should be the id of a <canvas> element, or else a reference to it from getElementById(). Fps is the number of frames per second at which to run our game.
