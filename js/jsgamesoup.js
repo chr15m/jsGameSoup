@@ -137,7 +137,7 @@ function JSGameSoup(canvas, framerate) {
 		delEntities = [];
 		
 		// clear the background
-		//this.clear();
+		this.clear();
 		// run .draw() on every entity in our list
 		for (o in entities) {
 			if (entities[o].draw) {
