@@ -6,18 +6,19 @@
 <script src="js/jsgamesoup.js"></script>
 <script>
 function startGame(gs) {
+	with (gs) {
 		function C() {
-			this.x = gs.random(0, gs.width);
-			this.y = gs.random(0, gs.height);
-			this.vx = gs.random(-3, 3);
-			this.vy = gs.random(-3, 3);
-			this.r = gs.random(10, 30);
-			this.c = gs.random(100, 200);
+			this.x = random(0, gs.width);
+			this.y = random(0, gs.height);
+			this.vx = random(-3, 3);
+			this.vy = random(-3, 3);
+			this.r = random(10, 30);
+			this.c = random(100, 200);
 			this.fs = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c) + ', ' + parseInt(this.c) + ', 1.0)';
 			
 			this.update = function() {
-				this.y = (this.y + this.vy + gs.canvas.height) % gs.canvas.height;
-				this.x = (this.x + this.vx + gs.canvas.width) % gs.canvas.width;
+				this.y = (this.y + this.vy + canvas.height) % canvas.height;
+				this.x = (this.x + this.vx + canvas.width) % canvas.width;
 			}
 			
 			this.draw = function(c, gs) {
@@ -29,10 +30,10 @@ function startGame(gs) {
 			}
 		}
 		
-		gs.addEntity(new C());
-		gs.addEntity(new C());
-		gs.addEntity(new C());
-		gs.launch();
+		addEntity(new C());
+		addEntity(new C());
+		addEntity(new C());
+	}
 }
 </script>
 </head>

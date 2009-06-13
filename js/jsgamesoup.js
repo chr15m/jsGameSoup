@@ -213,8 +213,11 @@ function FindAndLaunchCanvasJSGS() {
 			if (canvases[i].fps)
 				launchfps = canvases[i].fps;
 		}
-		if (launchfn)
-			this[launchfn](new JSGameSoup(canvases[i], launchfps));
+		if (launchfn) {
+			var gs = new JSGameSoup(canvases[i], launchfps);
+			this[launchfn](gs);
+			gs.launch();
+		}
 	}
 }
 
