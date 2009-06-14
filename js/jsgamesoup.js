@@ -87,8 +87,17 @@ function JSGameSoup(canvas, framerate) {
 		this.canvas.onmousedown = this.onmousedown;
 	}
 	
-	//this.pointInEntitiesCall([mouseX, mouseY], "mousePressed");
-	//pointInEntitiesCall([mouseX, mouseY], "mouseReleased");
+	// TODO: add mouseup event
+	
+	// TODO: add mousemove event
+	
+	// TODO: add mouse ispressed "event"
+	
+	// TODO: add key down event
+	
+	// TODO: add key up event
+	
+	// TODO: add key isheld "event"
 	
 	// any entity which wants to be run every frame
 	// must implement an .update() method
@@ -98,14 +107,15 @@ function JSGameSoup(canvas, framerate) {
 	// define where the object is on the screen for things like mouseclicks
 	// if 'priority' is defined in the entity, it will be used to order the update/draw
 	// greater priority will be run first
-	// TODO: sort entities according to e.priority after adding or removing
-	// TODO: make lists of drawables and updateables to make the loops tighter
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
 	
 	this.addEntity = function addEntity(e) {
 		// add this game entity to our pool of entities (will happen after update())
+		// TODO: sort entities by priority
+		// TODO: make sublists of drawables to make the loops tighter
+		// TODO: make sublists of updateables to make the loops tighter
 		addEntities.push(e);
 	}
 	
@@ -120,7 +130,7 @@ function JSGameSoup(canvas, framerate) {
 	// .getBoundingBox() should return an array which looks like [x, y, width, height]
 	// .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
 	// var colliders = [];
-	// TODO: add RDC to this
+	// TODO: add RDC/collision loop to this
 	
 	// this is our main game loop
 	this.gameSoupLoop = function gameSoupLoop() {
