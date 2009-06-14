@@ -8,9 +8,14 @@ function JSGameSoup(canvas, framerate) {
 		this.canvas = document.getElementById(canvas);
 	else
 		this.canvas = canvas;
+	// set the cursor to the pointer for IE to stop the flickering text cursor problem
+	this.canvas.style.cursor = "default";
 	this.ctx = this.canvas.getContext('2d');
+	// stop the bug where lines on whole integers are blurred (processingjs fix)
 	this.ctx.translate(0.5, 0.5);
+	// we need a variable we can access from inside callbacks etc.
 	var JSGS = this;
+	// give us easy access to some variables
 	this.width = this.canvas.width;
 	this.height = this.canvas.height;
 	
@@ -18,10 +23,12 @@ function JSGameSoup(canvas, framerate) {
 	 *	Graphics assistance routines.
 	 */
 	this.clear = function clear() {
+		// clear the frame (happens automatically before each frame drawn)
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 	
 	this.polygon = function polygon(poly) {
+		// draw a polygon - list of 2-element lists (x,y)
 		this.ctx.save();
 		this.ctx.beginPath();
 		this.ctx.moveTo(poly[0][0], poly[0][1]);
@@ -35,6 +42,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	this.background = function background(color) {
+		// fill in the background with a particular color
 		this.ctx.save();
 		this.ctx.fillStyle = color;
 		this.ctx.fillRect(0, 0, this.width, this.height);
@@ -44,8 +52,8 @@ function JSGameSoup(canvas, framerate) {
 	/*
 	 *	Other good functions.
 	 */
-	// get a random integer
 	this.random = function random(start, end) {
+		// get a random number (non-int) between start and end
 		return Math.random() * (end - start) + start;
 	}
 	
@@ -97,10 +105,12 @@ function JSGameSoup(canvas, framerate) {
 	var delEntities = [];
 	
 	this.addEntity = function addEntity(e) {
+		// add this game entity to our pool of entities (will happen after update())
 		addEntities.push(e);
 	}
 	
 	this.delEntity = function delEntity(e) {
+		// remove this entity from our pool of entities (will happen after update())
 		delEntities.push(e);
 	}
 	
@@ -112,7 +122,7 @@ function JSGameSoup(canvas, framerate) {
 	// var colliders = [];
 	// TODO: add RDC to this
 	
-	// this is our custom loop
+	// this is our main game loop
 	this.gameSoupLoop = function gameSoupLoop() {
 		// run .update() on every entity in our list
 		for (o in entities) {
@@ -179,7 +189,7 @@ function JSGameSoup(canvas, framerate) {
 		return cn % 2
 	}
 	
-	// call an entity on a method if the point is inside the entity's polygon
+	// call a method on an entity if the point is inside the entity's polygon
 	// used in mouse events to send mouseDown and mouseUp events into the entity
 	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
 		for (e in entities) {
