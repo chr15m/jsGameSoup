@@ -107,6 +107,10 @@ function JSGameSoup(canvas, framerate) {
 	// define where the object is on the screen for things like mouseclicks
 	// if 'priority' is defined in the entity, it will be used to order the update/draw
 	// greater priority will be run first
+	// TODO: different types of collisions:
+	//	circle, box, polygon
+	// 	for pointer
+	//	for entity-entity
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
