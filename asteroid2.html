@@ -47,6 +47,12 @@ function startAsteroids(gs) {
 		}
 	}
 	
+	function Star(world) {
+		this.world = world;
+		this.rate = gs.random(0, 1);
+		this.type = Math.round(gs.random(0, 2));
+	}
+	
 	function Ship(world) {
 		this.world = world;
 		this.world.player = this;
@@ -56,6 +62,18 @@ function startAsteroids(gs) {
 		this.speed = 0;
 		this.points = [[0, -13], [-7, 7], [7, 7]];
 		this.poly = [];
+		
+		this.keyDown = function (keyCode) {
+			//console.log(keyCode);
+		}
+		
+		this.keyDown_37 = function () {
+			this.angle -= 0.1;
+		}
+		
+		this.keyDown_39 = function () {
+			this.angle += 0.1;
+		}
 		
 		this.collisionPoly = function () {
 			return this.poly;

@@ -19,9 +19,10 @@ function JSGameSoup(canvas, framerate) {
 	this.width = this.canvas.width;
 	this.height = this.canvas.height;
 	
-	/*
-	 *	Graphics assistance routines.
-	 */
+	/******************************
+	 	Graphics helpers
+	 ******************************/
+	
 	this.clear = function clear() {
 		// clear the frame (happens automatically before each frame drawn)
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
@@ -49,21 +50,48 @@ function JSGameSoup(canvas, framerate) {
 		this.ctx.restore();
 	}
 	
-	/*
-	 *	Other good functions.
-	 */
+	/******************************
+	 	Math helpers
+	 ******************************/
+	
 	this.random = function random(start, end) {
 		// get a random number (non-int) between start and end
 		return Math.random() * (end - start) + start;
 	}
 	
-	// TODO: get canvas size like processingjs
+	/***************************
+	 	Event handling
+	 ***************************/
 	
-	// TODO: attach event callbacks to our canvas mousedown, mouseup, keyboard
-	this.onmousedown = function onmousedown(ev) {
-		if (!ev) {
-			ev = window.event;
+	// event state variables
+	this.heldKeys = {};
+	
+	// helper function to attach events in a cross platform way
+	this.attachEvent = function attachEvent(name) {
+		if ( document.addEventListener ) {
+			document.addEventListener(name, this["on" + name], false);
+		} else if ( document.attachEvent ) {
+			document.attachEvent("on" + name, this["on" + name]);
+		} else {
+			this.canvas["on" + name] = this["on" + name];
 		}
+	}
+	
+	// helper function to cancel an event
+	this.cancelEvent = function cancelEvent(ev) {
+		if (ev.stopPropagation)
+			ev.stopPropagation();
+		// otherwise set the cancelBubble property of the original event to true (IE)
+		ev.cancelBubble = true; 
+	}
+	
+	// TODO: add key isheld "event"
+	
+	/*** Actual event handlers ***/
+	
+	// mouse button pressed event
+	this.onmousedown = function onmousedown(ev) {
+		var ev = (ev) ? ev : window.event;
 		
 		// Get the mouse position relative to the canvas element.
 		if (ev.layerX || ev.layerX == 0) { // Firefox
@@ -73,19 +101,12 @@ function JSGameSoup(canvas, framerate) {
 			mouseX = ev.offsetX;
 			mouseY = ev.offsetY;
 		} else {
-			mouseX = e.clientX - canvas.offsetLeft + scrollX;
-			mouseY = e.clientY - canvas.offsetTop + scrollY;
+			mouseX = ev.clientX - canvas.offsetLeft + scrollX;
+			mouseY = ev.clientY - canvas.offsetTop + scrollY;
 		}
 		JSGS.pointInEntitiesCall([mouseX, mouseY], "mouseDown");
 	}
-	
-	if ( document.addEventListener ) {
-		document.addEventListener("mousedown", this.onmousedown, false);
-	} else if ( document.attachEvent ) {
-		document.attachEvent("onmousedown", this.onmousedown);
-	} else {
-		this.canvas.onmousedown = this.onmousedown;
-	}
+	this.attachEvent("mousedown");
 	
 	// TODO: add mouseup event
 	
@@ -94,10 +115,34 @@ function JSGameSoup(canvas, framerate) {
 	// TODO: add mouse ispressed "event"
 	
 	// TODO: add key down event
+	this.onkeydown = function onkeydown(ev) {
+		var ev = (ev) ? ev : window.event;
+		// call keyDown on entities who are listening
+		if (!JSGS.heldKeys[ev.keyCode]) {
+			JSGS.entitiesCall("keyDown", ev.keyCode);
+			JSGS.entitiesCall("keyDown_" + ev.keyCode);
+			JSGS.heldKeys[ev.keyCode] = true;
+		}
+		JSGS.cancelEvent(ev);
+	}
+	this.attachEvent("keydown");
 	
 	// TODO: add key up event
+	this.onkeyup = function onkeyup(ev) {
+		var ev = (ev) ? ev : window.event;
+		// call keyUp on entities who are listening
+		if (JSGS.heldKeys[ev.keyCode]) {
+			JSGS.entitiesCall("keyUp", ev.keyCode);
+			JSGS.entitiesCall("keyUp_" + ev.keyCode);
+			JSGS.heldKeys[ev.keyCode] = false;
+		}
+		JSGS.cancelEvent(ev);
+	}
+	this.attachEvent("keyup");
 	
-	// TODO: add key isheld "event"
+	/***************************
+	 	Entity helpers
+	 ***************************/
 	
 	// any entity which wants to be run every frame
 	// must implement an .update() method
@@ -120,6 +165,7 @@ function JSGameSoup(canvas, framerate) {
 		// TODO: sort entities by priority
 		// TODO: make sublists of drawables to make the loops tighter
 		// TODO: make sublists of updateables to make the loops tighter
+		// TODO: make sublists of event handling entities
 		addEntities.push(e);
 	}
 	
@@ -127,6 +173,10 @@ function JSGameSoup(canvas, framerate) {
 		// remove this entity from our pool of entities (will happen after update())
 		delEntities.push(e);
 	}
+	
+	/**********************
+	 	Main loop
+	 **********************/
 	
 	// any entity which can collide with other entities
 	// should provide a .getBoundingBox() method and can
@@ -188,6 +238,7 @@ function JSGameSoup(canvas, framerate) {
 		}, 1000 / this.framerate);
 	}
 	
+	// TODO: use canvas isPointInPath instead, when it's supported by excanvas
 	// detect whether a point is inside a polygon (list of points) or not
 	this.pointInPoly = function pointInPoly(pos, poly) {
 		/* This code is patterned after [Franklin, 2000]
@@ -203,6 +254,10 @@ function JSGameSoup(canvas, framerate) {
 		return cn % 2
 	}
 	
+	/*****************************************
+	 	Make calls on entity methods
+	 *****************************************/
+	
 	// call a method on an entity if the point is inside the entity's polygon
 	// used in mouse events to send mouseDown and mouseUp events into the entity
 	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
@@ -211,13 +266,30 @@ function JSGameSoup(canvas, framerate) {
 				entities[e][fn]();
 		}
 	}
+	
+	// call a method on each entity for which that method exists
+	// used for key events etc.
+	this.entitiesCall = function entitiesCall(fn, arg) {
+		for (e in entities) {
+			if (entities[e][fn]) {
+				entities[e][fn](arg);
+			}
+		}
+	}
 }
+
+	/*******************************************
+	 	Cross platform launching stuff
+		(outside JSGameSoup definition)
+	 *******************************************/
 
 /*
  *	Finds all canvas tags in the document:
  *	> calls the function named in the attribute 'jsgs'
  *	> passes a new JSGameSoup instance to that function
  *	> fps is set in the attribute called 'fps'
+ *
+ *	Modified version of processingjs' init.js example script.
  *
  */
 
@@ -250,9 +322,10 @@ function FindAndLaunchCanvasJSGS() {
 function JSGS_init() {
   if (arguments.callee.done) return;
   arguments.callee.done = true;
-  // do your thing
+  // MAIN LAUNCH
   FindAndLaunchCanvasJSGS();
 }
+
 if (document.addEventListener) {
   document.addEventListener('DOMContentLoaded', JSGS_init, false);
 }
