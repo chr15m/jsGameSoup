@@ -75,6 +75,14 @@ function startAsteroids(gs) {
 			this.angle += 0.1;
 		}
 		
+		this.keyHeld = function () {
+			console.log("key");
+		}
+		
+		this.keyHeld_37 = function () {
+			console.log("held 37");
+		}
+		
 		this.collisionPoly = function () {
 			return this.poly;
 		}

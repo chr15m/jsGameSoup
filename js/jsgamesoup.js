@@ -63,6 +63,8 @@ function JSGameSoup(canvas, framerate) {
 	 	Event handling
 	 ***************************/
 	
+	// TODO: queue up the events rather than firing the methods right as they happen (synchronous)
+	
 	// event state variables
 	this.heldKeys = {};
 	
@@ -160,18 +162,29 @@ function JSGameSoup(canvas, framerate) {
 	var addEntities = [];
 	var delEntities = [];
 	
+	// different specialist lists
+	var entitiesKeyHeld = [];
+	
 	this.addEntity = function addEntity(e) {
 		// add this game entity to our pool of entities (will happen after update())
-		// TODO: sort entities by priority
-		// TODO: make sublists of drawables to make the loops tighter
-		// TODO: make sublists of updateables to make the loops tighter
-		// TODO: make sublists of event handling entities
 		addEntities.push(e);
 	}
 	
 	this.delEntity = function delEntity(e) {
 		// remove this entity from our pool of entities (will happen after update())
 		delEntities.push(e);
+	}
+	
+	this.addEntityToSpecialistLists = function addEntityToSpecialistLists(e) {
+		for (method in e) {
+			if (method.indexOf("keyHeld") == 0 && entitiesKeyHeld.indexOf(e) < 0) {
+				entitiesKeyHeld.push(e);
+			}
+		}
+	}
+	
+	this.removeEntityFromSpecialistLists = function removeEntityFromSpecialistLists(e) {
+		entitiesKeyHeld.remove(e);
 	}
 	
 	/**********************
@@ -195,9 +208,27 @@ function JSGameSoup(canvas, framerate) {
 			}
 		}
 		
+		// test for held keys and send them to listening entities
+		for (o in entitiesKeyHeld) {
+			var hasHeld = false;
+			for (k in this.heldKeys) {
+				if (this.heldKeys[k]) {
+					this.callAll(entitiesKeyHeld, "keyHeld_" + k);
+					hasHeld = true;
+				}
+			}
+			if (hasHeld)
+				this.callAll(entitiesKeyHeld, "keyHeld");
+		}
+		
 		// add any new entities which the user has added
 		for (o in addEntities) {
+			// TODO: sort entities by priority
+			// TODO: make sublists of drawables to make the loops tighter
+			// TODO: make sublists of updateables to make the loops tighter
+			// TODO: make sublists of event handling entities
 			entities.push(addEntities[o]);
+			this.addEntityToSpecialistLists(addEntities[o]);
 			if (addEntities[o].update) {
 				addEntities[o].update(this);
 			}
@@ -206,7 +237,8 @@ function JSGameSoup(canvas, framerate) {
 		
 		// delete any entities the user has asked to remove
 		for (o in delEntities) {
-			entities.splice(entities.indexOf(delEntities[o]), 1);
+			entities.remove(delEntities[o]);
+			this.removeEntityFromSpecialistLists(o);
 		}
 		delEntities = [];
 		
@@ -226,14 +258,16 @@ function JSGameSoup(canvas, framerate) {
 	
 	// launch our game
 	this.launch = function launch() {
-		GS = this;
+		var GS = this;
 		// launch our custom loop
 		looping = setInterval(function() {
 			try {
 				GS.gameSoupLoop()
 			} catch(e) {
 				clearInterval(looping);
-				throw e;
+				if (console)
+					console.log(e);
+				throw(e);
 			}
 		}, 1000 / this.framerate);
 	}
@@ -270,9 +304,14 @@ function JSGameSoup(canvas, framerate) {
 	// call a method on each entity for which that method exists
 	// used for key events etc.
 	this.entitiesCall = function entitiesCall(fn, arg) {
-		for (e in entities) {
-			if (entities[e][fn]) {
-				entities[e][fn](arg);
+		this.callAll(entities, fn, arg);
+	}
+	
+	// generalised form of entitiesCall which can be applied on any array of entities
+	this.callAll = function callAll(arr, fn, arg) {
+		for (e in arr) {
+			if (arr[e][fn]) {
+				arr[e][fn](arg);
 			}
 		}
 	}
@@ -388,5 +427,14 @@ if (!Array.prototype.indexOf)
     }
     return -1;
   };
+}
+
+/* Python style remove function */
+if (!Array.prototype.remove) {
+	Array.prototype.remove = function(el) {
+		if (el in this) {
+			this.splice(this.indexOf(el), 1);
+		}
+	}
 }
 
