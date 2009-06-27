@@ -39,6 +39,7 @@ function JSGameSoup(canvas, framerate) {
 		if (open)
 			this.ctx.lineTo(poly[0][0], poly[0][1]);
 		this.ctx.closePath();
+		this.ctx.stroke();
 		this.ctx.restore();
 	}
 	
