@@ -28,7 +28,7 @@ function JSGameSoup(canvas, framerate) {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 	
-	this.polygon = function polygon(poly) {
+	this.polygon = function polygon(poly, open) {
 		// draw a polygon - list of 2-element lists (x,y)
 		this.ctx.save();
 		this.ctx.beginPath();
@@ -36,9 +36,9 @@ function JSGameSoup(canvas, framerate) {
 		for (n = 0; n < poly.length; n++) {
 			this.ctx.lineTo(poly[n][0], poly[n][1]);
 		}
-		this.ctx.lineTo(poly[0][0], poly[0][1]);
+		if (open)
+			this.ctx.lineTo(poly[0][0], poly[0][1]);
 		this.ctx.closePath();
-		this.ctx.stroke();
 		this.ctx.restore();
 	}
 	
@@ -79,6 +79,13 @@ function JSGameSoup(canvas, framerate) {
 		}
 	}
 	
+	// we want to allow right clicks on the canvas without popping up a stupid menu
+	this.oncontextmenu = function oncontextmenu(ev) {
+		JSGS.cancelEvent(ev);
+		return false;
+	}
+	this.attachEvent("contextmenu");
+	
 	// helper function to cancel an event
 	this.cancelEvent = function cancelEvent(ev) {
 		if (ev.stopPropagation)
@@ -87,14 +94,8 @@ function JSGameSoup(canvas, framerate) {
 		ev.cancelBubble = true; 
 	}
 	
-	// TODO: add key isheld "event"
-	
-	/*** Actual event handlers ***/
-	
-	// mouse button pressed event
-	this.onmousedown = function onmousedown(ev) {
-		var ev = (ev) ? ev : window.event;
-		
+	// get the position of the triggered event
+	this.pointerPos = function pointerPos(ev) {
 		// Get the mouse position relative to the canvas element.
 		if (ev.layerX || ev.layerX == 0) { // Firefox
 			mouseX = ev.layerX - canvas.offsetLeft;
@@ -106,11 +107,28 @@ function JSGameSoup(canvas, framerate) {
 			mouseX = ev.clientX - canvas.offsetLeft + scrollX;
 			mouseY = ev.clientY - canvas.offsetTop + scrollY;
 		}
-		JSGS.pointInEntitiesCall([mouseX, mouseY], "mouseDown");
+		return [mouseX, mouseY];
+	}
+	
+	/*** Actual event handlers ***/
+	
+	// pointer pressed event
+	this.onmousedown = function onmousedown(ev) {
+		var ev = (ev) ? ev : window.event;
+		JSGS.pointInEntitiesCall(JSGS.pointerPos(ev), "pointerDown", ev.button);
+		JSGS.cancelEvent(ev);
+		return false;
 	}
 	this.attachEvent("mousedown");
 	
-	// TODO: add mouseup event
+	// pointer released event
+	this.onmouseup = function onmouseup(ev) {
+		var ev = (ev) ? ev : window.event;
+		JSGS.pointInEntitiesCall(JSGS.pointerPos(ev), "pointerUp", ev.button);
+		JSGS.cancelEvent(ev);
+		return false;
+	}
+	this.attachEvent("mouseup");
 	
 	// TODO: add mousemove event
 	
@@ -126,6 +144,7 @@ function JSGameSoup(canvas, framerate) {
 			JSGS.heldKeys[ev.keyCode] = true;
 		}
 		JSGS.cancelEvent(ev);
+		return false;
 	}
 	this.attachEvent("keydown");
 	
@@ -139,6 +158,7 @@ function JSGameSoup(canvas, framerate) {
 			JSGS.heldKeys[ev.keyCode] = false;
 		}
 		JSGS.cancelEvent(ev);
+		return false;
 	}
 	this.attachEvent("keyup");
 	
@@ -294,10 +314,10 @@ function JSGameSoup(canvas, framerate) {
 	
 	// call a method on an entity if the point is inside the entity's polygon
 	// used in mouse events to send mouseDown and mouseUp events into the entity
-	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
+	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
 		for (e=0; e<entities.length; e++) {
 			if (entities[e].collisionPoly && entities[e][fn] && this.pointInPoly(pos, entities[e].collisionPoly()))
-				entities[e][fn]();
+				entities[e][fn](arg);
 		}
 	}
 	
@@ -432,8 +452,9 @@ if (!Array.prototype.indexOf)
 /* Python style remove function */
 if (!Array.prototype.remove) {
 	Array.prototype.remove = function(el) {
-		if (el in this) {
-			this.splice(this.indexOf(el), 1);
+		var p = this.indexOf(el);
+		if (p>=0) {
+			this.splice(p, 1);
 		}
 	}
 }

@@ -29,7 +29,7 @@ function startAsteroids(gs) {
 			return this.poly;
 		}
 		
-		this.mouseDown = function() {
+		this.pointerDown = function() {
 			if (this.radius > 25) {
 				gs.addEntity(new Asteroid(this.radius / 3 * 2, this.x + this.randomPoint(), this.y + this.randomPoint()));
 				gs.addEntity(new Asteroid(this.radius / 3 * 2, this.x + this.randomPoint(), this.y + this.randomPoint()));
@@ -48,9 +48,10 @@ function startAsteroids(gs) {
 			}
 		}
 		
-		this.draw = function() {
-			gs.ctx.strokeStyle = 'rgba(255, 255, 255, 1.0)';
+		this.draw = function(c) {
+			c.strokeStyle = 'rgba(255, 255, 255, 1.0)';
 			gs.polygon(this.poly);
+			c.stroke();
 		}
 	}
 	
