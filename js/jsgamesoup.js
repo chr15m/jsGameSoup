@@ -202,14 +202,14 @@ function JSGameSoup(canvas, framerate) {
 	// this is our main game loop
 	this.gameSoupLoop = function gameSoupLoop() {
 		// run .update() on every entity in our list
-		for (o in entities) {
+		for (o=0; o<entities.length; o++) {
 			if (entities[o].update) {
 				entities[o].update(this);
 			}
 		}
 		
 		// test for held keys and send them to listening entities
-		for (o in entitiesKeyHeld) {
+		for (o=0; o<entitiesKeyHeld.length; o++) {
 			var hasHeld = false;
 			for (k in this.heldKeys) {
 				if (this.heldKeys[k]) {
@@ -222,7 +222,7 @@ function JSGameSoup(canvas, framerate) {
 		}
 		
 		// add any new entities which the user has added
-		for (o in addEntities) {
+		for (o=0; o<addEntities.length; o++) {
 			// TODO: sort entities by priority
 			// TODO: make sublists of drawables to make the loops tighter
 			// TODO: make sublists of updateables to make the loops tighter
@@ -236,7 +236,7 @@ function JSGameSoup(canvas, framerate) {
 		addEntities = [];
 		
 		// delete any entities the user has asked to remove
-		for (o in delEntities) {
+		for (o=0; o<delEntities.length; o++) {
 			entities.remove(delEntities[o]);
 			this.removeEntityFromSpecialistLists(o);
 		}
@@ -245,7 +245,7 @@ function JSGameSoup(canvas, framerate) {
 		// clear the background
 		this.clear();
 		// run .draw() on every entity in our list
-		for (o in entities) {
+		for (o=0; o<entities.length; o++) {
 			if (entities[o].draw) {
 				this.ctx.save();
 				entities[o].draw(this.ctx, this);
@@ -295,7 +295,7 @@ function JSGameSoup(canvas, framerate) {
 	// call a method on an entity if the point is inside the entity's polygon
 	// used in mouse events to send mouseDown and mouseUp events into the entity
 	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn) {
-		for (e in entities) {
+		for (e=0; e<entities.length; e++) {
 			if (entities[e].collisionPoly && entities[e][fn] && this.pointInPoly(pos, entities[e].collisionPoly()))
 				entities[e][fn]();
 		}
@@ -309,7 +309,7 @@ function JSGameSoup(canvas, framerate) {
 	
 	// generalised form of entitiesCall which can be applied on any array of entities
 	this.callAll = function callAll(arr, fn, arg) {
-		for (e in arr) {
+		for (e=0; e<arr.length; e++) {
 			if (arr[e][fn]) {
 				arr[e][fn](arg);
 			}

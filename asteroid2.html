@@ -67,20 +67,12 @@ function startAsteroids(gs) {
 			//console.log(keyCode);
 		}
 		
-		this.keyDown_37 = function () {
+		this.keyHeld_37 = this.keyDown_37 = function () {
 			this.angle -= 0.1;
 		}
 		
-		this.keyDown_39 = function () {
+		this.keyHeld_39 = this.keyDown_39 = function () {
 			this.angle += 0.1;
-		}
-		
-		this.keyHeld = function () {
-			console.log("key");
-		}
-		
-		this.keyHeld_37 = function () {
-			console.log("held 37");
 		}
 		
 		this.collisionPoly = function () {
