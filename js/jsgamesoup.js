@@ -33,7 +33,7 @@ function JSGameSoup(canvas, framerate) {
 		this.ctx.save();
 		this.ctx.beginPath();
 		this.ctx.moveTo(poly[0][0], poly[0][1]);
-		for (n = 0; n < poly.length; n++) {
+		for (var n = 0; n < poly.length; n++) {
 			this.ctx.lineTo(poly[n][0], poly[n][1]);
 		}
 		if (open)
@@ -58,6 +58,10 @@ function JSGameSoup(canvas, framerate) {
 	this.random = function random(start, end) {
 		// get a random number (non-int) between start and end
 		return Math.random() * (end - start) + start;
+	}
+	
+	this.distance = function distance(a, b) {
+		return Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2));
 	}
 	
 	/***************************
@@ -196,8 +200,12 @@ function JSGameSoup(canvas, framerate) {
 		delEntities.push(e);
 	}
 	
+	this.inEntities = function inEntities(e) {
+		return entities.indexOf(e) >= 0;
+	}
+	
 	this.addEntityToSpecialistLists = function addEntityToSpecialistLists(e) {
-		for (method in e) {
+		for (var method in e) {
 			if (method.indexOf("keyHeld") == 0 && entitiesKeyHeld.indexOf(e) < 0) {
 				entitiesKeyHeld.push(e);
 			}
@@ -223,16 +231,16 @@ function JSGameSoup(canvas, framerate) {
 	// this is our main game loop
 	this.gameSoupLoop = function gameSoupLoop() {
 		// run .update() on every entity in our list
-		for (o=0; o<entities.length; o++) {
+		for (var o=0; o<entities.length; o++) {
 			if (entities[o].update) {
 				entities[o].update(this);
 			}
 		}
 		
 		// test for held keys and send them to listening entities
-		for (o=0; o<entitiesKeyHeld.length; o++) {
+		for (var o=0; o<entitiesKeyHeld.length; o++) {
 			var hasHeld = false;
-			for (k in this.heldKeys) {
+			for (var k in this.heldKeys) {
 				if (this.heldKeys[k]) {
 					this.callAll(entitiesKeyHeld, "keyHeld_" + k);
 					hasHeld = true;
@@ -243,7 +251,7 @@ function JSGameSoup(canvas, framerate) {
 		}
 		
 		// add any new entities which the user has added
-		for (o=0; o<addEntities.length; o++) {
+		for (var o=0; o<addEntities.length; o++) {
 			// TODO: sort entities by priority
 			// TODO: make sublists of drawables to make the loops tighter
 			// TODO: make sublists of updateables to make the loops tighter
@@ -257,7 +265,7 @@ function JSGameSoup(canvas, framerate) {
 		addEntities = [];
 		
 		// delete any entities the user has asked to remove
-		for (o=0; o<delEntities.length; o++) {
+		for (var o=0; o<delEntities.length; o++) {
 			entities.remove(delEntities[o]);
 			this.removeEntityFromSpecialistLists(o);
 		}
@@ -266,7 +274,7 @@ function JSGameSoup(canvas, framerate) {
 		// clear the background
 		this.clear();
 		// run .draw() on every entity in our list
-		for (o=0; o<entities.length; o++) {
+		for (var o=0; o<entities.length; o++) {
 			if (entities[o].draw) {
 				this.ctx.save();
 				entities[o].draw(this.ctx, this);
@@ -302,7 +310,7 @@ function JSGameSoup(canvas, framerate) {
 		cn = 0
 		pts = poly.slice();
 		pts.push([poly[0][0], poly[0][1]]);
-		for (i=0; i<poly.length; i++)
+		for (var i=0; i<poly.length; i++)
 			if (((pts[i][1] <= pos[1]) && (pts[i+1][1] > pos[1])) || ((pts[i][1] > pos[1]) && (pts[i+1][1] <= pos[1])))
 				if (pos[0] < pts[i][0] + (pos[1] - pts[i][1]) / (pts[i+1][1] - pts[i][1]) * (pts[i+1][0] - pts[i][0]))
 		cn += 1
@@ -316,7 +324,7 @@ function JSGameSoup(canvas, framerate) {
 	// call a method on an entity if the point is inside the entity's polygon
 	// used in mouse events to send mouseDown and mouseUp events into the entity
 	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
-		for (e=0; e<entities.length; e++) {
+		for (var e=0; e<entities.length; e++) {
 			if (entities[e].collisionPoly && entities[e][fn] && this.pointInPoly(pos, entities[e].collisionPoly()))
 				entities[e][fn](arg);
 		}
@@ -330,7 +338,7 @@ function JSGameSoup(canvas, framerate) {
 	
 	// generalised form of entitiesCall which can be applied on any array of entities
 	this.callAll = function callAll(arr, fn, arg) {
-		for (e=0; e<arr.length; e++) {
+		for (var e=0; e<arr.length; e++) {
 			if (arr[e][fn]) {
 				arr[e][fn](arg);
 			}
