@@ -16,8 +16,8 @@ function JSGameSoup(canvas, framerate) {
 	// we need a variable we can access from inside callbacks etc.
 	var JSGS = this;
 	// give us easy access to some variables
-	this.width = this.canvas.width;
-	this.height = this.canvas.height;
+	this.width = parseInt(this.canvas.width);
+	this.height = parseInt(this.canvas.height);
 	
 	/******************************
 	 	Graphics helpers
