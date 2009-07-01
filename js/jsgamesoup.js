@@ -1,3 +1,14 @@
+/*
+ *	JSGameSoup, Copyright 2009 Chris McCormick
+ *
+ *	LGPL v3 licensed
+ *
+ * 	Major missing features:
+ * 	* Collision detection
+ *	* Bitmap sprites
+ *
+ */
+
 function JSGameSoup(canvas, framerate) {
 	// number of frames that the app has been running for
 	this.frameCount = 0;
@@ -175,10 +186,17 @@ function JSGameSoup(canvas, framerate) {
 	// must implement an .update() method
 	// any entity which wants to be drawn, must implement
 	// a .draw() method
-	// a collisionPoly() method should return a list of points which
-	// define where the object is on the screen for things like mouseclicks
+	// 
+	// a pointerPoly() method can be defined which returns a list of points which
+	// define where the object is on the screen for things like mouse clicks or finger touches
+	// a pointerBox() method can be defined for the same thing, but in a square
+	// a pointerCircle() method can be defined for the same thing but in a circle
+	//
 	// if 'priority' is defined in the entity, it will be used to order the update/draw
 	// greater priority will be run first
+	//
+	// collisions:
+	//
 	// TODO: different types of collisions:
 	//	circle, box, polygon
 	// 	for pointer
@@ -317,6 +335,15 @@ function JSGameSoup(canvas, framerate) {
 		return cn % 2
 	}
 	
+	// detect whether a point is inside a box or not
+	this.pointInBox = function pointInBox(pos, box) {
+		return pos[0] >= box[0] && pos[0] <= box[2] && pos[1] >= box[1] && pos[1] <= box[3];
+	}
+	
+	this.pointInCircle = function pointInCircle(pos, circle) {
+		return this.distance(pos, circle.slice(0,2)) <= circle[2];
+	}
+	
 	/*****************************************
 	 	Make calls on entity methods
 	 *****************************************/
@@ -325,8 +352,14 @@ function JSGameSoup(canvas, framerate) {
 	// used in mouse events to send mouseDown and mouseUp events into the entity
 	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
 		for (var e=0; e<entities.length; e++) {
-			if (entities[e].collisionPoly && entities[e][fn] && this.pointInPoly(pos, entities[e].collisionPoly()))
-				entities[e][fn](arg);
+			if (entities[e][fn]) {
+				if (entities[e].pointerPoly && this.pointInPoly(pos, entities[e].pointerPoly()))
+					entities[e][fn](arg);
+				if (entities[e].pointerBox && this.pointInBox(pos, entities[e].pointerBox()))
+					entities[e][fn](arg);
+				if (entities[e].pointerCircle && this.pointInCircle(pos, entities[e].pointerCircle()))
+					entities[e][fn](arg);
+			}
 		}
 	}
 	

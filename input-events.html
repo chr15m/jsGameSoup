@@ -7,6 +7,8 @@
 function startAsteroids(gs) {
 	function TestEntity() {
 		this.poly = [[135, 120], [150, 135], [135, 150], [120, 135]];
+		this.box = [160, 120, 180, 140];
+		this.circle = [210, 135, 20];
 		
 		// any key has been pressed
 		this.keyDown = function (keyCode) {
@@ -43,15 +45,38 @@ function startAsteroids(gs) {
 			console.log("pointerUp: " + i);
 		}
 		
-		// We implement this method to enable/detect mouse collisions
-		this.collisionPoly = function () {
+		// We implement this method to detect pointer/touch/mouse collisions with a polygon
+		this.pointerPoly = function () {
 			return this.poly;
+		}
+		
+		// We implement this method to detect pointer/touch/mouse collisions with a box
+		this.pointerBox = function () {
+			return this.box;
+		}
+		
+		// We implement this method to detect pointer/touch/mouse collisions with a circle
+		this.pointerCircle = function () {
+			return this.circle;
 		}
 		
 		// We implement this method to draw our polygon
 		this.draw = function(c) {
+			// draw our circle
 			c.strokeStyle = 'rgba(255, 255, 255, 1.0)';
 			gs.polygon(this.poly);
+			
+			// draw our box
+			c.beginPath();
+			c.strokeRect(this.box[0], this.box[1], this.box[2] - this.box[0], this.box[3] - this.box[1]);
+			c.closePath();
+			c.stroke();
+			
+			// draw our circle
+			c.beginPath();
+			c.arc(this.circle[0], this.circle[1], this.circle[2], 0, Math.PI*2, true);
+			c.closePath();
+			c.stroke();			
 		}
 	}
 	
