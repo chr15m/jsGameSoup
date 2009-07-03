@@ -1,8 +1,8 @@
 /*
  *	JSGameSoup, Copyright 2009 Chris McCormick
- *
+ *	
  *	LGPL v3 licensed
- *
+ *	
  * 	Major missing features:
  * 	* Collision detection
  *	* Bitmap sprites
@@ -72,6 +72,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	this.distance = function distance(a, b) {
+		// distance between two points
 		return Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2));
 	}
 	
@@ -79,7 +80,7 @@ function JSGameSoup(canvas, framerate) {
 	 	Event handling
 	 ***************************/
 	
-	// TODO: queue up the events rather than firing the methods right as they happen (synchronous)
+	// TODO: queue up the events for output in the main loop rather than firing the methods right as they happen
 	
 	// event state variables
 	this.heldKeys = {};
@@ -207,6 +208,7 @@ function JSGameSoup(canvas, framerate) {
 	
 	// different specialist lists
 	var entitiesKeyHeld = [];
+	var entitiesColliders = [];
 	
 	this.addEntity = function addEntity(e) {
 		// add this game entity to our pool of entities (will happen after update())
@@ -219,19 +221,28 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	this.inEntities = function inEntities(e) {
+		// is this entity in our entity list?
 		return entities.indexOf(e) >= 0;
 	}
 	
 	this.addEntityToSpecialistLists = function addEntityToSpecialistLists(e) {
+		// add this object to any specialist list to which it belongs
 		for (var method in e) {
+			// if this entity has an event listener for when certain keys are held down
 			if (method.indexOf("keyHeld") == 0 && entitiesKeyHeld.indexOf(e) < 0) {
 				entitiesKeyHeld.push(e);
+			}
+			// if this entity has any type of collision detection happening
+			if (method.indexOf("collision") == 0 && entitiesColliders.indexOf(e) < 0) {
+				entitiesColliders.push(e);
 			}
 		}
 	}
 	
 	this.removeEntityFromSpecialistLists = function removeEntityFromSpecialistLists(e) {
+		// clean this entity out of any special lists (above) to which it belongs
 		entitiesKeyHeld.remove(e);
+		entitiesColliders.remove(e);
 	}
 	
 	/**********************
@@ -239,12 +250,12 @@ function JSGameSoup(canvas, framerate) {
 	 **********************/
 	
 	// any entity which can collide with other entities
-	// should provide a .getBoundingBox() method and can
-	// possibly provide a .getPoly() method for finer grained collisions
-	// .getBoundingBox() should return an array which looks like [x, y, width, height]
-	// .getPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
-	// var colliders = [];
-	// TODO: add RDC/collision loop to this
+	// should provide a .collisionBox() method and can
+	// possibly provide a .collisionPoly() method for finer grained collisions
+	// of a .collisionCircle() method for circular collisions
+	// .collisionBox() should return an array which looks like [x, y, width, height]
+	// .collisionPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
+	// .collisionCircle() should return an array which looks like [x, y, r] where r is the circle radius
 	
 	// this is our main game loop
 	this.gameSoupLoop = function gameSoupLoop() {
@@ -266,6 +277,22 @@ function JSGameSoup(canvas, framerate) {
 			}
 			if (hasHeld)
 				this.callAll(entitiesKeyHeld, "keyHeld");
+		}
+		
+		// test for collisions between objects which support collisions
+		// TODO: do an RDC test on colliding entities first
+		// TODO: support poly-on-poly collisions
+		// TODO: support poly-on-circle collisions
+		// TODO: support circle-on-circle collisions
+		for (var o=0; o<entitiesColliders.length; o++) {
+			for (var e=o; e<entitiesColliders.length; e++) {
+				if (e != o) {
+					if (this.collidePolyPoly(entitiesColliders[o].collisionPoly(), entitiesColliders[e].collisionPoly())) {
+						entitiesColliders[o].collided(entitiesColliders[e]);
+						entitiesColliders[e].collided(entitiesColliders[o]);
+					}
+				}
+			}
 		}
 		
 		// add any new entities which the user has added
@@ -317,7 +344,13 @@ function JSGameSoup(canvas, framerate) {
 				throw(e);
 			}
 		}, 1000 / this.framerate);
+		// DEBUG:
+		//setInterval(function() { for (var e=0; e<entities.length; e++) console.log(entities[e].x + ", " + entities[e].y); }, 1000);
 	}
+	
+	/**********************************************
+		Collisions and collision helpers
+	 **********************************************/
 	
 	// TODO: use canvas isPointInPath instead, when it's supported by excanvas
 	// detect whether a point is inside a polygon (list of points) or not
@@ -340,8 +373,67 @@ function JSGameSoup(canvas, framerate) {
 		return pos[0] >= box[0] && pos[0] <= box[2] && pos[1] >= box[1] && pos[1] <= box[3];
 	}
 	
+	// detect whether a point is inside a circle
 	this.pointInCircle = function pointInCircle(pos, circle) {
 		return this.distance(pos, circle.slice(0,2)) <= circle[2];
+	}
+
+	this.lineOnLine = function lineOnLine(l1, l2) {
+		/* Detects the intersection of two lines
+		   http://www.kevlindev.com/gui/math/intersection/Intersection.js
+		*/
+		var a1 = l1[0];
+		var a2 = l1[1];
+		var b1 = l2[0];
+		var b2 = l2[1];
+		var a1x = a1[0];
+		var a1y = a1[1];
+		var a2x = a2[0];
+		var a2y = a2[1];
+		var b1x = b1[0];
+		var b1y = b1[1];
+		var b2x = b2[0];
+		var b2y = b2[1];
+		
+		var ua_t = (b2x - b1x) * (a1y - b1y) - (b2y - b1y) * (a1x - b1x);
+		var ub_t = (a2x - a1x) * (a1y - b1y) - (a2y - a1y) * (a1x - b1x);
+		var u_b  = (b2y - b1y) * (a2x - a1x) - (b2x - b1x) * (a2y - a1y);
+		
+		if (u_b) {
+			var ua = ua_t / u_b;
+			var ub = ub_t / u_b;
+			
+			if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
+				// intersection
+				return [a1x + ua * (a2x - a1x), a1y + ua * (a2y - a1y)];
+			} else {
+				return [];
+			}
+		} else {
+			if (ua_t == 0 || ub_t == 0) {
+				// coincident
+				//return [line2]
+				//this will be caught elsewhere anyway
+				return [(a2x + a1x) / 2, (a2y + a1y) / 2];
+			} else {
+				// parallel
+				return [];
+			}
+		}
+	}
+	
+	// *** Actual collision routines ***
+	
+	this.collidePolyPoly = function collidePolyPoly(e1, e2) {
+		var collided = false;
+		for (var l1=0; l1<e1.length; l1++) {
+			for (var l2=0; l2<e2.length; l2++) {
+				if (this.lineOnLine([e1[l1], e1[(l1 + 1) % e1.length]], [e2[l2], e2[(l2 + 1) % e2.length]]).length) {
+					collided = true;
+				}
+			}
+		}
+		return collided;
 	}
 	
 	/*****************************************
