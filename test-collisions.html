@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<!--[if IE]><script src="js/explorercanvas/excanvas.js"></script><![endif]-->
+<script src="js/jsgamesoup.js"></script>
+<script>
+function startAsteroids(gs) {
+	function TestEntity() {
+		this.points = [[0, -20], [20, 0], [0, 20], [-20, 0]];
+		this.poly = [];
+		this.x = gs.random(0, gs.width);
+		this.y = gs.height / 2;
+		this.vx = gs.random(0, 1);
+		this.color = 'rgba(255, 255, 255, 1.0)';
+		
+		// We implement this method to detect pointer/touch/mouse collisions with a polygon
+		this.collisionPoly = function () {
+			return this.poly;
+		}
+		
+		// This gets called when we collide with something
+		this.collided = function(other) {
+			this.color = 'rgba(255, 0, 0, 1.0)';
+			// console.log('collided');
+		}
+		
+		// We implement this method to draw our polygon
+		this.draw = function(c) {
+			// draw our circle
+			c.strokeStyle = this.color;
+			gs.polygon(this.poly);
+		}
+		
+		this.update = function() {
+			this.x = (this.x + this.vx + gs.width) % gs.width;
+			for (n=0; n<this.points.length; n++) {
+				this.poly[n] = [this.points[n][0] + this.x, this.points[n][1] + this.y];
+			}
+			this.color = 'rgba(255, 255, 255, 1.0)';
+		}
+	}
+	
+	function World() {
+		this.draw = function() {
+			gs.clear();
+			gs.background('rgba(100, 100, 100, 1.0)');
+		}
+	}
+	
+	gs.addEntity(new World());
+	gs.addEntity(new TestEntity());
+	gs.addEntity(new TestEntity());
+}
+</script>
+<style>
+html, body {
+	height: 100%;         /* required */
+}
+body {
+	text-align: center;   /* horizontal centering hack for IE */
+	padding: 0;           /* required to "hide" distance div */
+	margin: 0;            /* required to "hide" distance div */
+	overflow: hidden;
+}
+div#distance { 
+	margin-bottom: -10em; /* half of content height */
+	/* background: red;      /* temporary - used to see div */
+	width: 1px;           /* required to "hide" distance div */
+	height: 50%;          /* required */
+	float: left;          /* required */
+
+}
+div#content {
+	position: relative;   /* positions content on top of distance */
+	text-align: left;     /* horizontal centering hack for IE */
+	height: 320px;         /* required - desired height */
+	width: 480px;          /* required - desired width */
+	/* background: blue;     /* cosmetic */
+	margin: 0 auto;       /* required */
+	clear: left;          /* required */
+}
+</style>
+</head>
+<body>
+	<div id="distance"></div>
+	<div id="content">
+		<!-- absolutely centered content -->
+		<canvas id='asteroids' jsgs="startAsteroids" fps="40" width="480" height="320"></canvas>
+	</div>
+</body>
+</html>
