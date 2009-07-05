@@ -45,8 +45,9 @@ function JSGameSoup(canvas, framerate) {
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 	
-	/** 	draw a polygon
-		@param poly - a list of 2-element lists (x,y)
+	/** 	Draw a polygon
+		@param poly A list of 2-element lists (x,y) like [[x1, y1,], [x2, y2]...]
+		@param open Whether this polygon is closed or not
 		@tag graphics
 	*/
 	this.polygon = function polygon(poly, open) {
@@ -63,8 +64,8 @@ function JSGameSoup(canvas, framerate) {
 		this.ctx.restore();
 	}
 	
-	/**	fill in the background
-		@param color should be specified like a normal canvas color
+	/**	Fill in the background
+		@param color Should be specified like a normal canvas color
 		@tag graphics
 	*/
 	this.background = function background(color) {
@@ -215,7 +216,7 @@ function JSGameSoup(canvas, framerate) {
 	//	circle, box, polygon
 	// 	for pointer
 	//	for entity-entity
-	/** Array holding all game entities. use addEntity() and delEntity() to modify it's elements. */
+	/** Array holding all game entities. Use addEntity() and delEntity() to modify it's elements. */
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
@@ -368,7 +369,7 @@ function JSGameSoup(canvas, framerate) {
 	 **********************************************/
 	
 	// TODO: use canvas isPointInPath instead, when it's supported by excanvas
-	/** Detect whether a point is inside a polygon (list of points) or not */
+	/* Detect whether a point is inside a polygon (list of points) or not */
 	this.pointInPoly = function pointInPoly(pos, poly) {
 		/* This code is patterned after [Franklin, 2000]
 		http://www.geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
@@ -383,17 +384,17 @@ function JSGameSoup(canvas, framerate) {
 		return cn % 2
 	}
 	
-	/** Detect whether a point is inside a box or not */
+	/* Detect whether a point is inside a box or not */
 	this.pointInBox = function pointInBox(pos, box) {
 		return pos[0] >= box[0] && pos[0] <= box[2] && pos[1] >= box[1] && pos[1] <= box[3];
 	}
 	
-	/** Detect whether a point is inside a circle */
+	/* Detect whether a point is inside a circle */
 	this.pointInCircle = function pointInCircle(pos, circle) {
 		return this.distance(pos, circle.slice(0,2)) <= circle[2];
 	}
 	
-	/** Detect if a line is touching a line */
+	/* Detect if a line is touching a line */
 	this.lineOnLine = function lineOnLine(l1, l2) {
 		/* Detects the intersection of two lines
 		   http://www.kevlindev.com/gui/math/intersection/Intersection.js
@@ -439,7 +440,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	// *** Actual collision routines ***
-	/** Test whether two polygons are touching */
+	/* Test whether two polygons are touching */
 	this.collidePolyPoly = function collidePolyPoly(e1, e2) {
 		var collided = false;
 		for (var l1=0; l1<e1.length; l1++) {
