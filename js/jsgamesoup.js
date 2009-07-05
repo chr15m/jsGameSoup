@@ -9,6 +9,11 @@
  *
  */
 
+
+/**	@class JSGameSoup
+	@param canvas The canvas, or the ID of the canvas which this instance of JSGameSoup should attach itself to.
+	@param framerate The framerate of the game running on this canvas.
+*/
 function JSGameSoup(canvas, framerate) {
 	// number of frames that the app has been running for
 	this.frameCount = 0;
@@ -30,17 +35,21 @@ function JSGameSoup(canvas, framerate) {
 	this.width = parseInt(this.canvas.width);
 	this.height = parseInt(this.canvas.height);
 	
-	/******************************
+	/* ****************************
 	 	Graphics helpers
 	 ******************************/
+	/** @namespace graphics */
 	
+	/** clear the frame. This is called automatically before each frame is drawn. */
 	this.clear = function clear() {
-		// clear the frame (happens automatically before each frame drawn)
 		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
 	}
 	
+	/** 	draw a polygon
+		@param poly - a list of 2-element lists (x,y)
+		@tag graphics
+	*/
 	this.polygon = function polygon(poly, open) {
-		// draw a polygon - list of 2-element lists (x,y)
 		this.ctx.save();
 		this.ctx.beginPath();
 		this.ctx.moveTo(poly[0][0], poly[0][1]);
@@ -54,29 +63,33 @@ function JSGameSoup(canvas, framerate) {
 		this.ctx.restore();
 	}
 	
+	/**	fill in the background
+		@param color should be specified like a normal canvas color
+		@tag graphics
+	*/
 	this.background = function background(color) {
-		// fill in the background with a particular color
 		this.ctx.save();
 		this.ctx.fillStyle = color;
 		this.ctx.fillRect(0, 0, this.width, this.height);
 		this.ctx.restore();
 	}
 	
-	/******************************
+	/* ****************************
 	 	Math helpers
 	 ******************************/
+	/** @namespace math */
 	
+	/** Returns a random real number between start and end @tag math */
 	this.random = function random(start, end) {
-		// get a random number (non-int) between start and end
 		return Math.random() * (end - start) + start;
 	}
 	
+	/** Returns the distance between two points (two element arrays) @tag math */
 	this.distance = function distance(a, b) {
-		// distance between two points
 		return Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2));
 	}
 	
-	/***************************
+	/* *************************
 	 	Event handling
 	 ***************************/
 	
@@ -127,7 +140,7 @@ function JSGameSoup(canvas, framerate) {
 		return [mouseX, mouseY];
 	}
 	
-	/*** Actual event handlers ***/
+	/* ** Actual event handlers ** */
 	
 	// pointer pressed event
 	this.onmousedown = function onmousedown(ev) {
@@ -179,7 +192,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	this.attachEvent("keyup");
 	
-	/***************************
+	/* *************************
 	 	Entity helpers
 	 ***************************/
 	
@@ -202,6 +215,7 @@ function JSGameSoup(canvas, framerate) {
 	//	circle, box, polygon
 	// 	for pointer
 	//	for entity-entity
+	/** Array holding all game entities. use addEntity() and delEntity() to modify it's elements. */
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
@@ -210,16 +224,17 @@ function JSGameSoup(canvas, framerate) {
 	var entitiesKeyHeld = [];
 	var entitiesColliders = [];
 	
+	/** Add this game entity to our pool of entities (will happen synchronously after update() in the main loop) */
 	this.addEntity = function addEntity(e) {
-		// add this game entity to our pool of entities (will happen after update())
 		addEntities.push(e);
 	}
 	
+	/** Remove this entity from our pool of entities (will happen synchronously after update() in the main loop) */
 	this.delEntity = function delEntity(e) {
-		// remove this entity from our pool of entities (will happen after update())
 		delEntities.push(e);
 	}
 	
+	/** Returns true if this entity is in our array of all game entities. */
 	this.inEntities = function inEntities(e) {
 		// is this entity in our entity list?
 		return entities.indexOf(e) >= 0;
@@ -245,7 +260,7 @@ function JSGameSoup(canvas, framerate) {
 		entitiesColliders.remove(e);
 	}
 	
-	/**********************
+	/* ********************
 	 	Main loop
 	 **********************/
 	
@@ -257,7 +272,7 @@ function JSGameSoup(canvas, framerate) {
 	// .collisionPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
 	// .collisionCircle() should return an array which looks like [x, y, r] where r is the circle radius
 	
-	// this is our main game loop
+	/** This is our main game loop, which gets launched automatically with the launch() method. */
 	this.gameSoupLoop = function gameSoupLoop() {
 		// run .update() on every entity in our list
 		for (var o=0; o<entities.length; o++) {
@@ -330,7 +345,7 @@ function JSGameSoup(canvas, framerate) {
 		this.frameCount += 1;
 	}
 	
-	// launch our game
+	/** Launch an instance of jsGameSoup (generally happens automatically). */
 	this.launch = function launch() {
 		var GS = this;
 		// launch our custom loop
@@ -348,12 +363,12 @@ function JSGameSoup(canvas, framerate) {
 		//setInterval(function() { for (var e=0; e<entities.length; e++) console.log(entities[e].x + ", " + entities[e].y); }, 1000);
 	}
 	
-	/**********************************************
+	/* ********************************************
 		Collisions and collision helpers
 	 **********************************************/
 	
 	// TODO: use canvas isPointInPath instead, when it's supported by excanvas
-	// detect whether a point is inside a polygon (list of points) or not
+	/** Detect whether a point is inside a polygon (list of points) or not */
 	this.pointInPoly = function pointInPoly(pos, poly) {
 		/* This code is patterned after [Franklin, 2000]
 		http://www.geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
@@ -368,16 +383,17 @@ function JSGameSoup(canvas, framerate) {
 		return cn % 2
 	}
 	
-	// detect whether a point is inside a box or not
+	/** Detect whether a point is inside a box or not */
 	this.pointInBox = function pointInBox(pos, box) {
 		return pos[0] >= box[0] && pos[0] <= box[2] && pos[1] >= box[1] && pos[1] <= box[3];
 	}
 	
-	// detect whether a point is inside a circle
+	/** Detect whether a point is inside a circle */
 	this.pointInCircle = function pointInCircle(pos, circle) {
 		return this.distance(pos, circle.slice(0,2)) <= circle[2];
 	}
-
+	
+	/** Detect if a line is touching a line */
 	this.lineOnLine = function lineOnLine(l1, l2) {
 		/* Detects the intersection of two lines
 		   http://www.kevlindev.com/gui/math/intersection/Intersection.js
@@ -423,7 +439,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	// *** Actual collision routines ***
-	
+	/** Test whether two polygons are touching */
 	this.collidePolyPoly = function collidePolyPoly(e1, e2) {
 		var collided = false;
 		for (var l1=0; l1<e1.length; l1++) {
@@ -436,7 +452,7 @@ function JSGameSoup(canvas, framerate) {
 		return collided;
 	}
 	
-	/*****************************************
+	/* ***************************************
 	 	Make calls on entity methods
 	 *****************************************/
 	
@@ -471,16 +487,18 @@ function JSGameSoup(canvas, framerate) {
 	}
 }
 
-	/*******************************************
+	/* *****************************************
 	 	Cross platform launching stuff
 		(outside JSGameSoup definition)
 	 *******************************************/
 
-/*
- *	Finds all canvas tags in the document:
- *	> calls the function named in the attribute 'jsgs'
- *	> passes a new JSGameSoup instance to that function
- *	> fps is set in the attribute called 'fps'
+/**
+ *	Helper function which is automatically called to launch JSGameSoup on a canvas.
+ *
+ *	Finds all canvas tags in the document,
+ *	calls the function named in the attribute 'jsgs',
+ *	passes a new JSGameSoup instance to that function,
+ *	fps is set in the attribute called 'fps'.
  *
  *	Modified version of processingjs' init.js example script.
  *
