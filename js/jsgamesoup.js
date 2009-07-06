@@ -304,8 +304,10 @@ function JSGameSoup(canvas, framerate) {
 			for (var e=o; e<entitiesColliders.length; e++) {
 				if (e != o) {
 					if (this.collidePolyPoly(entitiesColliders[o].collisionPoly(), entitiesColliders[e].collisionPoly())) {
-						entitiesColliders[o].collided(entitiesColliders[e]);
-						entitiesColliders[e].collided(entitiesColliders[o]);
+						if (entitiesColliders[o].collided)
+							entitiesColliders[o].collided(entitiesColliders[e]);
+						if (entitiesColliders[e].collided)
+							entitiesColliders[e].collided(entitiesColliders[o]);
 					}
 				}
 			}

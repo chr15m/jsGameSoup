@@ -10,18 +10,11 @@ function startAsteroids(gs) {
 		this.poly = [];
 		this.x = gs.random(0, gs.width);
 		this.y = gs.height / 2;
-		this.vx = gs.random(0, 1);
 		this.color = 'rgba(255, 255, 255, 1.0)';
 		
 		// We implement this method to detect pointer/touch/mouse collisions with a polygon
 		this.collisionPoly = function () {
 			return this.poly;
-		}
-		
-		// This gets called when we collide with something
-		this.collided = function(other) {
-			this.color = 'rgba(255, 0, 0, 1.0)';
-			// console.log('collided');
 		}
 		
 		// We implement this method to draw our polygon
@@ -47,9 +40,18 @@ function startAsteroids(gs) {
 		}
 	}
 	
+	t1 = new TestEntity();
+	t1.vx = gs.random(0.5, 0.75);
+	t2 = new TestEntity();
+	t2.vx = gs.random(0.75, 1);
+	// This gets called when we collide with something
+	t2.collided = function(other) {
+		this.color = 'rgba(255, 0, 0, 1.0)';
+		other.color = 'rgba(255, 0, 0, 1.0)';
+	}
 	gs.addEntity(new World());
-	gs.addEntity(new TestEntity());
-	gs.addEntity(new TestEntity());
+	gs.addEntity(t1);
+	gs.addEntity(t2);
 }
 </script>
 <style>
