@@ -282,6 +282,27 @@ function JSGameSoup(canvas, framerate) {
 			}
 		}
 		
+		// add any new entities which the user has added
+		for (var o=0; o<addEntities.length; o++) {
+			// TODO: sort entities by priority
+			// TODO: make sublists of drawables to make the loops tighter
+			// TODO: make sublists of updateables to make the loops tighter
+			// TODO: make sublists of event handling entities
+			entities.push(addEntities[o]);
+			this.addEntityToSpecialistLists(addEntities[o]);
+			if (addEntities[o].update) {
+				addEntities[o].update(this);
+			}
+		}
+		addEntities = [];
+		
+		// delete any entities the user has asked to remove
+		for (var o=0; o<delEntities.length; o++) {
+			entities.remove(delEntities[o]);
+			this.removeEntityFromSpecialistLists(delEntities[o]);
+		}
+		delEntities = [];
+		
 		// test for held keys and send them to listening entities
 		for (var o=0; o<entitiesKeyHeld.length; o++) {
 			var hasHeld = false;
@@ -313,27 +334,6 @@ function JSGameSoup(canvas, framerate) {
 			}
 		}
 		
-		// add any new entities which the user has added
-		for (var o=0; o<addEntities.length; o++) {
-			// TODO: sort entities by priority
-			// TODO: make sublists of drawables to make the loops tighter
-			// TODO: make sublists of updateables to make the loops tighter
-			// TODO: make sublists of event handling entities
-			entities.push(addEntities[o]);
-			this.addEntityToSpecialistLists(addEntities[o]);
-			if (addEntities[o].update) {
-				addEntities[o].update(this);
-			}
-		}
-		addEntities = [];
-		
-		// delete any entities the user has asked to remove
-		for (var o=0; o<delEntities.length; o++) {
-			entities.remove(delEntities[o]);
-			this.removeEntityFromSpecialistLists(o);
-		}
-		delEntities = [];
-		
 		// clear the background
 		this.clear();
 		// run .draw() on every entity in our list
@@ -364,6 +364,8 @@ function JSGameSoup(canvas, framerate) {
 		}, 1000 / this.framerate);
 		// DEBUG:
 		//setInterval(function() { for (var e=0; e<entities.length; e++) console.log(entities[e].x + ", " + entities[e].y); }, 1000);
+		//setInterval(function() { console.log(entities.length) }, 1000);
+		//setInterval(function() { console.log(entitiesColliders.length) }, 1000);
 	}
 	
 	/* ********************************************
