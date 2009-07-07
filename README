@@ -5,7 +5,7 @@ JSGameSoup is copyright Chris McCormick, 2009
 
 JSGameSoup is licensed to you under the terms of the LGPL. Please see the file COPYING for details.
 
-JSGameSoup is a cross-browser framework for making video games on the web that don't require proprietary technologies like Flash. It's currently tested and runs under new versions of Firefox, Canvas, and IE 6.0 and IE 7.0.
+JSGameSoup is a cross-browser framework for making video games on the web that don't require proprietary technologies like Flash. It's currently tested and runs under new versions of Firefox, Safari, and IE 6.0 and IE 7.0.
 
 Getting Started
 ---------------

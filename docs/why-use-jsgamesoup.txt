@@ -1,0 +1,5 @@
+Why you should use jsGameSoup to develop your games
+
+* cross browser
+* free software
+
