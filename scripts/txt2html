@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [ "$1" == "" -o "$2" == "" ]
+then
+	echo "Usage: txt2html INFILE.txt OUTFILE.html"
+else
+	html=`markdown $1`
+	infile=`cat template.html`
+	echo "${infile//\#\#\# CONTENT \#\#\#/$html}" > $2
+fi
