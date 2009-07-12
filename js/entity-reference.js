@@ -1,5 +1,6 @@
 /**
-This is the reference implementation of the most important class in the jsGameSoup framework,
+@class ExampleEntity
+@description This is the reference implementation of the most important class in the jsGameSoup framework,
 which is the entity class. You will create a class like thisfor each type of entity in your game.
 You only need to override the methods that your entity needs. For example, if it needs to be drawn
 then you need to implement a draw() method. If it needs to change it's state or position, or other

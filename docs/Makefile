@@ -14,10 +14,6 @@ index.html: ../README
 jsdocs:../js/jsgamesoup.js ../js/entity-reference.js
 	jsdoc ../js/jsgamesoup.js ../js/entity-reference.js
 
-#$(HTMLS): $(TXTS)
-#	markdown docs/embedding-distributing-deploying.txt >> docs/
-
-
 clean: $(ALLDOCS)
 	rm -r $(ALLDOCS)
 

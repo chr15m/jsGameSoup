@@ -1,0 +1,24 @@
+body {
+	padding-left: 20%;
+	padding-right: 20%;
+	background: #646464;
+	color: white;
+	font-family: Arial;
+}
+
+p {
+	margin-left: 2%;
+}
+
+pre {
+	margin-left: 4%;
+}
+
+a {
+	color: yellow;
+	text-decoration: none;
+}
+
+a:hover {
+	color: red;
+}

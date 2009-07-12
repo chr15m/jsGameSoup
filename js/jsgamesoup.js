@@ -10,14 +10,15 @@
  */
 
 
-/**	@class JSGameSoup
-	@param canvas The canvas, or the ID of the canvas which this instance of JSGameSoup should attach itself to.
-	@param framerate The framerate of the game running on this canvas.
+/**	@class JSGameSoup is the core jsgamesoup library.
+	@param canvas The canvas element, or the ID of the canvas element which this instance of JSGameSoup should attach itself to.
+	@param framerate The number of frames per second the game will try to run at on this canvas.
+
 */
 function JSGameSoup(canvas, framerate) {
-	// number of frames that the app has been running for
+	/** The number of frames that the app has been running for */
 	this.frameCount = 0;
-	// how fast we run
+	/** How fast we are running in FPS */
 	this.framerate = framerate;
 	// where we will output the graphics
 	if (typeof canvas == "string")
