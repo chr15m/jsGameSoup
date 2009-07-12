@@ -1,3 +1,3 @@
 #!/bin/sh
 
-svn checkout http://explorercanvas.googlecode.com/svn/trunk/ js/explorercanvas
+svn export http://explorercanvas.googlecode.com/svn/trunk/ js/explorercanvas

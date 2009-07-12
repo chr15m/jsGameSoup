@@ -10,18 +10,16 @@ jsGameSoup is pretty beta, but you can already make games with it.
 Download
 --------
 
-You can get the source, including the jsgamesoup.js library in a couple of ways:
-
-You can download a [zipfile of the sourcecode](http://mccormick.cx/dev/jsGameSoup/) which includes the important bit [jsgamesoup.js](http://mccormick.cx/dev/).
+You can download a [zipfile of the latest version of the sourcecode](jsGameSoup.zip) which includes the important bit [jsgamesoup.js](js/jsgamesoup.js).
 
 If you use [bazaar](http://bazaar-vcs.org/) you can bzr checkout or bzr branch from the following repository:
 
-	http://mccormick.cx/dev/jsGameSoup.bzr/
+	http://mccormick.cx/dev/jsgamesoup/
 
 Demos
 -----
 
-Check out the jsGameSoup demos page online here.
+Check out the jsGameSoup [demos page here](demos).
 
 Documentation
 -------------
@@ -33,7 +31,7 @@ Because jsGameSoup graphics are rendered using the canvas tag, the [canvas docum
 Quick Start
 -----------
 
-The main component of the framework is the jsGameSoup object. The jsGameSoup object is the engine of the system. When the jsgamesoup.js script is loaded, it will attach a jsGameSoup engine to every canvas which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frames rate of the game engine for that canvas.
+The main component of the framework is the JSGameSoup() object, which is the engine of the system. When the jsgamesoup.js script is loaded, it will attach a new JSGameSoup() engine to every canvas which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frames rate of the game engine for that canvas.
 
 Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
 

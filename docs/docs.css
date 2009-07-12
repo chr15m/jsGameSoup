@@ -1,7 +1,8 @@
 body {
 	padding-left: 20%;
 	padding-right: 20%;
-	background: #646464;
+	padding-top: 30px;
+	background: #1a1a1a;
 	color: white;
 	font-family: Arial;
 }
@@ -15,10 +16,20 @@ pre {
 }
 
 a {
-	color: yellow;
+	color: #f60;
 	text-decoration: none;
 }
 
 a:hover {
-	color: red;
+	text-decoration: underline;
+}
+
+/*#logo {
+	position: absolute;
+	left: 20px;
+	top: 20px;
+}*/
+
+#logo {
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader("jsGameSoup-logo.png");
 }
