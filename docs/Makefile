@@ -28,5 +28,5 @@ js:../js
 	../scripts/fetch-externals.sh
 
 clean:
-	rm -r $(ALLDOCS) jsGameSoup-v*.zip
+	rm -rf $(ALLDOCS) jsGameSoup-v*.zip
 
