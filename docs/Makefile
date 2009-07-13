@@ -1,7 +1,7 @@
 SCRIPTS = jsgamesoup.js entity-reference.js
 TXTS = embedding-distributing-deploying.txt why-use-jsgamesoup.txt
 HTMLS = $(TXTS:.txt=.html)
-ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos js ../README
+ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos tests js ../README
 
 all: $(ALLDOCS)
 
@@ -13,6 +13,9 @@ index.html: ../README
 
 jsdocs:../js/jsgamesoup.js ../js/entity-reference.js
 	jsdoc ../js/jsgamesoup.js ../js/entity-reference.js
+
+tests:../tests
+	bzr export tests ../tests/
 
 demos:../demos
 	bzr export demos ../demos/
