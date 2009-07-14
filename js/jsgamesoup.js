@@ -1,11 +1,13 @@
 /*
- *	JSGameSoup, Copyright 2009 Chris McCormick
+ *	JSGameSoup v0, Copyright 2009 Chris McCormick
  *	
  *	LGPL v3 licensed
  *	
  * 	Major missing features:
- * 	* Collision detection
+ *	
+ * 	* Fast, robust collision detection
  *	* Bitmap sprites
+ *	* Sound
  *
  */
 
@@ -13,7 +15,6 @@
 /**	@class JSGameSoup is the core jsgamesoup library.
 	@param canvas The canvas element, or the ID of the canvas element which this instance of JSGameSoup should attach itself to.
 	@param framerate The number of frames per second the game will try to run at on this canvas.
-
 */
 function JSGameSoup(canvas, framerate) {
 	/** The number of frames that the app has been running for */
