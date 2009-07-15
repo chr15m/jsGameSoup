@@ -1,4 +1,4 @@
-jsGameSoup v59
+jsGameSoup v61
 --------------
 
 jsGameSoup is a Free Software framework for making games for the web using only Javascript and the canvas tag. It currently runs under new versions of Firefox, Safari, IE 6.0, and IE 7.0. It doesn't depend on any proprietary technologies like Flash or Silverlight.
@@ -12,7 +12,7 @@ I periodically post demos and releases of jsGameSoup on [my blog](http://mccormi
 Download
 --------
 
-You can download a [zipfile of v59 of the sourcecode](jsGameSoup-v59.zip) which includes the important bit [jsgamesoup.js](js/jsgamesoup.js). You could get away with just downloading the Javascript file as that's really all you need.
+You can download a [zipfile of v61 of the sourcecode](jsGameSoup-v61.zip) which includes the important bit [jsgamesoup.js](js/jsgamesoup.js). You could get away with just downloading the Javascript file as that's really all you need.
 
 If you use [bazaar](http://bazaar-vcs.org/) you can bzr checkout or bzr branch from the following repository:
 
