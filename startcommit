@@ -1,0 +1,4 @@
+#!/bin/sh
+
+scripts/replace-version.sh js/jsgamesoup.js
+scripts/replace-version.sh README
