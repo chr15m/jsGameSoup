@@ -21,6 +21,7 @@ demos:../demos
 	bzr export demos ../demos/
 
 jsGameSoup.zip:..
+	rm -f jsGameSoup.zip
 	../scripts/make-zip.sh
 
 js:../js
