@@ -1,7 +1,7 @@
 /*
- *	JSGameSoup v62, Copyright 2009 Chris McCormick
+ *	JSGameSoup v63, Copyright 2009 Chris McCormick
  *	
- *	LGPL v62 licensed
+ *	LGPL v63 licensed
  *	
  * 	Major missing features:
  *	
