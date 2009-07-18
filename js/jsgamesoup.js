@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v64, Copyright 2009 Chris McCormick
+ *	JSGameSoup v65, Copyright 2009 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -12,7 +12,7 @@
  */
 
 
-/**	@class JSGameSoup is the core jsgamesoup library.
+/**	@class JSGameSoup is the core jsgamesoup library. When the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` instantiation to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
 	@param canvas The canvas element, or the ID of the canvas element which this instance of JSGameSoup should attach itself to.
 	@param framerate The number of frames per second the game will try to run at on this canvas.
 */
@@ -82,12 +82,22 @@ function JSGameSoup(canvas, framerate) {
 	 ******************************/
 	/** @namespace math */
 	
-	/** Returns a random real number between start and end @tag math */
+	/**
+		Returns a random real number between start and end
+		@param start The lower bound of the real number to be chosen.
+		@param end The upper bound of the real number to be chosen.
+		@tag math
+	*/
 	this.random = function random(start, end) {
 		return Math.random() * (end - start) + start;
 	}
 	
-	/** Returns the distance between two points (two element arrays) @tag math */
+	/**
+		Returns the distance between two points (two element arrays)
+		@param a The first point.
+		@param b The second point.
+		@tag math
+	*/
 	this.distance = function distance(a, b) {
 		return Math.sqrt(Math.pow(b[0] - a[0], 2) + Math.pow(b[1] - a[1], 2));
 	}
@@ -227,17 +237,26 @@ function JSGameSoup(canvas, framerate) {
 	var entitiesKeyHeld = [];
 	var entitiesColliders = [];
 	
-	/** Add this game entity to our pool of entities (will happen synchronously after update() in the main loop) */
+	/**
+		Add this game entity to our pool of entities (will happen synchronously after update() in the main loop)
+		@param e The entity to be added to the jsGameSoup entity pool.
+	*/
 	this.addEntity = function addEntity(e) {
 		addEntities.push(e);
 	}
 	
-	/** Remove this entity from our pool of entities (will happen synchronously after update() in the main loop) */
+	/**
+		Remove this entity from our pool of entities (will happen synchronously after update() in the main loop)
+		@param e The entity to be removed from the jsGameSoup entity pool.
+	*/
 	this.delEntity = function delEntity(e) {
 		delEntities.push(e);
 	}
 	
-	/** Returns true if this entity is in our array of all game entities. */
+	/**
+		Returns true if this entity is in our array of all game entities.
+		@param e The entity which we want to check for in the jsGamesoup entity pool.
+	*/
 	this.inEntities = function inEntities(e) {
 		// is this entity in our entity list?
 		return entities.indexOf(e) >= 0;
