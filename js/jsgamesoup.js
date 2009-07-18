@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v66, Copyright 2009 Chris McCormick
+ *	JSGameSoup v67, Copyright 2009 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
