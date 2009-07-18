@@ -20,10 +20,99 @@ function ExampleEntity() {
 	}
 	
 	/**
-		Called every frame to update the state or position of this entity.
+		Called every frame to update the state or position, or whatever, of this entity.
 		@param gs The instance of jsGameSoup which is running this entity.
 	*/
 	this.update = function (gs) {
 		// Do your updating stuff here
+	}
+	
+	/**
+		Called when a key is pressed.
+		@param keyCode is the Javascript keyCode returned by the browser.
+	*/
+	this.keyDown = function (keyCode) {
+		console.log("keyDown: " + keyCode);
+	}
+	
+	/**
+		Called when a key is released.
+		@param keyCode is the Javascript keyCode returned by the browser.
+	*/
+	this.keyUp = function (keyCode) {
+		console.log("keyUp: " + keyCode);
+	}
+	
+	/**
+		keyHeld_XX is called during every frame when the key with keyCode XX is held down. In this case, it's keyCode 32 which is the spacebar. This function would get called every frame during which the spacebar is held down.
+	*/
+	this.keyHeld_32 = function () {
+		console.log("keyHeld_32");
+	}
+	
+	/**
+		keyDown_XX is called when the key with keyCode XX is pressed. In this case, it's keyCode 32 which is the spacebar. Each time the spacebar is pressed, this function would get called.
+	*/
+	this.keyDown_32 = function () {
+		console.log("keyDown_32");
+	}
+	
+	/**
+		keyUp_XX is called when the key with keyCode XX is released. In this case, it's keyCode 32 which is the spacebar. Each time the spacebar is released, this function would get called.
+	*/
+	this.keyUp_32 = function () {
+		console.log("keyUp_32");
+	}
+	
+	/**
+		Gets called when the pointer/mouse/finger is pressed inside this entity's bounds. You can define the bounds of the entity with pointerPoly(), pointerBox(), or pointerCircle(), or all three.
+		@param i represents the pointer button which was pressed. (e.g. 1 = "mouse button 1")
+	*/
+	this.pointerDown = function (i) {
+		console.log("pointerDown: " + i);
+	}
+	
+	/**
+		Gets called when the pointer/mouse/finger is released inside this entity's bounds. You can define the bounds of the entity with pointerPoly(), pointerBox(), or pointerCircle(), or all three.
+		@param i represents the pointer button which was pressed. (e.g. 1 = "mouse button 1")
+	*/
+	this.pointerUp = function (i) {
+		console.log("pointerUp: " + i);
+	}
+	
+	/**
+		If defined, this method allows the entity to receive pointer events (like mouse clicks or finger touches) by returning the coordinates of a polygon to receive events. This function should return a list of points which define the bounds of this entity. e.g. [[x1, y1], [x2, y2] ... [xn, yn]]
+	*/
+	this.pointerPoly = function () {
+		return this.poly;
+	}
+	
+	/**
+		If defined, this method allows the entity to receive pointer events (like mouse clicks or finger touches) by returning the coordinates of a box to receive events. This function should return a list of four points corresponding to the absolute coordinates, e.g. [left, top, right, bottom].
+	*/
+	this.pointerBox = function () {
+		return this.box;
+	}
+	
+	/**
+		If defined, this method allows the entity to receive pointer events (like mouse clicks or finger touches) by returning the coordinates and radius of a circle to receive events. This function should return a list of three numbers corresponding to the position and radius, e.g. [x, y, radius]
+	*/
+	this.pointerCircle = function () {
+		return this.circle;
+	}
+	
+	/**
+		If defined, this method allows the entity to be involved in collisions, and should return the polygon as a list of points [[x1, y1], [x2, y2]...[xn, yn]] which define the bounds of this entity for collisions. If you define this function it will automatically be tested for collisions with other entities. When entities collide the method collided() will be called.
+	*/
+	this.collisionPoly = function () {
+		return this.poly;
+	}
+	
+	/**
+		Called when the entity collides with another entity. This happens during every frame where the polygon returned by collisionPoly() intersects another entity's polygon. You need to set up collisionPoly() to return the polygon which defines the collision area for this entity.
+		@param other is the other entity with which we collided.
+	*/
+	this.collided = function(other) {
+		
 	}
 }
