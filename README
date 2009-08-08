@@ -1,4 +1,4 @@
-jsGameSoup v67
+jsGameSoup v68
 --------------
 
 jsGameSoup is a Free Software framework for making games for the web using only Javascript and the canvas tag. It currently runs under new versions of Firefox, Safari, IE 6.0, and IE 7.0. It doesn't depend on any proprietary technologies like Flash or Silverlight.
@@ -12,9 +12,9 @@ I periodically post demos and releases of jsGameSoup on [my blog](http://mccormi
 Download
 --------
 
-The main component of the framework is v67 of the [jsgamesoup.js](js/jsgamesoup.js) Javascript library. You probably also want to download [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatability.
+The main component of the framework is v68 of the [jsgamesoup.js](js/jsgamesoup.js) Javascript library. You probably also want to download [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatability.
 
-You can also download a [zipfile of v67 of the full sourcecode, docs, etc.](jsGameSoup-v67.zip), or if you use [bazaar](http://bazaar-vcs.org/) you can stay up to date with my cutting-edge repository by doing  `bzr checkout` or `bzr branch` from here:
+You can also download a [zipfile of v68 of the full sourcecode, docs, etc.](jsGameSoup-v68.zip), or if you use [bazaar](http://bazaar-vcs.org/) you can stay up to date with my cutting-edge repository by doing  `bzr checkout` or `bzr branch` from here:
 
 	http://mccormick.cx/dev/jsgamesoup/
 

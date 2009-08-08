@@ -1,11 +1,11 @@
 /*
- *	JSGameSoup v67, Copyright 2009 Chris McCormick
+ *	JSGameSoup v68, Copyright 2009 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
  * 	Major missing features:
  *	
- * 	* Fast, robust collision detection
+ * 	* Fast, robust collision detection (slow poly collisions are there)
  *	* Bitmap sprites
  *	* Sound
  *
@@ -21,6 +21,8 @@ function JSGameSoup(canvas, framerate) {
 	this.frameCount = 0;
 	/** How fast we are running in FPS */
 	this.framerate = framerate;
+	/** The current/last position of the pointer */
+	this.pointerPosition = [0, 0];
 	// where we will output the graphics
 	if (typeof canvas == "string")
 		this.canvas = document.getElementById(canvas);
@@ -138,7 +140,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	// get the position of the triggered event
-	this.pointerPos = function pointerPos(ev) {
+	this.getSetPointerPosition = function getSetPointerPosition(ev) {
 		// Get the mouse position relative to the canvas element.
 		if (ev.layerX || ev.layerX == 0) { // Firefox
 			mouseX = ev.layerX - canvas.offsetLeft;
@@ -150,7 +152,8 @@ function JSGameSoup(canvas, framerate) {
 			mouseX = ev.clientX - canvas.offsetLeft + scrollX;
 			mouseY = ev.clientY - canvas.offsetTop + scrollY;
 		}
-		return [mouseX, mouseY];
+		this.pointerPosition = [mouseX, mouseY];
+		return this.pointerPosition;
 	}
 	
 	/* ** Actual event handlers ** */
@@ -158,7 +161,7 @@ function JSGameSoup(canvas, framerate) {
 	// pointer pressed event
 	this.onmousedown = function onmousedown(ev) {
 		var ev = (ev) ? ev : window.event;
-		JSGS.pointInEntitiesCall(JSGS.pointerPos(ev), "pointerDown", ev.button);
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerDown", ev.button);
 		JSGS.cancelEvent(ev);
 		return false;
 	}
@@ -167,13 +170,20 @@ function JSGameSoup(canvas, framerate) {
 	// pointer released event
 	this.onmouseup = function onmouseup(ev) {
 		var ev = (ev) ? ev : window.event;
-		JSGS.pointInEntitiesCall(JSGS.pointerPos(ev), "pointerUp", ev.button);
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerUp", ev.button);
 		JSGS.cancelEvent(ev);
 		return false;
 	}
 	this.attachEvent("mouseup");
 	
-	// TODO: add mousemove event
+	// TODO: make this only check for entities which are listening with pointerMove().
+	this.onmousemove = function onmousemove(ev) {
+		var ev = (ev) ? ev : window.event;
+		JSGS.getSetPointerPosition(ev);
+		//JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", ev.button);
+		JSGS.cancelEvent(ev);
+		return false;
+	}
 	
 	// TODO: add mouse ispressed "event"
 	
