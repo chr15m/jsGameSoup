@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v68, Copyright 2009 Chris McCormick
+ *	JSGameSoup v69, Copyright 2009 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -109,16 +109,17 @@ function JSGameSoup(canvas, framerate) {
 	 ***************************/
 	
 	// TODO: queue up the events for output in the main loop rather than firing the methods right as they happen
+	// TODO: optimise this so that there are separate lists of entities for each type of event they listen to
 	
 	// event state variables
 	this.heldKeys = {};
 	
 	// helper function to attach events in a cross platform way
 	this.attachEvent = function attachEvent(name) {
-		if ( document.addEventListener ) {
-			document.addEventListener(name, this["on" + name], false);
-		} else if ( document.attachEvent ) {
-			document.attachEvent("on" + name, this["on" + name]);
+		if ( this.canvas.addEventListener ) {
+			this.canvas.addEventListener(name, this["on" + name], false);
+		} else if ( this.canvas.attachEvent ) {
+			this.canvas.attachEvent("on" + name, this["on" + name]);
 		} else {
 			this.canvas["on" + name] = this["on" + name];
 		}
@@ -179,11 +180,11 @@ function JSGameSoup(canvas, framerate) {
 	// TODO: make this only check for entities which are listening with pointerMove().
 	this.onmousemove = function onmousemove(ev) {
 		var ev = (ev) ? ev : window.event;
-		JSGS.getSetPointerPosition(ev);
-		//JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", ev.button);
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", ev.button);
 		JSGS.cancelEvent(ev);
 		return false;
 	}
+	this.attachEvent("mousemove");
 	
 	// TODO: add mouse ispressed "event"
 	
@@ -246,6 +247,7 @@ function JSGameSoup(canvas, framerate) {
 	// different specialist lists
 	var entitiesKeyHeld = [];
 	var entitiesColliders = [];
+	// TODO: entitiesPointerDown, entitiesPointerUp, entitiesPointerMove, entitiesKeyDown, entitiesKeyUp
 	
 	/**
 		Add this game entity to our pool of entities (will happen synchronously after update() in the main loop)

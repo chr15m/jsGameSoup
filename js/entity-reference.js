@@ -64,12 +64,12 @@ function ExampleEntity() {
 		console.log("keyUp_32");
 	}
 	
-	/*
+	/**
 		Gets called when the pointer/mouse/finger is moved inside the entity's bounds. You can define the bounds of the entity with pointerPoly(), pointerBox(), or pointerCircle(), or all three. You can use the variable gs.pointerPosition to retrieve the last known position of the pointer.
+	*/
 	this.pointerMove = function () {
 		console.log("pointerMove");
 	}
-	*/
 	
 	/**
 		Gets called when the pointer/mouse/finger is pressed inside this entity's bounds. You can define the bounds of the entity with pointerPoly(), pointerBox(), or pointerCircle(), or all three.

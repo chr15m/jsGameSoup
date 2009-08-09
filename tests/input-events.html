@@ -46,6 +46,11 @@ function startAsteroids(gs) {
 			console.log("pointerUp: " + i);
 		}
 		
+		// mouse move event
+		this.pointerMove = function () {
+			console.log("pointerMove: " + gs.pointerPosition);
+		}
+		
 		// We implement this method to detect pointer/touch/mouse collisions with a polygon
 		this.pointerPoly = function () {
 			return this.poly;
