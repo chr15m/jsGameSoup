@@ -108,9 +108,7 @@ function JSGameSoup(canvas, framerate) {
 	 	Event handling
 	 ***************************/
 	
-	// TODO: queue up the events for output in the main loop rather than firing the methods right as they happen
 	// TODO: optimise this so that there are separate lists of entities for each type of event they listen to
-	
 	// event state variables
 	this.heldKeys = {};
 	
@@ -188,7 +186,11 @@ function JSGameSoup(canvas, framerate) {
 	
 	// TODO: add mouse ispressed "event"
 	
-	// TODO: add key down event
+	// TODO: pointer over event
+	
+	// TODO: pointer out event
+	
+	// key down event
 	this.onkeydown = function onkeydown(ev) {
 		var ev = (ev) ? ev : window.event;
 		// call keyDown on entities who are listening
@@ -202,7 +204,7 @@ function JSGameSoup(canvas, framerate) {
 	}
 	this.attachEvent("keydown");
 	
-	// TODO: add key up event
+	// key up event
 	this.onkeyup = function onkeyup(ev) {
 		var ev = (ev) ? ev : window.event;
 		// call keyUp on entities who are listening
@@ -243,6 +245,10 @@ function JSGameSoup(canvas, framerate) {
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
+	
+	// array for synchronously sending events to entities in the update loop
+	// [ entity, method, arg ]
+	var entityEventQueue = [];
 	
 	// different specialist lists
 	var entitiesKeyHeld = [];
@@ -314,6 +320,11 @@ function JSGameSoup(canvas, framerate) {
 				entities[o].update(this);
 			}
 		}
+		
+		// get all the events out of the event queue and execute the event method on it's entity
+		var ev = null;
+		while (ev = entityEventQueue.pop())
+			ev[0][ev[1]](ev[2]);
 		
 		// add any new entities which the user has added
 		for (var o=0; o<addEntities.length; o++) {
@@ -494,17 +505,19 @@ function JSGameSoup(canvas, framerate) {
 	 	Make calls on entity methods
 	 *****************************************/
 	
-	// call a method on an entity if the point is inside the entity's polygon
+	// call a method on an entity if the point is inside the entity's polygon/circle/box
 	// used in mouse events to send mouseDown and mouseUp events into the entity
-	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
-		for (var e=0; e<entities.length; e++) {
-			if (entities[e][fn]) {
-				if (entities[e].pointerPoly && this.pointInPoly(pos, entities[e].pointerPoly()))
-					entities[e][fn](arg);
-				if (entities[e].pointerBox && this.pointInBox(pos, entities[e].pointerBox()))
-					entities[e][fn](arg);
-				if (entities[e].pointerCircle && this.pointInCircle(pos, entities[e].pointerCircle()))
-					entities[e][fn](arg);
+	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg, entityList) {
+		if (!entityList)
+			entityList = entities;
+		for (var e=0; e<entityList.length; e++) {
+			if (entityList[e][fn]) {
+				if (entityList[e].pointerPoly && this.pointInPoly(pos, entityList[e].pointerPoly()))
+					entityList[e][fn](arg);
+				if (entityList[e].pointerBox && this.pointInBox(pos, entityList[e].pointerBox()))
+					entityList[e][fn](arg);
+				if (entityList[e].pointerCircle && this.pointInCircle(pos, entityList[e].pointerCircle()))
+					entityList[e][fn](arg);
 			}
 		}
 	}
@@ -519,7 +532,7 @@ function JSGameSoup(canvas, framerate) {
 	this.callAll = function callAll(arr, fn, arg) {
 		for (var e=0; e<arr.length; e++) {
 			if (arr[e][fn]) {
-				arr[e][fn](arg);
+				entityEventQueue.push([arr[e], fn, arg]);
 			}
 		}
 	}
