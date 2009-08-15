@@ -463,17 +463,19 @@ function JSGameSoup(canvas, framerate) {
 	 	Make calls on entity methods
 	 *****************************************/
 	
-	// call a method on an entity if the point is inside the entity's polygon
+	// call a method on an entity if the point is inside the entity's polygon/circle/box
 	// used in mouse events to send mouseDown and mouseUp events into the entity
-	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
-		for (var e=0; e<entities.length; e++) {
-			if (entities[e][fn]) {
-				if (entities[e].pointerPoly && this.pointInPoly(pos, entities[e].pointerPoly()))
-					entities[e][fn](arg);
-				if (entities[e].pointerBox && this.pointInBox(pos, entities[e].pointerBox()))
-					entities[e][fn](arg);
-				if (entities[e].pointerCircle && this.pointInCircle(pos, entities[e].pointerCircle()))
-					entities[e][fn](arg);
+	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg, entityList) {
+		if (!entityList)
+			entityList = entities;
+		for (var e=0; e<entityList.length; e++) {
+			if (entityList[e][fn]) {
+				if (entityList[e].pointerPoly && this.pointInPoly(pos, entityList[e].pointerPoly()))
+					entityList[e][fn](arg);
+				if (entityList[e].pointerBox && this.pointInBox(pos, entityList[e].pointerBox()))
+					entityList[e][fn](arg);
+				if (entityList[e].pointerCircle && this.pointInCircle(pos, entityList[e].pointerCircle()))
+					entityList[e][fn](arg);
 			}
 		}
 	}
