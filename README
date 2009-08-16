@@ -1,13 +1,15 @@
 jsGameSoup v69
 --------------
 
-jsGameSoup is a Free Software framework for making games for the web using only Javascript and the canvas tag. It currently runs under new versions of Firefox, Safari, IE 6.0, and IE 7.0. It doesn't depend on any proprietary technologies like Flash or Silverlight.
+jsGameSoup is a simple Free Software framework for making games for the web using only Javascript and the canvas tag. Its purpose is to abstract away some of the complexity of developing Javascript + canvas tag games for multiple browsers and it currently runs under new versions of Firefox, Safari, IE 6.0, and IE 7.0. It doesn't depend on any proprietary technologies like Flash or Silverlight.
 
 jsGameSoup is copyright Chris McCormick, 2009, and is licensed to you under the terms of the LGPL. Please see the file COPYING for details.
 
 jsGameSoup is pretty beta, but you can already make games with it.
 
 I periodically post demos and releases of jsGameSoup on [my blog](http://mccormick.cx/news/tags/jsgamesoup).
+
+There is a [mailing list](http://groups.google.com/group/jsgamesoup) for jsGameSoup at Google groups.
 
 Download
 --------
