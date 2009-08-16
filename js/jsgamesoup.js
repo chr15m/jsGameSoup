@@ -114,12 +114,16 @@ function JSGameSoup(canvas, framerate) {
 	
 	// helper function to attach events in a cross platform way
 	this.attachEvent = function attachEvent(name) {
-		if ( this.canvas.addEventListener ) {
-			this.canvas.addEventListener(name, this["on" + name], false);
-		} else if ( this.canvas.attachEvent ) {
-			this.canvas.attachEvent("on" + name, this["on" + name]);
+		var boss = this.canvas;
+		// for some reason key events don't work on the canvas in firefox
+		if (name.indexOf("key") == 0)
+			boss = document;
+		if ( boss.addEventListener ) {
+			boss.addEventListener(name, this["on" + name], false);
+		} else if ( boss.attachEvent ) {
+			boss.attachEvent("on" + name, this["on" + name]);
 		} else {
-			this.canvas["on" + name] = this["on" + name];
+			boss["on" + name] = this["on" + name];
 		}
 	}
 	
@@ -513,11 +517,11 @@ function JSGameSoup(canvas, framerate) {
 		for (var e=0; e<entityList.length; e++) {
 			if (entityList[e][fn]) {
 				if (entityList[e].pointerPoly && this.pointInPoly(pos, entityList[e].pointerPoly()))
-					entityList[e][fn](arg);
+					entityEventQueue.push([entityList[e], fn, arg]);
 				if (entityList[e].pointerBox && this.pointInBox(pos, entityList[e].pointerBox()))
-					entityList[e][fn](arg);
+					entityEventQueue.push([entityList[e], fn, arg]);
 				if (entityList[e].pointerCircle && this.pointInCircle(pos, entityList[e].pointerCircle()))
-					entityList[e][fn](arg);
+					entityEventQueue.push([entityList[e], fn, arg]);
 			}
 		}
 	}
