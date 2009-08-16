@@ -15,17 +15,17 @@ jsdocs:../js/jsgamesoup.js ../js/entity-reference.js
 	jsdoc ../js/jsgamesoup.js ../js/entity-reference.js
 
 tests:../tests
-	cp -av ../tests .
+	rsync -avz ../tests tests
 
 demos:../demos
-	cp -av ../demos .
+	rsync -avz ../demos demos
 
 jsGameSoup.zip:..
 	rm -f jsGameSoup.zip
 	../scripts/make-zip.sh
 
 js:../js
-	cp -av ../js .
+	rsync -avz ../js js
 	#bzr export js ../js/
 	../scripts/fetch-externals.sh
 
