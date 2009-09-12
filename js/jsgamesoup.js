@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v69, Copyright 2009 Chris McCormick
+ *	JSGameSoup v74, Copyright 2009 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -64,6 +64,7 @@ function JSGameSoup(canvas, framerate) {
 		if (open)
 			this.ctx.lineTo(poly[0][0], poly[0][1]);
 		this.ctx.closePath();
+		this.ctx.fill();
 		this.ctx.stroke();
 		this.ctx.restore();
 	}
