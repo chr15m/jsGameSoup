@@ -1,0 +1,45 @@
+<html>
+<script src='../js/random.js'></script>
+<script>
+var freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+var r = new SeedableRandom2d(101, 101);
+
+console.log("Starting 1000 random ints (0, 10)...");
+
+for (var i=0; i<1000; i++) {
+	//var v = r.next();
+	var vi = r.nextInt(0, 10);
+	//console.log(v);
+	//console.log(vi);
+	freq[vi] += 1;
+}
+
+console.log("Frequencies of each integer (should be around 100):");
+console.log(freq);
+
+adjacent = [];
+console.log("Comparing horizontally similar seeds:");
+for (var i=0; i<10; i++) {
+	r.seed(100 + i, 100);
+	adjacent.push(r.nextInt(0, 10));
+}
+console.log(adjacent);
+
+adjacent = [];
+console.log("Comparing vertically similar seeds:");
+for (var i=0; i<10; i++) {
+	r.seed(100, 100 + i);
+	adjacent.push(r.nextInt(0, 10));
+}
+console.log(adjacent);
+
+adjacent = [];
+console.log("Comparing horizontally and vertically similar seeds:");
+for (var i=0; i<10; i++) {
+	r.seed(100 + i, 100 + i);
+	adjacent.push(r.nextInt(0, 10));
+}
+console.log(adjacent);
+
+</script>
+</html>
