@@ -1,5 +1,5 @@
 /* seedable random number generator */
-function SeedableRandom2d(x, y) {
+function SeedableRandom() {
 	this.next = function next() {
 		// Random number generator using George Marsaglia's MWC algorithm.
 		// Got this from the v8 js engine
@@ -23,16 +23,26 @@ function SeedableRandom2d(x, y) {
 	}
 	
 	this.nextInt = function nextInt(a, b) {
+		if (!b) {
+			a = 0;
+			b = 0xFFFFFFFF;
+		}
 		// fetch an integer between a and b inclusive
 		return Math.floor(this.next() * (b - a)) + a;
 	}
 	
-	this.seed = function seed(x, y) {
-		this.x = x * 2549 + y * 3571;
-		this.y = y * 2549 + x * 3571;
-		// start with the first iteration so we can be sure two close-together seeds are quite random
-		//this.next();
+	this.seed = function(ar) {
+		this.x = x * 3253;
+		this.y = this.nextX();
 	}
 	
-	this.seed(x, y);
+	this.seed2d = function seed(x, y) {
+		this.x = x * 2549 + y * 3571;
+		this.y = y * 2549 + x * 3571;
+	}
+	
+	this.seed3d = function seed(x, y, z) {
+		this.x = x * 2549 + y * 3571 + z * 3253;
+		this.y = x * 3253 + y * 2549 + z * 3571;
+	}
 }
