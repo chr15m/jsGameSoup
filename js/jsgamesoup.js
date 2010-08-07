@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v74, Copyright 2009 Chris McCormick
+ *	JSGameSoup v74, Copyright 2009-2010 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -28,6 +28,9 @@ function JSGameSoup(canvas, framerate) {
 		this.canvas = document.getElementById(canvas);
 	else
 		this.canvas = canvas;
+	// apply IE fix
+	if (typeof(G_vmlCanvasManager) != "undefined")
+		G_vmlCanvasManager.initElement(canvas);
 	// set the cursor to the pointer for IE to stop the flickering text cursor problem
 	this.canvas.style.cursor = "default";
 	this.ctx = this.canvas.getContext('2d');
@@ -38,6 +41,30 @@ function JSGameSoup(canvas, framerate) {
 	// give us easy access to some variables
 	this.width = parseInt(this.canvas.width);
 	this.height = parseInt(this.canvas.height);
+	
+	/**
+		Include an external javascript file.
+		This is used internally to add functionality from separate files but you can also use it: JSGS.include("myjavascript.js", function(url){ alert(url + 'loaded'); });
+		Pinched from http://ajaxpatterns.org/On-Demand_Javascript
+	**/
+	this.include = function(url, callback) {
+		var callback = callback;
+		var head = document.getElementsByTagName("head")[0];
+		script = document.createElement('script');
+		// script.id = '';
+		script.type = 'text/javascript';
+		script.src = url;
+		script.onload = function () { callback(url); }
+		head.appendChild(script);
+	}
+	
+	/*******************************
+		External includes
+	 *******************************/
+	// load the fast random number generator
+	this.include("random.js");
+	// load the sprite manager
+	this.include("sprite.js");
 	
 	/* ****************************
 	 	Graphics helpers
@@ -266,6 +293,7 @@ function JSGameSoup(canvas, framerate) {
 	*/
 	this.addEntity = function addEntity(e) {
 		addEntities.push(e);
+		return e;
 	}
 	
 	/**
@@ -274,6 +302,7 @@ function JSGameSoup(canvas, framerate) {
 	*/
 	this.delEntity = function delEntity(e) {
 		delEntities.push(e);
+		return e;
 	}
 	
 	/**
