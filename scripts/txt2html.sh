@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 BZRREV=`bzr log -r -1.. --line | cut -d":" -f 1`
 
