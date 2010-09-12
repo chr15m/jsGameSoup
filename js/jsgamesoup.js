@@ -54,7 +54,9 @@ function JSGameSoup(canvas, framerate) {
 		// script.id = '';
 		script.type = 'text/javascript';
 		script.src = url;
-		script.onload = function () { callback(url); }
+        if (callback != null) {
+            script.onload = function () { callback(url); }
+        }
 		head.appendChild(script);
 	}
 	
