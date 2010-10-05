@@ -168,28 +168,76 @@ function JSGameSoup(canvas, framerate) {
 	this.cancelEvent = function cancelEvent(ev) {
 		if (ev.stopPropagation)
 			ev.stopPropagation();
+		if (ev.preventDefault)
+			ev.preventDefault();
 		// otherwise set the cancelBubble property of the original event to true (IE)
 		ev.cancelBubble = true; 
 	}
 	
+	// test whether the browser handles the touch events instead of mousing
+	// we'll use touch events instead because they are generally faster
+	this.isTouchDevice = function isTouchDevice() {
+		try {
+			document.createEvent("TouchEvent");
+			return true;
+		} catch (e) {
+			return false;
+		}
+	}
+	
 	// get the position of the triggered event
 	this.getSetPointerPosition = function getSetPointerPosition(ev) {
-		// Get the mouse position relative to the canvas element.
-		if (ev.layerX || ev.layerX == 0) { // Firefox
-			mouseX = ev.layerX - canvas.offsetLeft;
-			mouseY = ev.layerY - canvas.offsetTop;
-		} else if (ev.offsetX || ev.offsetX == 0) { // Opera
-			mouseX = ev.offsetX;
-			mouseY = ev.offsetY;
+		// was this a touch?
+		if (ev.touches) {
+			var touch = ev.touches[0];
+			mouseX = touch.clientX - canvas.offsetLeft;
+			mouseX = touch.clientY - canvas.offsetTop;
+			this.pointerPosition = [mouseX, mouseY];
+			return this.pointerPosition;
 		} else {
-			mouseX = ev.clientX - canvas.offsetLeft + scrollX;
-			mouseY = ev.clientY - canvas.offsetTop + scrollY;
+			// Get the mouse position relative to the canvas element.
+			if (ev.layerX || ev.layerX == 0) { // Firefox
+				mouseX = ev.layerX - canvas.offsetLeft;
+				mouseY = ev.layerY - canvas.offsetTop;
+			} else if (ev.offsetX || ev.offsetX == 0) { // Opera
+				mouseX = ev.offsetX;
+				mouseY = ev.offsetY;
+			} else {
+				mouseX = ev.clientX - canvas.offsetLeft + scrollX;
+				mouseY = ev.clientY - canvas.offsetTop + scrollY;
+			}
+			this.pointerPosition = [mouseX, mouseY];
+			return this.pointerPosition;
 		}
-		this.pointerPosition = [mouseX, mouseY];
-		return this.pointerPosition;
 	}
 	
 	/* ** Actual event handlers ** */
+	
+	// these are the pointer events. if we have ontouchstart we use that
+	this.ontouchstart = function ontouchstart(ev) {
+		var ev = (ev) ? ev : window.event;
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerDown", ev.touches.length);
+		JSGS.cancelEvent(ev);
+		return false;
+	}
+	this.attachEvent("touchstart");
+	
+	this.ontouchstop = function ontouchstop(ev) {
+		alert('touchstop');
+		var ev = (ev) ? ev : window.event;
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerUp", ev.touches.length);
+		JSGS.cancelEvent(ev);
+		return false;
+	}
+	this.attachEvent("touchstop");
+	
+	this.ontouchmove = function ontouchmove(ev) {
+		var ev = (ev) ? ev : window.event;
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", ev.touches.length);
+		JSGS.cancelEvent(ev);
+		return false;
+	}
+	this.attachEvent("touchmove");
 	
 	// pointer pressed event
 	this.onmousedown = function onmousedown(ev) {
@@ -343,7 +391,7 @@ function JSGameSoup(canvas, framerate) {
 	// any entity which can collide with other entities
 	// should provide a .collisionBox() method and can
 	// possibly provide a .collisionPoly() method for finer grained collisions
-	// of a .collisionCircle() method for circular collisions
+	// or a .collisionCircle() method for circular collisions
 	// .collisionBox() should return an array which looks like [x, y, width, height]
 	// .collisionPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
 	// .collisionCircle() should return an array which looks like [x, y, r] where r is the circle radius
