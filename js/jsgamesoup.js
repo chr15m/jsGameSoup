@@ -54,19 +54,25 @@ function JSGameSoup(canvas, framerate) {
 		// script.id = '';
 		script.type = 'text/javascript';
 		script.src = url;
-        if (callback != null) {
-            script.onload = function () { callback(url); }
-        }
+		if (callback) {
+			script.onload = function () { callback(url); }
+		}
 		head.appendChild(script);
 	}
 	
 	/*******************************
 		External includes
 	 *******************************/
+	// figure out the baseurl of where javascript lives
+	var scripts = document.getElementsByTagName("script");
+	var mysrc = scripts[scripts.length-1].src;
+	var parts = mysrc.split("/");
+	var baseurl = parts.slice(0, -1).join("/");
+	
 	// load the fast random number generator
-	this.include("random.js");
+	this.include(baseurl + "/jsGameSoup/js/random.js");
 	// load the sprite manager
-	this.include("sprite.js");
+	this.include(baseurl + "/jsGameSoup/js/sprite.js");
 	
 	/* ****************************
 	 	Graphics helpers
