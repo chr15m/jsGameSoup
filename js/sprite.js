@@ -56,6 +56,7 @@ function Sprite(anchor, frames, loadedcallback) {
 		frame = 0;
 		sprite.update = sprite._update;
 		sprite.draw = sprite._draw;
+		sprite.aabb = sprite._aabb;
 	}
 	
 	// increment frame counter etc.
@@ -73,12 +74,13 @@ function Sprite(anchor, frames, loadedcallback) {
 		c.drawImage(i, x - calc_x[anchor[0]](i), y - calc_y[anchor[1]](i));
 	}
 	
-	this.update = function() {};
-	this.draw = function() {};
-	
 	// returns the axis-aligned bounding-box of this sprite	for the current frame
-	this.aabb = function(x, y) {
+	this._aabb = function(x, y) {
 		var i = frames[action][frame][0];
 		return [x - calc_x[anchor[0]](i), y - calc_y[anchor[1]](i), i.width, i.height];
 	}
+	
+	this.update = function() {};
+	this.draw = function() {};
+	this.aabb = function() { return [0, 0, 0, 0] };
 }
