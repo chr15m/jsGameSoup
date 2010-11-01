@@ -424,6 +424,9 @@ function JSGameSoup(canvas, framerate) {
 			// TODO: make sublists of event handling entities
 			entities.push(addEntities[o]);
 			this.addEntityToSpecialistLists(addEntities[o]);
+			if (addEntities[o].init) {
+				addEntities[o].init(this);
+			}
 			if (addEntities[o].update) {
 				addEntities[o].update(this);
 			}
