@@ -24,6 +24,31 @@ function Sprite(anchor, frames, loadedcallback) {
 		}
 	}
 	
+	// calculate offsets (center, right, left, top, bottom)
+	var calc_x = {
+		"left": function(frame) {
+			return 0;
+		},
+		"right": function(frame) {
+			return frame.width;
+		},
+		"center": function(frame) {
+			return frame.width / 2;
+		}
+	}
+	
+	var calc_y = {
+		"top": function(frame) {
+			return 0;
+		},
+		"bottom": function(frame) {
+			return frame.height;
+		},
+		"center": function(frame) {
+			return frame.height / 2;
+		}
+	}
+	
 	// set which action to play
 	this.action = function(a) {
 		action = a;
@@ -44,7 +69,8 @@ function Sprite(anchor, frames, loadedcallback) {
 	
 	// draw this sprite on canvas c at position with respect to the anchor specified
 	this._draw = function(c, x, y) {
-		c.drawImage(frames[action][frame][0], x, y);
+		var i = frames[action][frame][0];
+		c.drawImage(i, x - calc_x[anchor[0]](i), y - calc_y[anchor[1]](i));
 	}
 	
 	this.update = function() {};
