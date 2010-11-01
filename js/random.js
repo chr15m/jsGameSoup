@@ -31,7 +31,7 @@ function SeedableRandom() {
 		return Math.floor(this.next() * (b - a)) + a;
 	}
 	
-	this.seed = function(ar) {
+	this.seed = function(x) {
 		this.x = x * 3253;
 		this.y = this.nextX();
 	}
