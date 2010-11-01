@@ -75,4 +75,10 @@ function Sprite(anchor, frames, loadedcallback) {
 	
 	this.update = function() {};
 	this.draw = function() {};
+	
+	// returns the axis-aligned bounding-box of this sprite	for the current frame
+	this.aabb = function(x, y) {
+		var i = frames[action][frame][0];
+		return [x - calc_x[anchor[0]](i), y - calc_y[anchor[1]](i), i.width, i.height];
+	}
 }
