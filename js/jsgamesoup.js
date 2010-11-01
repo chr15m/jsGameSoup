@@ -453,24 +453,6 @@ function JSGameSoup(canvas, framerate) {
 				this.callAll(entitiesKeyHeld, "keyHeld");
 		}
 		
-		// test for collisions between objects which support collisions
-		// TODO: do an RDC test on colliding entities first
-		// TODO: support poly-on-poly collisions
-		// TODO: support poly-on-circle collisions
-		// TODO: support circle-on-circle collisions
-		for (var o=0; o<entitiesColliders.length; o++) {
-			for (var e=o; e<entitiesColliders.length; e++) {
-				if (e != o) {
-					if (this.collidePolyPoly(entitiesColliders[o].collisionPoly(), entitiesColliders[e].collisionPoly())) {
-						if (entitiesColliders[o].collided)
-							entitiesColliders[o].collided(entitiesColliders[e]);
-						if (entitiesColliders[e].collided)
-							entitiesColliders[e].collided(entitiesColliders[o]);
-					}
-				}
-			}
-		}
-		
 		// clear the background
 		this.clear();
 		// run .draw() on every entity in our list
@@ -533,65 +515,6 @@ function JSGameSoup(canvas, framerate) {
 	/* Detect whether a point is inside a circle */
 	this.pointInCircle = function pointInCircle(pos, circle) {
 		return this.distance(pos, circle.slice(0,2)) <= circle[2];
-	}
-	
-	/* Detect if a line is touching a line */
-	this.lineOnLine = function lineOnLine(l1, l2) {
-		/* Detects the intersection of two lines
-		   http://www.kevlindev.com/gui/math/intersection/Intersection.js
-		*/
-		var a1 = l1[0];
-		var a2 = l1[1];
-		var b1 = l2[0];
-		var b2 = l2[1];
-		var a1x = a1[0];
-		var a1y = a1[1];
-		var a2x = a2[0];
-		var a2y = a2[1];
-		var b1x = b1[0];
-		var b1y = b1[1];
-		var b2x = b2[0];
-		var b2y = b2[1];
-		
-		var ua_t = (b2x - b1x) * (a1y - b1y) - (b2y - b1y) * (a1x - b1x);
-		var ub_t = (a2x - a1x) * (a1y - b1y) - (a2y - a1y) * (a1x - b1x);
-		var u_b  = (b2y - b1y) * (a2x - a1x) - (b2x - b1x) * (a2y - a1y);
-		
-		if (u_b) {
-			var ua = ua_t / u_b;
-			var ub = ub_t / u_b;
-			
-			if (0 <= ua && ua <= 1 && 0 <= ub && ub <= 1) {
-				// intersection
-				return [a1x + ua * (a2x - a1x), a1y + ua * (a2y - a1y)];
-			} else {
-				return [];
-			}
-		} else {
-			if (ua_t == 0 || ub_t == 0) {
-				// coincident
-				//return [line2]
-				//this will be caught elsewhere anyway
-				return [(a2x + a1x) / 2, (a2y + a1y) / 2];
-			} else {
-				// parallel
-				return [];
-			}
-		}
-	}
-	
-	// *** Actual collision routines ***
-	/* Test whether two polygons are touching */
-	this.collidePolyPoly = function collidePolyPoly(e1, e2) {
-		var collided = false;
-		for (var l1=0; l1<e1.length; l1++) {
-			for (var l2=0; l2<e2.length; l2++) {
-				if (this.lineOnLine([e1[l1], e1[(l1 + 1) % e1.length]], [e2[l2], e2[(l2 + 1) % e2.length]]).length) {
-					collided = true;
-				}
-			}
-		}
-		return collided;
 	}
 	
 	/* ***************************************
