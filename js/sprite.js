@@ -5,6 +5,9 @@ function Sprite(anchor, frames, loadedcallback) {
 	var framecount = -1;
 	var frame = 0;
 	var sprite = this;
+	this.loaded = false;
+	this.width = 0;
+	this.height = 0;
 	
 	// load up all of the images
 	for (var a in frames) {
@@ -17,6 +20,9 @@ function Sprite(anchor, frames, loadedcallback) {
 				loadcount -= 1;
 				if (loadcount == 0) {
 					if (loadedcallback) {
+						sprite.loaded = true;
+						sprite.width = parseInt(img.width);
+						sprite.height = parseInt(img.height);
 						loadedcallback();
 					}
 				}
