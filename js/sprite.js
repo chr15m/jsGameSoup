@@ -50,10 +50,14 @@ function Sprite(anchor, frames, loadedcallback) {
 	}
 	
 	// set which action to play
-	this.action = function(a) {
+	this.action = function(a, reset) {
 		action = a;
-		framecount = frames[a][0][1];
-		frame = 0;
+		if (reset) {
+			framecount = frames[a][0][1];
+			frame = 0
+		} else {
+			frame = frame % frames[a].length;
+		}
 		sprite.update = sprite._update;
 		sprite.draw = sprite._draw;
 		sprite.aabb = sprite._aabb;
@@ -82,5 +86,5 @@ function Sprite(anchor, frames, loadedcallback) {
 	
 	this.update = function() {};
 	this.draw = function() {};
-	this.aabb = function() { return [0, 0, 0, 0] };
+	this.aabb = function() { return [0, 0, 0, 0]; };
 }
