@@ -94,3 +94,18 @@ function Sprite(anchor, frames, loadedcallback) {
 	this.draw = function() {};
 	this.aabb = function() { return [0, 0, 0, 0]; };
 }
+
+Sprite.preload = function(images, callback, progresscallback) {
+	var loadcount = images.length - 1;
+	for (var i=0; i<images.length; i++) {
+		var img = new Image();
+		img.src = images[i];
+		img.onload = function () {
+			loadcount -= 1;
+			if (progresscallback)
+				progresscallback(images.length - loadcount - 1);
+			if (loadcount == 0)
+				callback();
+		}
+	}
+}
