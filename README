@@ -1,4 +1,4 @@
-jsGameSoup v74
+jsGameSoup v96
 --------------
 
 Make games with Javascript and HTML5 which run in almost every browser with no Flash (even IE6!).
@@ -16,9 +16,9 @@ There is a [mailing list](http://groups.google.com/group/jsgamesoup) for jsGameS
 Download
 --------
 
-The main component of the framework is v74 of the [jsgamesoup.js](js/jsgamesoup.js) Javascript library. You probably also want to download [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatability.
+The main component of the framework is v96 of the [jsgamesoup.js](js/jsgamesoup.js) Javascript library. You probably also want to download [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatability.
 
-You can also download a [zipfile of v74 of the full sourcecode, docs, etc.](jsGameSoup-v74.zip), or if you use [bazaar](http://bazaar-vcs.org/) you can stay up to date with my cutting-edge repository by doing  `bzr checkout` or `bzr branch` from here:
+You can also download a [zipfile of v96 of the full sourcecode, docs, etc.](jsGameSoup-v96.zip), or if you use [bazaar](http://bazaar-vcs.org/) you can stay up to date with my cutting-edge repository by doing  `bzr checkout` or `bzr branch` from here:
 
 	http://mccormick.cx/dev/jsgamesoup/
 
