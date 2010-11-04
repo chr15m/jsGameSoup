@@ -1,37 +1,60 @@
-/** All collision methods accept two groups of entities to be collided against eachother. Each of the first array of entities will be tested against the second array of entities. The two arrays can also be the same to test every entity against every other. When a collision is found between two entities, the collide() method will be called on the entity. The first argument is the other entity in the collision, and the second argument is the type of collision. */
+/** All collision methods accept two groups of entities to be collided against eachother. Each of the first array of entities will be tested against the second array of entities. The two arrays can also be the same to test every entity against every other. When a collision is found between two entities, the collide_xxxx() method will be called on the entity, where xxxx is the type of collision (e.g. aabb, circle, polygon). The first argument is the other entity in the collision, and the second argument is the result returned from the collision, which depends on the type of collision (e.g. might be penetration depth or points or just boolean). */
 
 collide = {}
 
-/* axis-aligned bounding-box collision between two groups of entities. This expects all entities to have a method called aabb() which returns a rectangle of the boundaries of the entity with the form [x, y, w, h]. */
-collide.aabb = function(groupa, groupb) {
-	for (var a=0; a<groupa.length; a++) {
-		for (var b=0; b<groupb.length; b++) {
-			if (groupa[a] != groupb[b]) {
-				collide.aabb_entities(groupa[a], groupb[b]);
+// generic function for running fn on all of groupa and groupb
+collide.collideall = function(fn, type) {
+	var fnname = "collide_" + type;
+	return function(groupa, groupb) {
+		for (var a in groupa) {
+			for (var b in groupb) {
+				var ae = groupa[a];
+				var be = groupb[b];
+				if (ae != be && groupa.hasOwnProperty(a) && groupb.hasOwnProperty(b)) {
+					var collisionresult = fn(ae, be);
+					if (collisionresult) {
+						if (ae[fnname])
+							ae[fnname](be, type, collisionresult);
+						if (be[fnname])
+							be[fnname](ae, type, collisionresult);
+					}
+				}
 			}
 		}
 	}
 }
 
-collide.aabb_entities = function(a, b) {
-	if (b.aabb && a.aabb) {
-		var aaabb = a.aabb();
-		var baabb = b.aabb();
+/** axis-aligned bounding-box collision between two groups of entities. This expects all entities to have a method called get_collision_aabb() which returns a rectangle of the boundaries of the entity with the form [x, y, w, h]. */
+collide.aabb = function() {};
+
+collide.collide_aabb_entities = function(a, b) {
+	if (b.get_collision_aabb && a.get_collision_aabb) {
+		var aaabb = a.get_collision_aabb();
+		var baabb = b.get_collision_aabb();
 		
-		if (!(aaabb[0] > baabb[0] + baabb[2] || 
+		return (!(aaabb[0] > baabb[0] + baabb[2] || 
 		baabb[0] > aaabb[0] + aaabb[2] || 
 		aaabb[1] > baabb[1] + baabb[3] || 
-		baabb[1] > aaabb[1] + aaabb[3])) {
-			if (a.collide)
-				a.collide(b, "aabb");
-			if (b.collide)
-				b.collide(a, "aabb");
-		}
+		baabb[1] > aaabb[1] + aaabb[3]));
 	}
 }
 
+collide.aabb = collide.collideall(collide.collide_aabb_entities, "aabb");
+
+/** circle collisions expect entities to have a method called get_collision_circle() which returns the center of the circle and the radius like this: return [[x, y], r] */
+collide.circles = function() {};
+
+collide.collide_circle_entities = function(a, b) {
+	if (b.get_collision_circle && a.get_collision_circle) {
+		var ca = a.get_collision_circle();
+		var cb = b.get_collision_circle();
+		return Math.pow(ca[0][0] - cb[0][0],2) + Math.pow(ca[0][1] - cb[0][1],2) < Math.pow(ca[1] + cb[1], 2);
+	}
+}
+
+collide.circles = collide.collideall(collide.collide_circle_entities, "circle");
+
 // TODO: uncomment poly collisions below
-// TODO: do circle collisions
 
 /*
 	this.lineOnLine = function lineOnLine(l1, l2) {
