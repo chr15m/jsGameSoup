@@ -122,8 +122,11 @@ collide.collide_poly_entities = function(a, b) {
 		var e2 = b.get_collision_poly();
 		for (var l1=0; l1<e1.length; l1++) {
 			for (var l2=0; l2<e2.length; l2++) {
-				if (lineOnLine([e1[l1], e1[(l1 + 1) % e1.length]], [e2[l2], e2[(l2 + 1) % e2.length]]).length) {
-					return true;
+				var compareline1 = [e1[l1], e1[(l1 + 1) % e1.length]];
+				var compareline2 = [e2[l2], e2[(l2 + 1) % e2.length]];
+				var linesresult = lineOnLine(compareline1, compareline2);
+				if (linesresult.length) {
+					return [compareline1, compareline2, linesresult];
 				}
 			}
 		}
