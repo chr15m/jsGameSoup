@@ -418,10 +418,12 @@ function JSGameSoup(canvas, framerate) {
 		
 		// add any new entities which the user has added
 		for (var o=0; o<addEntities.length; o++) {
-			// TODO: sort entities by priority
 			// TODO: make sublists of drawables to make the loops tighter
 			// TODO: make sublists of updateables to make the loops tighter
 			// TODO: make sublists of event handling entities
+			// set default priority if it's not set
+			if (!addEntities[o].priority) addEntities[o].priority = 0;
+			// add the new one to our list of entities
 			entities.push(addEntities[o]);
 			this.addEntityToSpecialistLists(addEntities[o]);
 			if (addEntities[o].init) {
@@ -431,6 +433,8 @@ function JSGameSoup(canvas, framerate) {
 				addEntities[o].update(this);
 			}
 		}
+		// sort entities by priority after adding new entities
+		if (addEntities.length)	this.sortEntities();
 		addEntities = [];
 		
 		// delete any entities the user has asked to remove
@@ -485,6 +489,11 @@ function JSGameSoup(canvas, framerate) {
 		//setInterval(function() { for (var e=0; e<entities.length; e++) console.log(entities[e].x + ", " + entities[e].y); }, 1000);
 		//setInterval(function() { console.log(entities.length) }, 1000);
 		//setInterval(function() { console.log(entitiesColliders.length) }, 1000);
+	}
+	
+	/** Call this after any entity's priority changes - it's automatically called when new entities are added. */
+	this.sortEntities = function() {
+		entities.sort(function(a, b) { return a.priority - b.priority; });
 	}
 	
 	/* ********************************************
