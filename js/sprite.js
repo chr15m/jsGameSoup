@@ -95,7 +95,8 @@ function Sprite(anchor, frames, loadedcallback) {
 	this.aabb = function() { return [0, 0, 0, 0]; };
 }
 
-Sprite.preload = function(images, callback, progresscallback) {
+/** Pre-loads a whole array of images. Provides feedback on which images are loaded via the progresscallback, which returns 0 when the final image is loaded. */
+Sprite.preload = function(images, progresscallback) {
 	var loadcount = images.length - 1;
 	for (var i=0; i<images.length; i++) {
 		var img = new Image();
@@ -104,8 +105,6 @@ Sprite.preload = function(images, callback, progresscallback) {
 			loadcount -= 1;
 			if (progresscallback)
 				progresscallback(images.length - loadcount - 1);
-			if (loadcount == 0)
-				callback();
 		}
 	}
 }
