@@ -121,7 +121,7 @@ function JSGameSoup(canvas, framerate) {
 	/** @namespace math */
 	
 	/**
-		Returns a random real number between start and end
+		Returns a random real number between start and end. You should use the random.js with seedable random numbers instead.
 		@param start The lower bound of the real number to be chosen.
 		@param end The upper bound of the real number to be chosen.
 		@tag math
@@ -323,16 +323,11 @@ function JSGameSoup(canvas, framerate) {
 	// if 'priority' is defined in the entity, it will be used to order the update/draw
 	// greater priority will be run first
 	//
-	// collisions:
-	//
-	// TODO: different types of collisions:
-	//	circle, box, polygon
-	// 	for pointer
-	//	for entity-entity
 	/** Array holding all game entities. Use addEntity() and delEntity() to modify it's elements. */
 	var entities = [];
 	var addEntities = [];
 	var delEntities = [];
+	var totalEntityCount = 0;
 	
 	// array for synchronously sending events to entities in the update loop
 	// [ entity, method, arg ]
@@ -394,14 +389,6 @@ function JSGameSoup(canvas, framerate) {
 	 	Main loop
 	 **********************/
 	
-	// any entity which can collide with other entities
-	// should provide a .collisionBox() method and can
-	// possibly provide a .collisionPoly() method for finer grained collisions
-	// or a .collisionCircle() method for circular collisions
-	// .collisionBox() should return an array which looks like [x, y, width, height]
-	// .collisionPoly() should return an array which looks like [(x1, y1), (x2, y2), (x3, y3), ....]
-	// .collisionCircle() should return an array which looks like [x, y, r] where r is the circle radius
-	
 	/** This is our main game loop, which gets launched automatically with the launch() method. */
 	this.gameSoupLoop = function gameSoupLoop() {
 		// run .update() on every entity in our list
@@ -423,6 +410,9 @@ function JSGameSoup(canvas, framerate) {
 			// TODO: make sublists of event handling entities
 			// set default priority if it's not set
 			if (!addEntities[o].priority) addEntities[o].priority = 0;
+			// this hack is so that entities get a stable sort because WebKit's sort is not stable, gah!
+			addEntities[o].priority_preference = totalEntityCount;
+			totalEntityCount += 1;
 			// add the new one to our list of entities
 			entities.push(addEntities[o]);
 			this.addEntityToSpecialistLists(addEntities[o]);
@@ -493,7 +483,7 @@ function JSGameSoup(canvas, framerate) {
 	
 	/** Call this after any entity's priority changes - it's automatically called when new entities are added. */
 	this.sortEntities = function() {
-		entities.sort(function(a, b) { return a.priority - b.priority; });
+		entities.sort(function(a, b) { return a.priority == b.priority ? a.priority_preference - b.priority_preference : a.priority - b.priority; });
 	}
 	
 	/* ********************************************
