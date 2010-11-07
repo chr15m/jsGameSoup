@@ -90,35 +90,36 @@ if (!JSON) {
 	}
 }
 
-/** Register some objects to send and receive network data and events automatically, as fast as they will go. Entities should push data to the server by calling the send(data) method, or else the state(uid, data) where data is arbitrary and serialiseable as JSON, and uid is a unique ID which identifies the particular state.
+/** Register some objects to send and receive network data and events automatically, as fast as they will go. Entities should push data to the server by calling the send(data) method to queue up messages for the server, or else the state(state_id, data) to maintain some state information on the server side. In both cases data is arbitrary and serialiseable as JSON, and state_id is a unique ID which identifies the particular state (might be the entity's own internal id for example).
 	
 	@param url is the location to make the network calls to.
 	@param entities is an array that contains the entities who want to send and receive their network data.
-	@param id is a unique id for this client which gets sent to the server each update.
 	@param failcallback gets called if there is a network timeout when connecting to the url.
 	@param errorcallback gets called if the server sends through an error in JSON format.
 */
-network.serverConnection = function(url, entities, id, failcallback, errorcallback) {
+
+network.serverConnection = function(url, entities, failcallback, errorcallback) {
 	// whether or not the connection is running
 	var run = true;
 	// closure version of me for the callbacks
 	var cls = this;
-	// queue which we will use to store data to be sent
+	// message queue which we will use to store data to be sent to the server
 	var queue = [];
 	// list of entity states
 	var states = {};
+	// whether to print out all traffic
+	this.debug = false;
 	
 	/** start the request loop - happens automatically */
 	this.go = function() {
 		// assemble the outgoing data by pushing all state data into the send queue
 		for (var e in states) {
 			if (states.hasOwnProperty(e)) {
-				states[e].eid = e;
 				queue.push(states[e]);
 			}
 		}
 		// make the actual ajax request
-		network.makeRequest(url, this, "POST", "id=" + escape(id) + "&data=xxxxxx", 10000);
+		network.makeRequest(url, this, "POST", "data=" + escape(JSON.stringify(queue)), 10000);
 		// reset the send queue and states dictionary
 		queue = [];
 		states = {};
@@ -128,13 +129,36 @@ network.serverConnection = function(url, entities, id, failcallback, errorcallba
 	this.network_request_complete = function(response) {
 		if (run) {
 			// parse the response and deal with the incoming data
-			//console.log(response);
 			var result = JSON.parse(response);
-			if (result.error) {
+			// debug - print out results
+			if (this.debug && result && result.length) console.log(result);
+			// if this is a special debug error message, pass to errorcallback()
+			if (result.error && errorcallback) {
 				errorcallback(result.error);
 				run = false;
 			} else {
-				// putting this in a timeout stops it being jerky
+				// array of packets
+				for (p in result) {
+					var packet = result[p];
+					// find the entities who are filtering for this packet
+					for (e in entities) {
+						// look through each filter of the current entity
+						for (f in entities[e].network_filter) {
+							// if the filter matches, send this data to the entity
+							if (packet[f] == entities[e].network_filter[f]) {
+								// if the packet contains a method directive, use that
+								// otherwise use the generic network_data(packet) method
+								if (packet.method) {
+									entities[e][packet.method](packet);
+								} else {
+									entities[e].network_data(packet);
+								}
+							}
+						}
+					}
+				}
+				// putting this in a timeout stops it being jerky on firefox
+				// TODO: on webkit set this to zero
 				setTimeout(function() { cls.go(); }, 100);
 			}
 		}
@@ -156,9 +180,9 @@ network.serverConnection = function(url, entities, id, failcallback, errorcallba
 		queue.push(data);
 	}
 	
-	/** Call this to update the states table for a particular entity */
-	this.state = function(eid, data) {
-		states[eid] = data;
+	/** Call this to update the states table */
+	this.state = function(state_id, data) {
+		states[state_id] = data;
 	}
 	
 	// launch the very first request
