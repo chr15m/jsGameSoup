@@ -38,6 +38,13 @@ network.makeRequest = function(url, caller, type, data, timeout) {
 	
 	// asynchronous request
 	http_request.open(type, url, true);
+	
+	// if this is a post, send required headers
+	if (type == "POST") {
+		http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+		http_request.setRequestHeader("Content-length", data.length);
+	}
+	
 	http_request.send(data);
 	
 	// make sure we cancel everything if we reach the timeout
@@ -71,46 +78,87 @@ network.bulkLoad = function(urls, progresscallback, timeoutcallback, timeout) {
 // cross platform JSON.parse() support (could be dangerous on platforms without json)
 // TODO: find a less dangerous way to do this on platforms without it
 if (!JSON) {
-	JSON = {
+	var JSON = {
 		"parse": function(xxx) {
 			var json=null;
 			eval("json = " + xxx);
 			return json;
+		},
+		"stringify": function(xxx) {
+			return "" + xxx;
 		}
 	}
 }
 
-/** Register some objects to send and receive network data and events automatically, as fast as they will go.
+/** Register some objects to send and receive network data and events automatically, as fast as they will go. Entities should push data to the server by calling the send(data) method, or else the state(uid, data) where data is arbitrary and serialiseable as JSON, and uid is a unique ID which identifies the particular state.
+	
 	@param url is the location to make the network calls to.
 	@param entities is an array that contains the entities who want to send and receive their network data.
+	@param id is a unique id for this client which gets sent to the server each update.
 	@param failcallback gets called if there is a network timeout when connecting to the url.
+	@param errorcallback gets called if the server sends through an error in JSON format.
 */
-network.serverConnection = function(url, entities, failcallback) {
+network.serverConnection = function(url, entities, id, failcallback, errorcallback) {
 	// whether or not the connection is running
 	var run = true;
 	// closure version of me for the callbacks
 	var cls = this;
+	// queue which we will use to store data to be sent
+	var queue = [];
+	// list of entity states
+	var states = {};
 	
+	/** start the request loop - happens automatically */
 	this.go = function() {
-		// assemble the outgoing data
-		network.makeRequest(url, this, "POST", "data=[1]", 10000);
+		// assemble the outgoing data by pushing all state data into the send queue
+		for (var e in states) {
+			if (states.hasOwnProperty(e)) {
+				states[e].eid = e;
+				queue.push(states[e]);
+			}
+		}
+		// make the actual ajax request
+		network.makeRequest(url, this, "POST", "id=" + escape(id) + "&data=xxxxxx", 10000);
+		// reset the send queue and states dictionary
+		queue = [];
+		states = {};
 	}
 	
+	// when the request comes back we want to initiate another one asap to keep the information flowing
 	this.network_request_complete = function(response) {
 		if (run) {
 			// parse the response and deal with the incoming data
-			console.log(response);
-			cls.go();
+			//console.log(response);
+			var result = JSON.parse(response);
+			if (result.error) {
+				errorcallback(result.error);
+				run = false;
+			} else {
+				// putting this in a timeout stops it being jerky
+				setTimeout(function() { cls.go(); }, 100);
+			}
 		}
 	}
 	
+	// callback happens when there is a network timeout
 	this.network_timeout = function() {
 		run = false;
 		failcallback();
 	}
 	
+	/** stop the ajax request loop */
 	this.stop = function() {
 		run = false;
+	}
+	
+	/** Call this to queue up data to be sent down the pipe. */
+	this.send = function(data) {
+		queue.push(data);
+	}
+	
+	/** Call this to update the states table for a particular entity */
+	this.state = function(eid, data) {
+		states[eid] = data;
 	}
 	
 	// launch the very first request
