@@ -101,6 +101,8 @@ if (!JSON) {
 network.serverConnection = function(url, entities, failcallback, errorcallback) {
 	// whether or not the connection is running
 	var run = true;
+	// if a request is in progress or not
+	var request_in_progress = false;
 	// closure version of me for the callbacks
 	var cls = this;
 	// message queue which we will use to store data to be sent to the server
@@ -112,6 +114,7 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 	
 	/** start the request loop - happens automatically */
 	this.go = function() {
+		request_in_progress = true;
 		// assemble the outgoing data by pushing all state data into the send queue
 		for (var e in states) {
 			if (states.hasOwnProperty(e)) {
@@ -123,6 +126,14 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 		// reset the send queue and states dictionary
 		queue = [];
 		states = {};
+	}
+	
+	/** This method should be called repeatedly in order to maintain the server connection. This will happen if you add it as a jsGameSoup entity. */
+	this.update = function() {
+		if (!request_in_progress && run) {
+			console.log('hi');
+			this.go();
+		}
 	}
 	
 	// when the request comes back we want to initiate another one asap to keep the information flowing
@@ -157,11 +168,9 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 						}
 					}
 				}
-				// putting this in a timeout stops it being jerky on firefox
-				// TODO: on webkit set this to zero
-				setTimeout(function() { cls.go(); }, 100);
 			}
 		}
+		request_in_progress = false;
 	}
 	
 	// callback happens when there is a network timeout
@@ -184,7 +193,4 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 	this.state = function(state_id, data) {
 		states[state_id] = data;
 	}
-	
-	// launch the very first request
-	this.go();
 }
