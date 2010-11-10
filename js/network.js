@@ -131,7 +131,6 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 	/** This method should be called repeatedly in order to maintain the server connection. This will happen if you add it as a jsGameSoup entity. */
 	this.update = function() {
 		if (!request_in_progress && run) {
-			console.log('hi');
 			this.go();
 		}
 	}
