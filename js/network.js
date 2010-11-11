@@ -140,33 +140,38 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 		if (run) {
 			// parse the response and deal with the incoming data
 			var result = JSON.parse(response);
-			// debug - print out results
-			if (this.debug && result && result.length) console.log(result);
-			// if this is a special debug error message, pass to errorcallback()
-			if (result.error && errorcallback) {
-				errorcallback(result.error);
-				run = false;
-			} else {
-				// array of packets
-				for (p in result) {
-					var packet = result[p];
-					// find the entities who are filtering for this packet
-					for (e in entities) {
-						// look through each filter of the current entity
-						for (f in entities[e].network_filter) {
-							// if the filter matches, send this data to the entity
-							if (packet[f] == entities[e].network_filter[f]) {
-								// if the packet contains a method directive, use that
-								// otherwise use the generic network_data(packet) method
-								if (packet.method) {
-									entities[e][packet.method](packet);
-								} else {
-									entities[e].network_data(packet);
+			if (result) {
+				// debug - print out results
+				if (this.debug && result.length) console.log(result);
+				// if this is a special debug error message, pass to errorcallback()
+				if (result.error && errorcallback) {
+					errorcallback(result.error);
+					run = false;
+				} else {
+					// array of packets
+					for (p in result) {
+						var packet = result[p];
+						// find the entities who are filtering for this packet
+						for (e in entities) {
+							// look through each filter of the current entity
+							for (f in entities[e].network_filter) {
+								// if the filter matches, send this data to the entity
+								if (packet[f] == entities[e].network_filter[f]) {
+									// if the packet contains a method directive, use that
+									// otherwise use the generic network_data(packet) method
+									if (packet.method) {
+										entities[e][packet.method](packet);
+									} else {
+										entities[e].network_data(packet);
+									}
 								}
 							}
 						}
 					}
 				}
+			} else {
+				// what the heck to do with empty JSON returned?
+				// nothing i guess
 			}
 		}
 		request_in_progress = false;
