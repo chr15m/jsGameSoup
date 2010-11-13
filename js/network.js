@@ -111,6 +111,8 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 	var states = {};
 	// whether to print out all traffic
 	this.debug = false;
+	// the poll data we should send every frame if there is nothing to be sent
+	var poll_data = null;
 	
 	/** start the request loop - happens automatically */
 	this.go = function() {
@@ -121,6 +123,7 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 				queue.push(states[e]);
 			}
 		}
+		if (!queue.length && poll_data) queue = [poll_data];
 		// make the actual ajax request
 		network.makeRequest(url, this, "POST", "data=" + escape(JSON.stringify(queue)), 10000);
 		// reset the send queue and states dictionary
@@ -196,5 +199,10 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 	/** Call this to update the states table */
 	this.state = function(state_id, data) {
 		states[state_id] = data;
+	}
+	
+	/** Set the poll data associative array to be sent on empty frames */
+	this.set_poll_data = function(data) {
+		poll_data = data;
 	}
 }
