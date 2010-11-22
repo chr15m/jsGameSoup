@@ -152,22 +152,20 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 					run = false;
 				} else {
 					// array of packets
-					for (p in result) {
+					for (var p=0; p<result.length; p++) {
 						var packet = result[p];
 						// find the entities who are filtering for this packet
 						for (e in entities) {
 							// look through each filter of the current entity
-							for (f in entities[e].network_filter) {
-								// if the filter matches, send this data to the entity
-								if (packet[f] == entities[e].network_filter[f]) {
-									// if the packet contains a method directive, use that
-									// otherwise use the generic network_data(packet) method
-									if (packet.method) {
-										entities[e][packet.method](packet);
-									} else {
-										entities[e].network_data(packet);
+							if (entities[e].network_filter) {
+								for (f in entities[e].network_filter) {
+									// if the filter matches, send this data to the entity
+									if (packet[f] == entities[e].network_filter[f]) {
+										this.send_entity_packet(entities[e], packet);
 									}
 								}
+							} else if (entities[e].network_data) {
+								this.send_entity_packet(entities[e], packet);
 							}
 						}
 					}
@@ -178,6 +176,17 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 			}
 		}
 		request_in_progress = false;
+	}
+	
+	// send a packet to an entity
+	this.send_entity_packet = function(entity, packet) {
+		// if the packet contains a method directive, use that
+		// otherwise use the generic network_data(packet) method
+		if (packet.action && entity["network_" + packet.action]) {
+			entity["network_" + packet.action](packet);
+		} else if (entity.network_data) {
+			entity.network_data(packet);
+		}
 	}
 	
 	// callback happens when there is a network timeout
