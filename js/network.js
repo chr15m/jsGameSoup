@@ -150,7 +150,7 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 				if (result.error && errorcallback) {
 					errorcallback(result.error);
 					run = false;
-				} else {
+				} else if (result.length) {
 					// array of packets
 					for (var p=0; p<result.length; p++) {
 						var packet = result[p];
@@ -170,9 +170,6 @@ network.serverConnection = function(url, entities, failcallback, errorcallback) 
 						}
 					}
 				}
-			} else {
-				// what the heck to do with empty JSON returned?
-				// nothing i guess
 			}
 		}
 		request_in_progress = false;
