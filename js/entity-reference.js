@@ -1,18 +1,22 @@
 /**
-@class ExampleEntity
-@description This is the reference implementation of the most important class in the jsGameSoup framework,
-which is the entity class. You will create a class like thisfor each type of entity in your game.
-You only need to override the methods that your entity needs. For example, if it needs to be drawn
-then you need to implement a draw() method. If it needs to change it's state or position, or other
-paramters every frame then you should implement an update() method in that entity. If it needs to
-collide with other entities there is a class of methods which you can implement to make that happen
-too.
+	@class Example implementation showing the properties and methods that a jsGameSoup entity can have.
+	@description This is the reference implementation of the most important class in the jsGameSoup framework, which is the entity class. You will create a class like thisfor each type of entity in your game. You only need to override the methods that your entity needs. For example, if it needs to be drawn then you need to implement a draw() method. If it needs to change it's state or position, or other parameters every frame then you should implement an update() method in that entity etc.
 */
 
 function ExampleEntity() {
+	/** @description the priority parameter defines the order of execution and drawing of every entity. By default, entities have the priority in which they were added. If you dynamically change an entity's priority you should call the sortEntities() method on the jsGameSoup instance for your game. E.g. in your update(gs) method you would call gs.sortEntities() after updating an entity's priority. */
+	this.priority = 1;
+	
+	/**
+		Called as soon as this entity is added to the game. Use this to set up various entity parameters based upon the running game.
+		@param gs The instance of jsGameSoup which is running the game.
+	**/
+	this.init = function(gs) {
+	}
+
 	/**
 		Called every frame to draw this entity.
-		@param c The canvas context which you can draw on. See the mozilla canvas documentation for examples of how to do this.
+		@param c The canvas context which you can draw on. See the mozilla canvas documentation for examples of how to do this. You can use the Sprite() class and Sprite.draw() if you are just drawing sprites.
 		@param gs The instance of jsGameSoup which is running this entity.
 	*/
 	this.draw = function (c, gs) {
@@ -20,7 +24,7 @@ function ExampleEntity() {
 	}
 	
 	/**
-		Called every frame to update the state or position, or whatever, of this entity.
+		Called every frame to update the state or position, or whatever, of this entity. You should put any code which updates this entity's state inside this method.
 		@param gs The instance of jsGameSoup which is running this entity.
 	*/
 	this.update = function (gs) {
@@ -109,17 +113,9 @@ function ExampleEntity() {
 	}
 	
 	/**
-		If defined, this method allows the entity to be involved in collisions, and should return the polygon as a list of points [[x1, y1], [x2, y2]...[xn, yn]] which define the bounds of this entity for collisions. If you define this function it will automatically be tested for collisions with other entities. When entities collide the method collided() will be called.
+		This method is called where xxxx is a collision type as defined in collide.js such as aabb, circle, or polygon, if this entity is involved in such a collision. See the collision documentation for more information.
 	*/
-	this.collisionPoly = function () {
+	this.collide_xxxxx = function () {
 		return this.poly;
-	}
-	
-	/**
-		Called when the entity collides with another entity. This happens during every frame where the polygon returned by collisionPoly() intersects another entity's polygon. You need to set up collisionPoly() to return the polygon which defines the collision area for this entity.
-		@param other is the other entity with which we collided.
-	*/
-	this.collided = function(other) {
-		
 	}
 }

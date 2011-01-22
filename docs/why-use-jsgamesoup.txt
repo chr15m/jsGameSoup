@@ -1,9 +1,0 @@
-Some reasons you might like to use jsGameSoup to develop your web based games
-
-* You like open standards and protocols
-* You like [Free Software](http://en.wikipedia.org/wiki/Free_Software) better than proprietary software
- 	* jsGameSoup is Free Software, which means that its users and developers (that's you) will have control over it's destiny
-* You want your game to be easy to deploy and run in as many places as possible
-	* Supported renderers are IE6 and higher, Gecko (Firefox), Webkit (Safari, Chrome)
-	* Runs in some places where Flash won't run, like the iPhone
-

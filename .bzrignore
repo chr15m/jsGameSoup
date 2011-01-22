@@ -3,3 +3,4 @@ tests/fauxconsole.css
 tests/fauxconsole.js
 tests/fauxconsoledemo.html
 js/explorercanvas
+docs/jsdocs

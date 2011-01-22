@@ -12,7 +12,7 @@
  */
 
 
-/**	@class JSGameSoup is the core jsgamesoup library. When the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` instantiation to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
+/**	@class The core jsGameSoup library for entity and event management. When the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` instantiation to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
 	@param canvas The canvas element, or the ID of the canvas element which this instance of JSGameSoup should attach itself to.
 	@param framerate The number of frames per second the game will try to run at on this canvas.
 */

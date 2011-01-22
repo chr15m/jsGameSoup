@@ -1,48 +1,54 @@
 jsGameSoup v96
 --------------
 
-Make games with Javascript and HTML5 which run in almost every browser with no Flash (even IE6!).
+![AsteroidsTNG screenshot](screenshots/AsteroidsTNG.png)
 
-jsGameSoup is a simple Free Software framework for making games for the web using only Javascript and HTML5. Its purpose is to abstract away some of the complexity of developing Javascript games for multiple browsers. It currently runs under new versions of Firefox, Safari, IE 6.0, and IE 7.0. It doesn't depend on any proprietary technologies like Flash or Silverlight.
+A Free Software framework for making games for the web using only Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox, Safari, IE 6.0, and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
 
-jsGameSoup is pretty beta, but you can already make games with it.
+![FallingGame screenshot](screenshots/FallingGame.png)
 
-jsGameSoup is copyright Chris McCormick, 2009, and is licensed to you under the terms of the LGPL. Please see the file COPYING for details.
+ * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
+ * [Mailing list](http://groups.google.com/group/jsgamesoup)
 
-I periodically post demos and releases of jsGameSoup on [my blog](http://mccormick.cx/news/tags/jsgamesoup).
+Copyright Chris McCormick, 2009, and is licensed to you under the terms of the LGPL. Please see the file COPYING for details.
 
-There is a [mailing list](http://groups.google.com/group/jsgamesoup) for jsGameSoup at Google groups, although it's not very active now.
+Batteries included
+------------------
+
+ * Cross browser event handling (keyboard, mouse, touch)
+ * Game entity management
+ * Rudimentary polygon, box, circle collision detection [collisions.js](js/collisions.js)
+ * Sprite management [sprite.js](js/sprite.js)
+ * Fast, deterministic random number generator [random.js](js/random.js)
+ * Networking (ajax) abstraction layer [network.js](js/network.js)
+ * Basic cookie management [cookies.js](js/cookies.js)
+ * Auto-init to launch code attached to a specific HTML canvas
 
 Download
 --------
 
-The main component of the framework is v96 of the [jsgamesoup.js](js/jsgamesoup.js) Javascript library. You probably also want to download [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatability.
+[Zipfile of jsGameSoup v96](jsGameSoup-v96.zip)
 
-You can also download a [zipfile of v96 of the full sourcecode, docs, etc.](jsGameSoup-v96.zip), or if you use [bazaar](http://bazaar-vcs.org/) you can stay up to date with my cutting-edge repository by doing  `bzr checkout` or `bzr branch` from here:
-
-	http://mccormick.cx/dev/jsgamesoup/
-
-[Patches welcome](mailto:chris@mccormick.cx)!
-
-What it provides
-----------------
-
- * Cross browser event handling
- * Rudimentary polygon collision detection
- * Auto-init to launch code attached to a specific HTML canvas
- * Game entity management
-
-Demos
------
-
-Check out the jsGameSoup [demos page here](demos). The somewhat sparse [test suite](tests) might also be useful.
+You probably also want [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatibility.
 
 Documentation
 -------------
 
-Probably the most important bit of documentation is [jsGameSoup's API](jsdocs), but see the bottom of the page for a quick-start setup, which gives you the HTML neccessary to get up and running with your first jsGameSoup "hello world".
+ * [jsGameSoup API documentation](jsdocs)
+ * [jsGameSoup Sprite class](jsdocs/symbols/Sprite.html)
+ * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
+ * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
+ * [Mozilla's canvas demos page](https://developer.mozilla.org/en/drawing_graphics_with_canvas)
+ * [Reference implementation of a jsGameSoup entity](jsdocs/symbols/ExampleEntity.html)
+ * [Simple jsGameSoup example game](jsdocs/symbols/ExampleGame.html)
 
-Because jsGameSoup graphics are rendered using the canvas tag, the [canvas documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element) is also useful, as well as [Mozilla's canvas demos page](https://developer.mozilla.org/en/drawing_graphics_with_canvas). Finally, the [canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png) by Jacob Seidelin is very useful too. Be aware that jsGameSoup uses the excanvas library for Internet Explorer compatability and so not everything works 100%, although most of the important bits do.
+Demos
+-----
+
+ * [AsteroidsTNG](http://mccormick.cx/dev/blogref/AsteroidsTNG/)
+ * [FallingGame](http://mccormick.cx/dev/blogref/FallingGame/)
+ * [Demos page here](demos)
+ * [Not very well maintained test suite](tests)
 
 Quick Start
 -----------
@@ -69,3 +75,13 @@ Here is some example code to get you going. You should be able to paste this int
 	</script>
 	<canvas id='mygame' jsgs='startGame' fps="25"></canvas>
 
+Source code
+-----------
+
+Contribute or get the latest version of the code using [bazaar](http://bazaar-vcs.org/):
+
+	bzr co http://mccormick.cx/dev/jsgamesoup/
+
+Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
+
+[Patches welcome](mailto:chris@mccormick.cx)!

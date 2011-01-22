@@ -1,4 +1,7 @@
-/** All collision methods accept two groups of entities to be collided against eachother. Each of the first array of entities will be tested against the second array of entities. The two arrays can also be the same to test every entity against every other. When a collision is found between two entities, the collide_xxxx() method will be called on the entity, where xxxx is the type of collision (e.g. aabb, circle, polygon). The first argument is the other entity in the collision, and the second argument is the result returned from the collision, which depends on the type of collision (e.g. might be penetration depth or points or just boolean). */
+/** 
+	@namespace
+	Test for collisions between arrays of entities. Each collision method accept two arrays of entities. Every entity in the first array will be tested for collisions against every entity in the second array. The two arrays can also be the same to test every entity against every other. When a collision is found between two entities, the collide_xxxx() method will be called on each entity involved in the collision, where "xxxx" is the type of collision (e.g. collide_aabb(), collide_circle(), collide_polygon()). The first argument is the other entity in the collision, and the second argument is the result returned from the collision, which depends on the type of collision (e.g. might be penetration depth or points or just boolean).
+*/
 
 collide = {}
 
@@ -24,7 +27,11 @@ collide.collideall = function(fn, calltype) {
 	}
 }
 
-/** axis-aligned bounding-box collision between two groups of entities. This expects all entities to have a method called get_collision_aabb() which returns a rectangle of the boundaries of the entity with the form [x, y, w, h]. */
+/**
+	Axis-aligned bounding-box collision between two arrays of entities. This expects entities to have a method called get_collision_aabb() which should return a rectangle of the boundaries of the entity with the form [x, y, w, h].
+	@param a is an array of entities
+	@param b is an array of entities that will be collided with those in group a
+*/
 collide.aabb = function() {};
 
 collide.collide_aabb_entities = function(a, b) {
@@ -41,7 +48,11 @@ collide.collide_aabb_entities = function(a, b) {
 
 collide.aabb = collide.collideall(collide.collide_aabb_entities, "aabb");
 
-/** circle collisions expect entities to have a method called get_collision_circle() which returns the center of the circle and the radius like this: return [[x, y], r] */
+/**
+	Circle collision test between two groups of entities. This expects entities to have a method called get_collision_circle() which should return the center of the circle and the radius like this: return [[x, y], r].
+	@param a is an array of entities
+	@param b is an array of entities that will be collided with those in group a
+*/
 collide.circles = function() {};
 
 collide.collide_circle_entities = function(a, b) {
@@ -54,7 +65,11 @@ collide.collide_circle_entities = function(a, b) {
 
 collide.circles = collide.collideall(collide.collide_circle_entities, "circle");
 
-/* Detect whether a point is inside a polygon (list of points) or not. This code is annoyingly duplicated inside jsgamesoup too. */
+/**
+	Helper function which tests whether a point is within a particular polygon.
+	@param pos is a point of the form [x, y]
+	@param poly is a polygon defined as a list of points of the form [[x1, y1], [x2, y2], ... [xn, yn]]
+ */
 var pointInPoly = function(pos, poly) {
 	/* This code is patterned after [Franklin, 2000]
 	http://www.geometryalgorithms.com/Archive/algorithm_0103/algorithm_0103.htm
@@ -69,7 +84,11 @@ var pointInPoly = function(pos, poly) {
 	return cn % 2
 }
 
-// helper function
+/**
+	Helper function which tests whether two lines intersect.
+	@param l1 is a line of the form [[x1, y1], [x2, y2]]
+	@param l2 is a line of the form [[x1, y1], [x2, y2]]	
+*/
 var lineOnLine = function(l1, l2) {
 	// Detects the intersection of two lines
 	//   http://www.kevlindev.com/gui/math/intersection/Intersection.js
@@ -113,7 +132,11 @@ var lineOnLine = function(l1, l2) {
 	}
 }
 
-/** Test whether two polygons are touching. Entities should have a get_collision_poly() method which returns an array of lines. */
+/**
+	Polygon collision tests whether two entities defined by polygons are touching. Entities should have a get_collision_poly() method which should return an array of lines of the form [[x1, y1], [x2, y2], ... [xn, yn]].
+	@param a is an array of entities
+	@param b is an array of entities that will be collided with those in group a
+*/
 collide.polys = function() {};
 
 collide.collide_poly_entities = function(a, b) {

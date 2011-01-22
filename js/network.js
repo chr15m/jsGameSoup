@@ -1,7 +1,17 @@
-/** provides simple abstract network interfaces for Javascript games. */
+/** 
+	@namespace
+	Provides a simple abstract network (ajax) interface for Javascript games.
+*/
 network = {};
 
-/** Make a single ajax request. The caller object should support the callback methods network_request_complete(response, http_request) and network_timeout(http_request), where http_request is the standard xml http request object. The default timeout is 30000 milliseconds. */
+/**
+	Make a single ajax request. The caller object should support the callback methods network_request_complete(response, http_request) and network_timeout(http_request), where http_request is the standard xml http request object. The default timeout is 30000 milliseconds. 
+	@param url is where to fetch data from.
+	@param caller is the caller object which can implement methods network_request_complete(response, http_request) and network_timeout() when the request fails.
+	@param type is GET or POST.
+	@param data is an associative array of data to send.
+	@param timeout is how long in milliseconds to wait before registering a network request as failed.
+*/
 network.makeRequest = function(url, caller, type, data, timeout) {
 	var http_request = false;
 	var requestComplete = false;
@@ -58,7 +68,13 @@ network.makeRequest = function(url, caller, type, data, timeout) {
 	}, timeout);
 };
 
-/** Loads an array of urls and calls progresscallback(urls_left, received) each time a file has finished loading. The value in urls_left is the number of urls still to be loaded, whilst received is an associative array where the key is the url, and the value is the content at that url. */
+/**
+	Loads an array of urls and calls progresscallback(urls_left, received) each time a file has finished loading. The value in urls_left is the number of urls still to be loaded, whilst received is an associative array where the key is the url, and the value is the content at that url.
+	@param urls is an array of urls to fetch
+	@param progresscallback is called each time a url is successfully fetched with arguments (number-of-calls-remaining, received-data).
+	@param timeoutcallback is called if a request times out.
+	@param timeout is the number of milliseconds to wait before timing out the request.
+*/
 network.bulkLoad = function(urls, progresscallback, timeoutcallback, timeout) {
 	var loadcount = urls.length - 1;
 	var received = {};
@@ -90,7 +106,8 @@ if (!JSON) {
 	}
 }
 
-/** Register some objects to send and receive network data and events automatically, as fast as they will go. Entities should push data to the server by calling the send(data) method to queue up messages for the server, or else the state(state_id, data) to maintain some state information on the server side. In both cases data is arbitrary and serialiseable as JSON, and state_id is a unique ID which identifies the particular state (might be the entity's own internal id for example).
+/**
+	Register some objects to send and receive network data and events automatically, as fast as they will go. Entities should push data to the server by calling the send(data) method to queue up messages for the server, or else the state(state_id, data) to maintain some state information on the server side. In both cases data is arbitrary and serialiseable as JSON, and state_id is a unique ID which identifies the particular state (might be the entity's own internal id for example).
 	
 	@param url is the location to make the network calls to.
 	@param entities is an array that contains the entities who want to send and receive their network data.
