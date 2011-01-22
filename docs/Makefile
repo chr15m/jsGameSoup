@@ -15,10 +15,10 @@ jsdocs: $(SCRIPTS:^:../)
 	cd ../js && jsdoc -t=../docs/jsdoc-templates $(SCRIPTS) && mv jsdocs ../docs && cd ../docs
 
 tests:../tests
-	rsync -avz ../tests tests
+	rsync -avz ../tests .
 
 demos:../demos
-	rsync -avz ../demos demos
+	rsync -avz ../demos .
 
 COPYING:../COPYING
 	cp ../COPYING .

@@ -1,9 +1,9 @@
-jsGameSoup v96
+jsGameSoup v116
 --------------
 
 A Free Software framework for making games for the web using only Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), IE 6.0 and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
 
-[Download jsGameSoup v96](jsGameSoup-v96.zip)
+[Download jsGameSoup v116](jsGameSoup-v116.zip)
 
 ![AsteroidsTNG screenshot](screenshots/AsteroidsTNG.png)
 
@@ -17,11 +17,11 @@ Batteries included
 
  * Cross browser event handling (keyboard, mouse, touch)
  * Game entity management
- * Rudimentary polygon, box, circle collision detection [collisions.js](js/collisions.js)
- * Sprite management [sprite.js](js/sprite.js)
- * Fast, deterministic random number generator [random.js](js/random.js)
- * Networking (ajax) abstraction layer [network.js](js/network.js)
- * Basic cookie management [cookies.js](js/cookies.js)
+ * Rudimentary polygon, box, circle collision detection [collisions.js](js/js/collisions.js)
+ * Sprite management [sprite.js](js/js/sprite.js)
+ * Fast, deterministic random number generator [random.js](js/js/random.js)
+ * Networking (ajax) abstraction layer [network.js](js/js/network.js)
+ * Basic cookie management [cookies.js](js/js/cookies.js)
  * Auto-init to launch code attached to a specific HTML canvas
 
 ![FallingGame screenshot](screenshots/FallingGame.png)
@@ -29,7 +29,7 @@ Batteries included
 Download
 --------
 
-[Zipfile of jsGameSoup v96](jsGameSoup-v96.zip)
+[Zipfile of jsGameSoup v116](jsGameSoup-v116.zip)
 
 You probably also want [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatibility.
 
