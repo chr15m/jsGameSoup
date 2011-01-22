@@ -1,16 +1,16 @@
-jsGameSoup v116
+jsGameSoup v117
 --------------
 
 A Free Software framework for making games for the web using only Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), IE 6.0 and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
 
-[Download jsGameSoup v116](jsGameSoup-v116.zip)
+[Download jsGameSoup v117](jsGameSoup-v117.zip)
 
 ![AsteroidsTNG screenshot](screenshots/AsteroidsTNG.png)
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
 
-Copyright Chris McCormick, 2009, and is licensed to you under the terms of the LGPL. Please see the file [COPYING](COPYING) for details.
+Copyright Chris McCormick, 2009-2011, and is licensed to you under the terms of the LGPL. Please see the file [COPYING](COPYING) for details.
 
 Batteries included
 ------------------
@@ -29,7 +29,7 @@ Batteries included
 Download
 --------
 
-[Zipfile of jsGameSoup v116](jsGameSoup-v116.zip)
+[Zipfile of jsGameSoup v117](jsGameSoup-v117.zip)
 
 You probably also want [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatibility.
 
