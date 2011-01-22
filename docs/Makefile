@@ -1,7 +1,7 @@
 SCRIPTS = jsgamesoup.js entity-reference.js sprite.js collisions.js random.js network.js cookies.js example-game.js
 TXTS = 
 HTMLS = $(TXTS:.txt=.html)
-ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos tests js
+ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos tests js COPYING
 
 all: $(ALLDOCS)
 
@@ -19,6 +19,9 @@ tests:../tests
 
 demos:../demos
 	rsync -avz ../demos demos
+
+COPYING:../COPYING
+	cp ../COPYING .
 
 jsGameSoup.zip:..
 	rm -f jsGameSoup.zip

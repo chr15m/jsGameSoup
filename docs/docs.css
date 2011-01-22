@@ -11,6 +11,7 @@ img {
 	display: block;
 	margin-left: auto;
 	margin-right: auto;
+	border: 1px solid white;
 }
 
 p {
@@ -30,12 +31,8 @@ a:hover {
 	text-decoration: underline;
 }
 
-/*#logo {
-	position: absolute;
-	left: 20px;
-	top: 20px;
-}*/
-
 #logo {
+	margin: 0px;
+	border: 0px solid black;
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader("jsGameSoup-logo.png");
 }
