@@ -1,16 +1,16 @@
 jsGameSoup v96
 --------------
 
+A Free Software framework for making games for the web using only Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), IE 6.0 and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
+
+[Download jsGameSoup v96](jsGameSoup-v96.zip)
+
 ![AsteroidsTNG screenshot](screenshots/AsteroidsTNG.png)
-
-A Free Software framework for making games for the web using only Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox, Safari, IE 6.0, and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
-
-![FallingGame screenshot](screenshots/FallingGame.png)
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
 
-Copyright Chris McCormick, 2009, and is licensed to you under the terms of the LGPL. Please see the file COPYING for details.
+Copyright Chris McCormick, 2009, and is licensed to you under the terms of the LGPL. Please see the file [COPYING](COPYING) for details.
 
 Batteries included
 ------------------
@@ -23,6 +23,8 @@ Batteries included
  * Networking (ajax) abstraction layer [network.js](js/network.js)
  * Basic cookie management [cookies.js](js/cookies.js)
  * Auto-init to launch code attached to a specific HTML canvas
+
+![FallingGame screenshot](screenshots/FallingGame.png)
 
 Download
 --------
