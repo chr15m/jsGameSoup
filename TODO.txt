@@ -1,1 +1,1 @@
-
+* integrate Nick's resize code if possible http://onetwenty.org/upload/soupbox/

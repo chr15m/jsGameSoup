@@ -3,17 +3,14 @@
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
- * 	Major missing features:
- *	
- * 	* Fast, robust collision detection (slow poly collisions are there)
- *	* Bitmap sprites
+ *	Major missing features:
  *	* Sound
  *
  */
 
 
-/**	@class The core jsGameSoup library for entity and event management. When the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` instantiation to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
-	@param canvas The canvas element, or the ID of the canvas element which this instance of JSGameSoup should attach itself to.
+/**	@class The core jsGameSoup library for entity and event management. You can either pass your own canvas like this: var gs = new JSGameSoup(mycanvas, 30); myGameFunction(gs); gs.launch(); or else when the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` instantiation to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
+	@param canvas can be a canvas element object, or the ID of the canvas element which this instance of JSGameSoup should attach itself to. If you pass another type of object, for example a <div> tag, a canvas of the same size will be created automatically.
 	@param framerate The number of frames per second the game will try to run at on this canvas.
 */
 function JSGameSoup(canvas, framerate) {
@@ -24,10 +21,25 @@ function JSGameSoup(canvas, framerate) {
 	/** The current/last position of the pointer */
 	this.pointerPosition = [0, 0];
 	// where we will output the graphics
-	if (typeof canvas == "string")
+	if (typeof canvas == "string") {
+		// the caller has supplied the ID of a canvas
 		this.canvas = document.getElementById(canvas);
-	else
-		this.canvas = canvas;
+	} else {
+		if (canvas.tagName.toLowerCase() == "canvas") {
+			// they have supplied their own canvas element
+			this.canvas = canvas;
+		} else {
+			// they have passed a container element
+			// insert a canvas of the same size inside it
+			var container = canvas;
+			canvas = document.createElement("canvas");
+			// set the width and height of our canvas to be the same as the container element
+			canvas.style.width = canvas.width = (container.offsetWidth + 1);
+			canvas.style.height = canvas.height = (container.offsetHeight + 1);
+			container.appendChild(canvas);
+			this.canvas = canvas;
+		}
+	}
 	// apply IE fix
 	if (typeof(G_vmlCanvasManager) != "undefined")
 		G_vmlCanvasManager.initElement(canvas);
