@@ -1,1 +1,3 @@
-
+* integrate Nick's resize code if possible http://onetwenty.org/upload/soupbox/
+* method to add a whole array of new entities
+* method to erase a whole array of entities

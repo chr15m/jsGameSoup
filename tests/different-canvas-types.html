@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
+	<script src="../js/jsgamesoup.js"></script>
+	<script>
+		// this is our game code. see below for different launch methods.
+		// note that the first launch method (black border) has no code as it happens automatically
+		function startGame(gs) {
+				function C() {
+					this.x = gs.random(0, gs.width);
+					this.y = gs.random(0, gs.height);
+					this.vx = gs.random(-3, 3);
+					this.vy = gs.random(-3, 3);
+					this.r = gs.random(10, 30);
+					this.c = gs.random(100, 200);
+					this.fs = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c) + ', ' + parseInt(this.c) + ', 1.0)';
+					
+					this.update = function() {
+						this.y = (this.y + this.vy + gs.canvas.height) % gs.canvas.height;
+						this.x = (this.x + this.vx + gs.canvas.width) % gs.canvas.width;
+					}
+					
+					this.draw = function(c, gs) {
+						c.fillStyle = this.fs;
+						c.beginPath();
+						c.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+						c.closePath();
+						c.fill();
+					}
+				}
+				
+				for (i=0; i<5; i++)
+					gs.addEntity(new C());
+		}
+		
+		// supply an existing <canvas> element to jsGameSoup but launch it yourself
+		// (blue border)
+		function launch_one() {
+			var cnv_one = document.getElementById("surface_1");
+			var gs = new JSGameSoup(cnv_one, 30);
+			startGame(gs);
+			gs.launch();
+		}
+		
+		// supply an existing element (e.g. <div>) to jsGamesoup and launch it yourself
+		// jsGameSoup adds a canvas the same size as the element
+		// (red border)
+		function launch_two() {
+			var cnv_two = document.getElementById("surface_2");
+			var gs = new JSGameSoup(cnv_two, 30);
+			startGame(gs);
+			gs.launch();
+		}
+		
+		// Dynamically create your own canvas object in the DOM and pass it to jsGamesoup
+		// (green border)
+		function launch_three() {
+			var newcanvas = document.createElement("canvas");
+			newcanvas.id = "surface_3";
+			document.getElementById("allcanvases").appendChild(newcanvas);
+			var gs = new JSGameSoup(newcanvas, 30);
+			startGame(gs);
+			gs.launch();
+		}
+	</script>
+	<style>
+		body { margin: 20px; font-family: Arial; }
+		#about { margin-right: 20px; }
+		#allcanvases { float: right; width: 50%; }
+		#surface_0 { border: 1px solid black; }
+		#surface_1 { border: 1px solid blue; }
+		#surface_2 { width: 50%; height: 100px; border: 1px solid red; }
+		#surface_3 { border: 1px solid green; }
+	</style>
+</head>
+<body onLoad="launch_one(); launch_two(); launch_three();">
+	<div id='allcanvases'>
+		<canvas id='surface_0' jsgs='startGame'></canvas>
+		<canvas id='surface_1'></canvas>
+		<div id='surface_2'></div>
+	</div>
+	<div id='about'>
+		<p>Different ways of launching jsGameSoup.</p>
+		<ul>
+			<li>A &lt;canvas&gt; element with an attribute of "jsgs='launchFunctionName'". (black)</li>
+			<li>Dynamically create your own canvas object and pass that. (green)</li>
+			<li>Passing a &lt;canvas&gt; element by ID to jsGameSoup instance. (blue)</li>
+			<li>Passing another element (e.g. &lt;div&gt;) by ID to a jsGameSoup instance. (red)</li>
+		</ul>
+		<p>View the source to see how!</p>
+	</div>
+</body>
+</html>
+
