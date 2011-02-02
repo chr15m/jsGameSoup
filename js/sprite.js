@@ -61,7 +61,11 @@ function Sprite(anchor, frames, loadedcallback) {
 		}
 	}
 	
-	// set which action to play
+	/**
+		Sets which named animation/action to play.
+		@param a is the name of the animation/action you defined on initialisation.
+		@param reset indicates whether the frame number should be reset to the start of the animation.
+	**/
 	this.action = function(a, reset) {
 		action = a;
 		if (reset) {
