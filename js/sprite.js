@@ -128,7 +128,6 @@ Sprite.preload = function(images, completedcallback, progresscallback) {
 	var loadcount = images.length;
 	for (var i=0; i<images.length; i++) {
 		var img = new Image();
-		img.src = images[i];
 		img.onload = function () {
 			loadcount -= 1;
 			if (progresscallback)
@@ -137,5 +136,6 @@ Sprite.preload = function(images, completedcallback, progresscallback) {
 				completedcallback();
 			}
 		}
+		img.src = images[i];
 	}
 }
