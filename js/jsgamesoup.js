@@ -482,7 +482,7 @@ function JSGameSoup(canvas, framerate) {
 				GS.gameSoupLoop()
 			} catch(e) {
 				clearInterval(looping);
-				if (console)
+				if (typeof(console) != "undefined")
 					console.log(e);
 				throw(e);
 			}
