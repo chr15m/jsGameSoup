@@ -1,6 +1,6 @@
 /** 
 	@namespace
-	Provides a simple abstract network (ajax) interface for Javascript games.
+	Note: this module is experimental and probably difficult to use right now! Provides a simple abstract network (ajax) interface for Javascript games.
 */
 network = {};
 
