@@ -31,18 +31,27 @@ Download
 
 [Zipfile of jsGameSoup v120](jsGameSoup-v120.zip)
 
-You probably also want [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for Internet Explorer compatibility.
+You probably also want one of the following for Internet Explorer compatability:
+
+ * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatability, but it's a bit slower
+ * [FlashCanvas](http://flashcanvas.net/download) which provides better speed but depends upon the proprietary Flash plugin.
 
 Documentation
 -------------
 
- * [jsGameSoup API documentation](jsdocs)
- * [jsGameSoup Sprite class](jsdocs/symbols/Sprite.html)
- * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
- * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
- * [Mozilla's canvas demos page](https://developer.mozilla.org/en/drawing_graphics_with_canvas)
+ * [Simple jsGameSoup example game](jsdocs/symbols/src/example-game.js.html)
  * [Reference implementation of a jsGameSoup entity](jsdocs/symbols/ExampleEntity.html)
- * [Simple jsGameSoup example game](jsdocs/symbols/ExampleGame.html)
+ * [All jsGameSoup API documentation](jsdocs)
+
+ * [Sprite class](jsdocs/symbols/Sprite.html)
+ * [JSGameSoup game management class](jsdocs/symbols/JSGameSoup.html)
+ * [Seedable random number generator](jsdocs/symbols/SeedableRandom.html)
+ * [Collision API](jsdocs/symbols/collide.html)
+ * [Cookie handling](jsdocs/symbols/cookies.html)
+ * [Network/ajax API](jsdocs/symbols/network.html)
+
+ * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
+ * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
 
 Demos
 -----
