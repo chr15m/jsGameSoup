@@ -79,6 +79,16 @@ function Sprite(anchor, frames, loadedcallback) {
 		sprite.aabb = sprite._aabb;
 	}
 	
+	/** Returns the current action being played. **/
+	this.get_action = function() {
+		return action;
+	}
+	
+	/** Returns the current frame number being played. **/
+	this.get_frame = function() {
+		return frame;
+	}
+	
 	// increment frame counter etc.
 	this._update = function() {
 		framecount -= 1;
