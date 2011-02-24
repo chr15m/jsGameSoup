@@ -89,6 +89,11 @@ function Sprite(anchor, frames, loadedcallback) {
 		return frame;
 	}
 	
+	/** Sets the animation frame to play **/
+	this.set_frame = function(newframe) {
+		frame = newframe;
+	}
+	
 	// increment frame counter etc.
 	this._update = function() {
 		framecount -= 1;
