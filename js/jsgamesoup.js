@@ -350,6 +350,9 @@ function JSGameSoup(canvas, framerate) {
 	// array for synchronously sending events to entities in the update loop
 	// [ entity, method, arg ]
 	var entityEventQueue = [];
+	// a list of entities who have received an event and returned true
+	// TODO: document this
+	var entitiesTriggered = [];
 	
 	// different specialist lists
 	var entitiesKeyHeld = [];
@@ -381,6 +384,14 @@ function JSGameSoup(canvas, framerate) {
 	this.inEntities = function inEntities(e) {
 		// is this entity in our entity list?
 		return entities.indexOf(e) >= 0;
+	}
+	
+	/**
+		Gets a list of entities which have already been triggered by the current event.
+		Call this inside e.g. pointerUp() to get a list of entities which have also had their pointerUp() method called. Note that only lower priority entities will see the triggers of higher priority entities (e.g. entities with higher priorities get triggered first).
+	*/
+	this.getTriggeredEntities = function() {
+		return entitiesTriggered;
 	}
 	
 	this.addEntityToSpecialistLists = function addEntityToSpecialistLists(e) {
@@ -418,8 +429,12 @@ function JSGameSoup(canvas, framerate) {
 		
 		// get all the events out of the event queue and execute the event method on it's entity
 		var ev = null;
-		while (ev = entityEventQueue.pop())
-			ev[0][ev[1]](ev[2]);
+		entitiesTriggered = [];
+		while (ev = entityEventQueue.pop()) {
+			if (ev[0][ev[1]](ev[2])) {
+				entitiesTriggered.push(ev[0]);
+			}
+		}
 		
 		// add any new entities which the user has added
 		for (var o=0; o<addEntities.length; o++) {
@@ -499,7 +514,9 @@ function JSGameSoup(canvas, framerate) {
 		//setInterval(function() { console.log(entitiesColliders.length) }, 1000);
 	}
 	
-	/** Call this after any entity's priority changes - it's automatically called when new entities are added. */
+	/**
+		Call this after any entity's priority changes - it's automatically called when new entities are added.
+	*/
 	this.sortEntities = function() {
 		entities.sort(function(a, b) { return a.priority == b.priority ? a.priority_preference - b.priority_preference : a.priority - b.priority; });
 	}
@@ -540,17 +557,18 @@ function JSGameSoup(canvas, framerate) {
 	
 	// call a method on an entity if the point is inside the entity's polygon/circle/box
 	// used in mouse events to send mouseDown and mouseUp events into the entity
-	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg, entityList) {
-		if (!entityList)
-			entityList = entities;
-		for (var e=0; e<entityList.length; e++) {
-			if (entityList[e][fn]) {
-				if (entityList[e].pointerPoly && this.pointInPoly(pos, entityList[e].pointerPoly()))
-					entityEventQueue.push([entityList[e], fn, arg]);
-				if (entityList[e].pointerBox && this.pointInBox(pos, entityList[e].pointerBox()))
-					entityEventQueue.push([entityList[e], fn, arg]);
-				if (entityList[e].pointerCircle && this.pointInCircle(pos, entityList[e].pointerCircle()))
-					entityEventQueue.push([entityList[e], fn, arg]);
+	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
+		for (var e=0; e<entities.length; e++) {
+			var ent = entities[e];
+			if (ent[fn]) {
+				if (ent.pointerPoly && this.pointInPoly(pos, ent.pointerPoly()))
+					entityEventQueue.push([ent, fn, arg]);
+				if (ent.pointerBox && this.pointInBox(pos, ent.pointerBox()))
+					entityEventQueue.push([entities[e], fn, arg]);
+				if (ent.pointerCircle && this.pointInCircle(pos, ent.pointerCircle()))
+					entityEventQueue.push([ent, fn, arg]);
+				if (ent.pointerTest && ent.pointerTest(pos))
+					entityEventQueue.push([ent, fn, arg]);
 			}
 		}
 	}

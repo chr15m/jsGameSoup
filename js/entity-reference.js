@@ -113,6 +113,13 @@ function ExampleEntity() {
 	}
 	
 	/**
+		This method can provide it's own test for whether a touch event is inside this entity. Useful for more complex hit-zone shapes, multiple shapes, etc.
+	*/
+	this.pointerTest = function(pos) {
+		return pos_is_inside_me(pos);
+	}
+	
+	/**
 		This method is called where xxxx is a collision type as defined in collide.js such as aabb, circle, or polygon, if this entity is involved in such a collision. See the collision documentation for more information.
 	*/
 	this.collide_xxxxx = function () {
