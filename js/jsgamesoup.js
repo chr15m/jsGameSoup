@@ -20,6 +20,8 @@ function JSGameSoup(canvas, framerate) {
 	this.framerate = framerate;
 	/** The current/last position of the pointer */
 	this.pointerPosition = [0, 0];
+	/** The current/last pointer up/down status */
+	this.pointerDown = false;
 	// where we will output the graphics
 	if (typeof canvas == "string") {
 		// the caller has supplied the ID of a canvas
@@ -236,6 +238,7 @@ function JSGameSoup(canvas, framerate) {
 		var ev = (ev) ? ev : window.event;
 		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerDown", ev.touches.length);
 		JSGS.cancelEvent(ev);
+		JSGS.pointerDown = true;
 		return false;
 	}
 	this.attachEvent("touchstart");
@@ -245,6 +248,7 @@ function JSGameSoup(canvas, framerate) {
 		var ev = (ev) ? ev : window.event;
 		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerUp", ev.touches.length);
 		JSGS.cancelEvent(ev);
+		JSGS.pointerDown = false;
 		return false;
 	}
 	this.attachEvent("touchstop");
@@ -262,6 +266,7 @@ function JSGameSoup(canvas, framerate) {
 		var ev = (ev) ? ev : window.event;
 		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerDown", ev.button);
 		JSGS.cancelEvent(ev);
+		JSGS.pointerDown = true;
 		return false;
 	}
 	this.attachEvent("mousedown");
@@ -271,6 +276,7 @@ function JSGameSoup(canvas, framerate) {
 		var ev = (ev) ? ev : window.event;
 		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerUp", ev.button);
 		JSGS.cancelEvent(ev);
+		JSGS.pointerDown = false;
 		return false;
 	}
 	this.attachEvent("mouseup");
