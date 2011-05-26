@@ -1,3 +1,5 @@
+<base href="http://mccormick.cx/projects/jsGameSoup/" />
+
 jsGameSoup v135
 --------------
 
