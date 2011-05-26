@@ -8,7 +8,7 @@ all: $(ALLDOCS)
 %.html : %.txt
 	../scripts/txt2html.sh $< $@
 
-index.html: ../README
+index.html: ../README.markdown
 	../scripts/txt2html.sh $< $@
 
 jsdocs: $(SCRIPTS:^:../)
