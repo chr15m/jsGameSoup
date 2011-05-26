@@ -253,11 +253,15 @@ function JSGameSoup(canvas, framerate) {
 	}
 	this.attachEvent("touchstop");
 	
-	this.ontouchmove = function ontouchmove(ev) {
+	this.onmove = function onmove(ev, idx) {
 		var ev = (ev) ? ev : window.event;
-		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", ev.touches.length);
+		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", idx);
 		JSGS.cancelEvent(ev);
 		return false;
+	}
+	
+	this.ontouchmove = function ontouchmove(ev) {
+		JSGS.onmove(ev, ev.touches.length);
 	}
 	this.attachEvent("touchmove");
 	
@@ -283,10 +287,7 @@ function JSGameSoup(canvas, framerate) {
 	
 	// TODO: make this only check for entities which are listening with pointerMove().
 	this.onmousemove = function onmousemove(ev) {
-		var ev = (ev) ? ev : window.event;
-		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerMove", ev.button);
-		JSGS.cancelEvent(ev);
-		return false;
+		JSGS.onmove(ev, ev.button);
 	}
 	this.attachEvent("mousemove");
 	
@@ -351,7 +352,6 @@ function JSGameSoup(canvas, framerate) {
 	// [ entity, method, arg ]
 	var entityEventQueue = [];
 	// a list of entities who have received an event and returned true
-	// TODO: document this
 	var entitiesTriggered = [];
 	
 	// different specialist lists
@@ -558,19 +558,17 @@ function JSGameSoup(canvas, framerate) {
 	// call a method on an entity if the point is inside the entity's polygon/circle/box
 	// used in mouse events to send mouseDown and mouseUp events into the entity
 	this.pointInEntitiesCall = function pointInEntitiesCall(pos, fn, arg) {
+		var hit = [];
 		for (var e=0; e<entities.length; e++) {
 			var ent = entities[e];
 			if (ent[fn]) {
-				if (ent.pointerPoly && this.pointInPoly(pos, ent.pointerPoly()))
+				if ((ent.pointerPoly && this.pointInPoly(pos, ent.pointerPoly())) || (ent.pointerBox && this.pointInBox(pos, ent.pointerBox())) || (ent.pointerCircle && this.pointInCircle(pos, ent.pointerCircle())) || (ent.pointerTest && ent.pointerTest(pos))) {
 					entityEventQueue.push([ent, fn, arg]);
-				if (ent.pointerBox && this.pointInBox(pos, ent.pointerBox()))
-					entityEventQueue.push([entities[e], fn, arg]);
-				if (ent.pointerCircle && this.pointInCircle(pos, ent.pointerCircle()))
-					entityEventQueue.push([ent, fn, arg]);
-				if (ent.pointerTest && ent.pointerTest(pos))
-					entityEventQueue.push([ent, fn, arg]);
+					hit.push(ent);
+				}
 			}
 		}
+		return hit;
 	}
 	
 	// call a method on each entity for which that method exists
