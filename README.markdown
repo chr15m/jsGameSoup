@@ -1,11 +1,11 @@
 <base href="http://mccormick.cx/projects/jsGameSoup/" />
 
-jsGameSoup v135
+jsGameSoup v137
 --------------
 
 A Free Software framework for making games for the web using Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), IE 6.0 and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
 
-[Download jsGameSoup v135](jsGameSoup-v135.zip)
+[Download jsGameSoup v137](jsGameSoup-v137.zip)
 
 ![FallingGame screenshot](screenshots/FallingGame.png)
 
@@ -31,7 +31,7 @@ Batteries included
 Download
 --------
 
-[Zipfile of jsGameSoup v135](jsGameSoup-v135.zip)
+[Zipfile of jsGameSoup v137](jsGameSoup-v137.zip)
 
 You probably also want one of the following for Internet Explorer compatability:
 
