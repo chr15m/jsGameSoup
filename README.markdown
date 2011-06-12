@@ -12,6 +12,8 @@ A Free Software framework for making games for the web using Javascript and HTML
 
 Copyright Chris McCormick, 2009-2011, and is LGPL licensed. Please see the file [COPYING](http://mccormick.cx/projects/jsGameSoup/COPYING) for details.
 
+[Using jsGameSoup for your game? Hire me as a consultant.](mailto:chris@mccormickit.com)
+
 Batteries included
 ------------------
 

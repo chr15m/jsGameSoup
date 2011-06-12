@@ -1,7 +1,5 @@
 * integrate Nick's resize code if possible http://onetwenty.org/upload/soupbox/
-* put a note on the page - 'Using jsGameSoup? Hire me!'
 * make a tutorial about integrating box2d.js
-* write something about flashcanvas for the site
 * method to add a whole array of new entities
 * method to erase a whole array of entities
 * check out sylvester.js and write something about using it for the site
