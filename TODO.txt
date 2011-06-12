@@ -1,5 +1,8 @@
 * integrate Nick's resize code if possible http://onetwenty.org/upload/soupbox/
-* make a tutorial about integrating box2d.js
+* fix links to .js files to actually go to API docs
+* make audio.js work
+* make a tutorial about integrating box2d.js (see Nick's example)
+* make a tutorial about integrating socket.io
 * method to add a whole array of new entities
 * method to erase a whole array of entities
 * check out sylvester.js and write something about using it for the site
