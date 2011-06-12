@@ -1,35 +1,35 @@
 jsGameSoup v139
 --------------
 
-A Free Software framework for making games for the web using Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), IE 6.0 and higher. Doesn't depend on any proprietary technologies like Flash or Silverlight.
+A Free Software framework for making games for the web using Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher. Does not require any proprietary technologies like Flash or Silverlight.
 
-[Download jsGameSoup v139](jsGameSoup-v139.zip)
+[Download jsGameSoup v139](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v139.zip)
 
-![FallingGame screenshot](screenshots/FallingGame.png)
+![FallingGame screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame.png)
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
 
-Copyright Chris McCormick, 2009-2011, and is LGPL licensed. Please see the file [COPYING](COPYING) for details.
+Copyright Chris McCormick, 2009-2011, and is LGPL licensed. Please see the file [COPYING](http://mccormick.cx/projects/jsGameSoup/COPYING) for details.
 
 Batteries included
 ------------------
 
  * Cross browser event handling (keyboard, mouse, touch)
  * Game entity management
- * Rudimentary polygon, box, circle collision detection [collisions.js](js/js/collisions.js)
- * Sprite management [sprite.js](js/js/sprite.js)
- * Fast, deterministic random number generator [random.js](js/js/random.js)
- * Networking (ajax) abstraction layer [network.js](js/js/network.js)
- * Basic cookie management [cookies.js](js/js/cookies.js)
- * Auto-init to launch code attached to a specific HTML canvas
+ * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/js/js/collisions.js)
+ * Sprite management [sprite.js](http://mccormick.cx/projects/jsGameSoup/js/js/sprite.js)
+ * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/js/js/random.js)
+ * Networking (ajax) abstraction layer [network.js](http://mccormick.cx/projects/jsGameSoup/js/js/network.js)
+ * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/js/js/cookies.js)
+ * Optional auto-init to launch code attached to HTML canvases
 
-![AsteroidsTNG screenshot](screenshots/AsteroidsTNG.png)
+![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
 
 Download
 --------
 
-[Zipfile of jsGameSoup v139](jsGameSoup-v139.zip)
+[Zipfile of jsGameSoup v139](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v139.zip)
 
 You probably also want one of the following for Internet Explorer compatability:
 
@@ -39,16 +39,18 @@ You probably also want one of the following for Internet Explorer compatability:
 Documentation
 -------------
 
- * [Simple jsGameSoup example game](jsdocs/symbols/src/example-game.js.html)
- * [Reference implementation of a jsGameSoup entity](jsdocs/symbols/ExampleEntity.html)
- * [All jsGameSoup API documentation](jsdocs)
+ * [All jsGameSoup API documentation](http://mccormick.cx/projects/jsGameSoup/jsdocs)
+   * [Sprite class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
+   * [JSGameSoup game management class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/JSGameSoup.html)
+   * [Seedable random number generator](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
+   * [Collision API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
+   * [Cookie handling](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
+   * [Network/ajax request API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
 
- * [Sprite class](jsdocs/symbols/Sprite.html)
- * [JSGameSoup game management class](jsdocs/symbols/JSGameSoup.html)
- * [Seedable random number generator](jsdocs/symbols/SeedableRandom.html)
- * [Collision API](jsdocs/symbols/collide.html)
- * [Cookie handling](jsdocs/symbols/cookies.html)
- * [Network/ajax API](jsdocs/symbols/network.html)
+
+ * [Reference implementation of a jsGameSoup entity](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/ExampleEntity.html)
+ * [Simple jsGameSoup example game](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/src/example-game.js.html)
+
 
  * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
  * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
@@ -58,33 +60,104 @@ Demos
 
  * [AsteroidsTNG](http://mccormick.cx/dev/blogref/AsteroidsTNG/)
  * [FallingGame](http://mccormick.cx/dev/blogref/FallingGame/)
- * [Demos page here](demos)
- * [Not very well maintained test suite](tests)
+ * [Demos page here](http://mccormick.cx/projects/jsGameSoup/demos)
+ * [Not very well maintained test suite](http://mccormick.cx/projects/jsGameSoup/tests)
 
 Quick Start
 -----------
 
-The main component of the framework is the `JSGameSoup()` object, which is the engine of the system. When the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` engine to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas.
+Start in an empty working directoy. First get the jsGameSoup source in a sub-directory called 'jsGameSoup'.
 
-Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the `addEntity()` method.
+Now create a file called index.html that contain a basic HTML page, with a window-filling div tag that will become our game canvas.
 
-Here is some example code to get you going. You should be able to paste this into an HTML document with jsgamesoup.js and excanvas.js installed in the correct subdirectories.
-
-	<!--[if IE]><script src="js/explorercanvas/excanvas.js"></script><![endif]-->
-	<script src='js/jsgamesoup.js'></script>
-	<script>
-	function startGame(gs) {
-		// our demo game entity
-		function Thingy() {
-			this.draw = function(c, gs) {
-				c.moveTo(10, 10);
-				c.lineTo(10 + 10 * Math.sin(), 10 + 10 * Math.cos());
-			}
+	<html>
+	<head>
+		<script src="jsGameSoup/js/jsgamesoup.js"></script>
+		<script src="main.js"></script>
+	</head>
+	<style>
+		html, body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
 		}
-		gs.addEntity(new Thingy());
+		div {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: -1px;
+			left: -1px;
+		}
+	</style>
+	<body onload='startGame()'>
+		<div id='surface'></div>
+	</body>
+	</html>
+
+Now edit main.js with a little test code to get you started:
+
+	function Dot(gs) {
+		var x = gs.width * 0.5;
+		var y = gs.height * 0.5;
+		var r = gs.width * 0.1;
+		
+		this.update = function() {
+			x += gs.width * 0.01 * (Math.random() - 0.5);
+			y += gs.height * 0.01 * (Math.random() - 0.5);
+		}
+		
+		this.draw = function(c) {
+			c.fillRect(x - r / 2, y - r / 2, r, r);
+		}
 	}
-	</script>
-	<canvas id='mygame' jsgs='startGame' fps="25"></canvas>
+	
+	function startGame() {
+		var surface = document.getElementById("surface");
+		var gs = new JSGameSoup(surface, 30);
+		gs.addEntity(new Dot(gs));
+		gs.launch();
+	}
+
+When you visit index page you should see a black square wiggling about. The main component of the framework is the `JSGameSoup()` object, which is the engine of the system. You add your game entities to it with the `addEntity()` method as above. Entities should have an `update()` method and a `draw()` method, which accepts a canvas context as an argument. You can use the canvas context to draw your entities.
+
+### Internet Explorer compatability ###
+
+To make your jsGameSoup game run under Internet Explorer 6 and above, you can use the ExplorerCanvas library (pure Javascript) or the FlashCanvas library (uses the proprietary Flash plugin) to emulate the `<canvas>` tag. These libraries have both been tested with jsGameSoup on Internet Explorer 6 and work fine, with the FlashCanvas library providing better performance than excanvas. You should get the source code for the project you want and then put the respective line for loading the library inside the `<head>` tag, before any other `<script>` tags.
+
+To use ExplorerCanvas:
+
+	<!--[if IE]><script src="explorercanvas/excanvas.js"></script><![endif]-->
+
+To use FlashCanvas:
+
+	<!--[if IE]><script src="js/flashcanvas/src/flashcanvas.js"></script><![endif]-->
+
+### Auto-launching your games ###
+
+Auto-launching is useful if you have pages with multiple game canvases and you don't want to write the launch code for every instance. You do this by simply creating `<canvas>` tags in your html document with an attribute "jsgs":
+
+	<html>
+		<head>
+			<script src='jsGameSoup/jsgamesoup.js'></script>
+			<script>
+				function startGame(gs) {
+					// our demo game entity
+					function Thingy() {
+						this.draw = function(c, gs) {
+							c.moveTo(10, 10);
+							c.lineTo(10 + 10 * Math.sin(), 10 + 10 * Math.cos());
+						}
+					}
+					gs.addEntity(new Thingy());
+				}
+			</script>
+		</head>
+		<body>
+			<canvas id='mygame' jsgs='startGame' fps="25"></canvas>
+		</body>
+	</html>
+
+When the page is loaded, jsGameSoup will attach a `new JSGameSoup()` object to every canvas tag with the 'jsgs' attribute. This specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately.
 
 Source code
 -----------
@@ -94,5 +167,8 @@ Contribute or get the latest version of the code using [bazaar](http://bazaar-vc
 	bzr co http://mccormick.cx/dev/jsgamesoup/
 
 Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
+
+Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
+
 
 [Patches welcome](mailto:chris@mccormick.cx)!
