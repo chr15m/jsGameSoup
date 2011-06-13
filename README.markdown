@@ -70,7 +70,7 @@ Quick Start
 
 Start in an empty working directoy. First get the jsGameSoup source in a sub-directory called 'jsGameSoup'.
 
-Now create a file called index.html that contain a basic HTML page, with a window-filling div tag that will become our game canvas.
+Now create a file called index.html that will contain a basic HTML page, with a window-filling div tag that will become our game canvas.
 
 	<html>
 	<head>
@@ -132,7 +132,9 @@ To use ExplorerCanvas:
 
 To use FlashCanvas:
 
-	<!--[if IE]><script src="js/flashcanvas/src/flashcanvas.js"></script><![endif]-->
+	<!--[if IE]><script src="flashcanvas/bin/flashcanvas.js"></script><![endif]-->
+
+See the Download section above for links to these libraries.
 
 ### Auto-launching your games ###
 
