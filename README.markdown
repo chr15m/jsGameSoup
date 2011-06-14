@@ -33,9 +33,9 @@ Download
 
 [Zipfile of jsGameSoup v147](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v147.zip)
 
-You probably also want one of the following for Internet Explorer compatability:
+You probably also want one of the following for Internet Explorer compatibility:
 
- * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatability, but it's a bit slower.
+ * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatibility, but it's a bit slower.
  * [FlashCanvas](http://flashcanvas.net/download) which provides better performance but depends upon the proprietary Flash plugin.
 
 See the quickstart section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
@@ -120,7 +120,7 @@ Now edit main.js with a little test code to get you started:
 
 When you visit index page now you should see a black square wiggling about. The main component of the framework is the `JSGameSoup()` object, which is the engine of the system. You add your game entities to it with the `addEntity()` method as above. Entities should have an `update()` method and a `draw()` method, which accepts a canvas context as an argument. You can use the canvas context to draw your entities.
 
-### Internet Explorer compatability ###
+### Internet Explorer compatibility ###
 
 To make your jsGameSoup game run under Internet Explorer 6 and above, you can use the ExplorerCanvas library (pure Javascript) or the FlashCanvas library (uses the proprietary Flash plugin) to emulate the `<canvas>` tag. These libraries have both been tested with jsGameSoup on Internet Explorer 6 and work fine, with the FlashCanvas library providing better performance than excanvas. You should get the source code for the project you want and then put the respective line for loading the library inside the `<head>` tag, before any other `<script>` tags.
 
