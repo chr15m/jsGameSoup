@@ -35,8 +35,10 @@ Download
 
 You probably also want one of the following for Internet Explorer compatability:
 
- * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatability, but it's a bit slower
- * [FlashCanvas](http://flashcanvas.net/download) which provides better speed but depends upon the proprietary Flash plugin.
+ * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatability, but it's a bit slower.
+ * [FlashCanvas](http://flashcanvas.net/download) which provides better performance but depends upon the proprietary Flash plugin.
+
+See the quickstart section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
 
 Documentation
 -------------
@@ -48,12 +50,8 @@ Documentation
    * [Collision API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
    * [Cookie handling](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
    * [Network/ajax request API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
-
-
  * [Reference implementation of a jsGameSoup entity](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/ExampleEntity.html)
  * [Simple jsGameSoup example game](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/src/example-game.js.html)
-
-
  * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
  * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
 
@@ -120,7 +118,7 @@ Now edit main.js with a little test code to get you started:
 		gs.launch();
 	}
 
-When you visit index page you should see a black square wiggling about. The main component of the framework is the `JSGameSoup()` object, which is the engine of the system. You add your game entities to it with the `addEntity()` method as above. Entities should have an `update()` method and a `draw()` method, which accepts a canvas context as an argument. You can use the canvas context to draw your entities.
+When you visit index page now you should see a black square wiggling about. The main component of the framework is the `JSGameSoup()` object, which is the engine of the system. You add your game entities to it with the `addEntity()` method as above. Entities should have an `update()` method and a `draw()` method, which accepts a canvas context as an argument. You can use the canvas context to draw your entities.
 
 ### Internet Explorer compatability ###
 
@@ -135,6 +133,8 @@ To use FlashCanvas:
 	<!--[if IE]><script src="flashcanvas/bin/flashcanvas.js"></script><![endif]-->
 
 See the Download section above for links to these libraries.
+
+One final gotcha under IE6 is that Javascript datastructures should not contain a trailing comma on the last element. E.g. `t = [1, 2, 3];` not `t = [1, 2, 3,];` This is a quirk of the browser that seems to trip a lot of people up.
 
 ### Auto-launching your games ###
 
