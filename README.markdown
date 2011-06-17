@@ -22,9 +22,19 @@ Batteries included
  * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
  * Sprite management [sprite.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
  * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
- * Networking (ajax) abstraction layer [network.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
  * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
  * Optional auto-init to launch code attached to HTML canvases
+
+Suggested companion libraries
+-----------------------------
+
+In an effort to keep this library minimal and focused on making games, here are some excellent 3rd party libraries and frameworks providing functionality you might need that is not included in jsGameSoup. Wherever possible these are single-file Javascript libraries that can just be dropped into your project along side jsGameSoup.
+
+ * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/)
+ * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
+ * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
+ * 2D physics - [box2djs](http://box2d-js.sourceforge.net/)
+ * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
 
 ![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
 
