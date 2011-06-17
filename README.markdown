@@ -1,9 +1,9 @@
-jsGameSoup v156
+jsGameSoup v157
 --------------
 
 A Free Software framework for making games for the web using Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher. Does not require any proprietary technologies like Flash or Silverlight.
 
-[Download jsGameSoup v156](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v156.zip)
+[Download jsGameSoup v157](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v157.zip) - jump down to the quickstart section to dive in.
 
 ![FallingGame screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame.png)
 
@@ -30,10 +30,10 @@ Suggested companion libraries
 
 In an effort to keep this library minimal and focused on making games, here are some excellent 3rd party libraries and frameworks providing functionality you might need that is not included in jsGameSoup. Wherever possible these are single-file Javascript libraries that can just be dropped into your project along side jsGameSoup.
 
- * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demos section below)
+ * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demo below)
  * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
  * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
- * 2D physics - [box2djs](http://box2d-js.sourceforge.net/)
+ * 2D physics - [box2djs](http://box2d-js.sourceforge.net/) (see the demo below)
  * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
 
 ![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
@@ -41,14 +41,14 @@ In an effort to keep this library minimal and focused on making games, here are 
 Download
 --------
 
-[Zipfile of jsGameSoup v156](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v156.zip)
+[Zipfile of jsGameSoup v157](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v157.zip)
 
 You probably also want one of the following for Internet Explorer compatibility:
 
  * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatibility, but it's a bit slower.
  * [FlashCanvas](http://flashcanvas.net/download) which provides better performance but depends upon the proprietary Flash plugin.
 
-See the quickstart section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
+See the Internet Explorer compatability section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
 
 Source code
 -----------
@@ -85,6 +85,7 @@ Demos
  * [AsteroidsTNG](http://mccormick.cx/dev/blogref/AsteroidsTNG/)
  * [FallingGame](http://mccormick.cx/dev/blogref/FallingGame/)
  * [sylvester.js vector demo](http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester)
+ * [Box2d.js physics demo](http://mccormick.cx/projects/jsGameSoup/demos/box2d)
  * [Demos page here](http://mccormick.cx/projects/jsGameSoup/demos)
  * [Not very well maintained test suite](http://mccormick.cx/projects/jsGameSoup/tests)
 
