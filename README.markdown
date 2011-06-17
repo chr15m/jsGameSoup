@@ -30,7 +30,7 @@ Suggested companion libraries
 
 In an effort to keep this library minimal and focused on making games, here are some excellent 3rd party libraries and frameworks providing functionality you might need that is not included in jsGameSoup. Wherever possible these are single-file Javascript libraries that can just be dropped into your project along side jsGameSoup.
 
- * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/)
+ * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demos section below)
  * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
  * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
  * 2D physics - [box2djs](http://box2d-js.sourceforge.net/)
@@ -84,6 +84,7 @@ Demos
 
  * [AsteroidsTNG](http://mccormick.cx/dev/blogref/AsteroidsTNG/)
  * [FallingGame](http://mccormick.cx/dev/blogref/FallingGame/)
+ * [sylvester.js vector demo](http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester)
  * [Demos page here](http://mccormick.cx/projects/jsGameSoup/demos)
  * [Not very well maintained test suite](http://mccormick.cx/projects/jsGameSoup/tests)
 

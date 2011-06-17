@@ -1,7 +1,7 @@
 SCRIPTS = jsgamesoup.js entity-reference.js sprite.js collisions.js random.js network.js cookies.js example-game.js
 TXTS = 
 HTMLS = $(TXTS:.txt=.html)
-ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos tests js COPYING
+ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos tests js COPYING explorercanvas flashcanvas
 
 all: $(ALLDOCS)
 
@@ -31,6 +31,12 @@ js:../js
 	rsync -avz ../js js
 	#bzr export js ../js/
 	../scripts/fetch-externals.sh
+
+explorercanvas: 
+	bzr co http://explorercanvas.googlecode.com/svn/trunk explorercanvas
+
+flashcanvas:
+	bzr co http://flashcanvas.googlecode.com/svn/trunk flashcanvas
 
 clean:
 	rm -rf $(ALLDOCS) jsGameSoup-v*.zip

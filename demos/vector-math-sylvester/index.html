@@ -1,0 +1,30 @@
+<html>
+<head>
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="../../flashcanvas/bin/flashcanvas.js"></script>
+	<![endif]-->
+	<script src="sylvester.js"></script>
+	<script src="../../js/jsgamesoup.js"></script>
+	<script src="../../js/random.js"></script>
+	<script src="../../js/collisions.js"></script>
+	<script src="main.js"></script>
+	<style>
+		html, body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+		}
+		div {
+			width: 70%;
+			height: 70%;
+			position: absolute;
+			top: 15%;
+			left: 15%;
+			border: 1px solid black;
+		}
+	</style>
+</head>
+<body onload='launch();'>
+	<div id='surface'></div>
+</body>
+</html>
