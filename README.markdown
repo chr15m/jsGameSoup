@@ -19,11 +19,11 @@ Batteries included
 
  * Cross browser event handling (keyboard, mouse, touch)
  * Game entity management
- * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/js/js/collisions.js)
- * Sprite management [sprite.js](http://mccormick.cx/projects/jsGameSoup/js/js/sprite.js)
- * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/js/js/random.js)
- * Networking (ajax) abstraction layer [network.js](http://mccormick.cx/projects/jsGameSoup/js/js/network.js)
- * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/js/js/cookies.js)
+ * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
+ * Sprite management [sprite.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
+ * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
+ * Networking (ajax) abstraction layer [network.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
+ * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
  * Optional auto-init to launch code attached to HTML canvases
 
 ![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
@@ -39,6 +39,20 @@ You probably also want one of the following for Internet Explorer compatibility:
  * [FlashCanvas](http://flashcanvas.net/download) which provides better performance but depends upon the proprietary Flash plugin.
 
 See the quickstart section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
+
+Source code
+-----------
+
+Contribute or get the latest version of the code using [bazaar](http://bazaar-vcs.org/):
+
+	bzr co http://mccormick.cx/dev/jsgamesoup/
+
+Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
+
+Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
+
+
+[Patches welcome](mailto:chris@mccormick.cx)!
 
 Documentation
 -------------
@@ -163,16 +177,3 @@ Auto-launching is useful if you have pages with multiple game canvases and you d
 
 When the page is loaded, jsGameSoup will attach a `new JSGameSoup()` object to every canvas tag with the 'jsgs' attribute. This specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately.
 
-Source code
------------
-
-Contribute or get the latest version of the code using [bazaar](http://bazaar-vcs.org/):
-
-	bzr co http://mccormick.cx/dev/jsgamesoup/
-
-Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
-
-Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
-
-
-[Patches welcome](mailto:chris@mccormick.cx)!
