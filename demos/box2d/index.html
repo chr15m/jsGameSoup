@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<meta name="http-equiv" content="Content-type: text/html; charset=UTF-8"/>
+
+<head>
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="../../js/flashcanvas/bin/flashcanvas.js"></script>
+	<![endif]-->
+	<title>SoupBox - jsGameSoup + box2d.js</title>
+	
+	<script src="js/prototype/protoclass.js"></script>
+	<script src="js/box2d/box2d.js"></script>
+	<script src="../../js/jsgamesoup.js"></script>
+	<script src="main.js"></script> <!-- defines init() -->
+	
+	<style>
+		html, body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+			height: 100%;
+			text-align: center;
+			font-family: Arial;
+		}
+		
+		canvas {
+			width: 800px;
+			height: 600px;
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+
+<body onload="launch();">
+
+	<p>SoupBox - jsGameSoup + box2d.js</p>
+	<canvas width="800" height="600" id="canvas"></canvas>
+	<p>With thanks to <a href='http://nick.onetwenty.org/'>Nick Lowe</a></p>
+
+</body>
+</html>
