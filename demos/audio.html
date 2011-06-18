@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+	body {
+		height: 100%;
+		margin: 0;
+		overflow: hidden;
+		text-align: center;
+		font-family: Arial;
+	}
+	
+	canvas {
+		border: 1px solid black;
+		margin-top: 50px;
+	}
+	</style>
+</head>
+<body>
+<!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
+<script src="../js/jsgamesoup.js"></script>
+<script src="../js/audio.js"></script>
+<script>
+function startGame(gs) {
+		var snd = new AudioManager();
+		snd.load("coin.wav");
+		snd.load("ponk.wav");
+		
+		function C() {
+			this.x = gs.random(0, gs.width);
+			this.y = gs.random(0, gs.height);
+			this.vx = gs.random(-3, 3);
+			this.vy = gs.random(-3, 3);
+			this.r = gs.random(10, 30);
+			this.c = gs.random(100, 200);
+			this.fs = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c) + ', ' + parseInt(this.c) + ', 1.0)';
+			
+			this.update = function() {
+				this.y = (this.y + this.vy + gs.canvas.height) % gs.canvas.height;
+				this.x = (this.x + this.vx + gs.canvas.width) % gs.canvas.width;
+			}
+			
+			this.draw = function(c, gs) {
+				c.fillStyle = this.fs;
+				c.beginPath();
+				c.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+				c.closePath();
+				c.fill();
+			}
+			
+			this.pointerCircle = function() {
+				return [this.x, this.y, this.r];
+			}
+			
+			this.pointerDown = function(i) {
+				Math.random() > 0.5 ? snd.play("coin") : snd.play("ponk");
+				gs.addEntity(new C());
+				gs.delEntity(this);
+			}
+		}
+				
+		for (i=0; i<3; i++)
+			gs.addEntity(new C());
+}
+</script>
+<canvas id='surface' jsgs='startGame'></canvas><br/>
+click me!
+</body>
+</html>
+

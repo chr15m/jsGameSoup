@@ -1,6 +1,6 @@
-* integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * make audio.js work
-* box2d.js demo (see Nick's example)
+* integrate Nick's resize code http://onetwenty.org/upload/soupbox/
+* fix internet explorer offset bug
 * socket.io demo
 * method to add a whole array of new entities
 * method to erase a whole array of entities

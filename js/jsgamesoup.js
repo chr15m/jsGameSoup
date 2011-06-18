@@ -47,7 +47,18 @@ function JSGameSoup(canvas, framerate) {
 		G_vmlCanvasManager.initElement(canvas);
 	// set the cursor to the pointer for IE to stop the flickering text cursor problem
 	this.canvas.style.cursor = "default";
-	this.ctx = this.canvas.getContext('2d');
+	if (this.canvas && this.canvas.getContext) {
+		this.ctx = this.canvas.getContext('2d');
+	} else {
+		alert("You are on a platform that does not support Canvas.\nTry ExplorerCanvas or FlashCanvas, maybe?");
+		// avoid errors by populating with empty function signatures.
+		this.width = 0;
+		this.height = 0;
+		this.random = function() {};
+		this.addEntity = function() {};
+		this.launch = function() {};
+		return;
+	}
 	// stop the bug where lines on whole integers are blurred (processingjs fix)
 	this.ctx.translate(0.5, 0.5);
 	// we need a variable we can access from inside callbacks etc.
