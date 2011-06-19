@@ -19,9 +19,11 @@ Batteries included
 
  * Cross browser event handling (keyboard, mouse, touch)
  * Game entity management
- * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
  * Sprite management [sprite.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
+ * Sound effects playback with [audio.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/AudioManager.html)
+ * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
  * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
+ * Simple AJAX and bulk data loading with [network.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
  * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
  * Optional auto-init to launch code attached to HTML canvases
 
@@ -69,11 +71,12 @@ Documentation
 
  * [All jsGameSoup API documentation](http://mccormick.cx/projects/jsGameSoup/jsdocs)
    * [Sprite class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
-   * [JSGameSoup game management class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/JSGameSoup.html)
-   * [Seedable random number generator](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
+   * [AudioManager class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/AudioManager.html)
    * [Collision API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
+   * [Seedable random number generator](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
    * [Cookie handling](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
-   * [Network/ajax request API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
+   * [Network/ajax/bulkLoad request API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
+ * [JSGameSoup engine class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/JSGameSoup.html)
  * [Reference implementation of a jsGameSoup entity](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/ExampleEntity.html)
  * [Simple jsGameSoup example game](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/src/example-game.js.html)
  * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
@@ -84,8 +87,8 @@ Demos
 
  * [AsteroidsTNG](http://mccormick.cx/dev/blogref/AsteroidsTNG/)
  * [FallingGame](http://mccormick.cx/dev/blogref/FallingGame/)
- * [sylvester.js vector demo](http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester)
  * [Box2d.js physics demo](http://mccormick.cx/projects/jsGameSoup/demos/box2d)
+ * [sylvester.js vector demo](http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester)
  * [Demos page here](http://mccormick.cx/projects/jsGameSoup/demos)
  * [Not very well maintained test suite](http://mccormick.cx/projects/jsGameSoup/tests)
 

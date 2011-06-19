@@ -1,5 +1,5 @@
-/**	@class
-	@description Load chunks of audio and play them by name. Only .wav files are really supported on all browser. You could try .mp3 or .ogg but they probably won't work on all browsers. There is no way to get progress feedback on whether sounds are loaded yet, sorry, so use short sounds.
+/**	@class Provides a way to load and play back .wav file sound effects.
+	@description Load chunks of audio and play them by name. Only .wav files are really supported on all browser. You could try .mp3 or .ogg but they probably won't work on all browsers. There is no way to get progress feedback on whether sounds are loaded yet, sorry, so use short sounds. Google 'sfxr' for an excellent sound effects generator.
 */
 //	http://stackoverflow.com/questions/3652005/hearing-an-echo-while-playing-mp3
 function AudioManager() {
