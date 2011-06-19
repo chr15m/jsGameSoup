@@ -163,7 +163,7 @@ To use FlashCanvas:
 
 See the Download section above for links to these libraries.
 
-One final gotcha under IE6 is that Javascript datastructures should not contain a trailing comma on the last element. E.g. `t = [1, 2, 3];` not `t = [1, 2, 3,];` This is a quirk of the browser that seems to trip a lot of people up.
+One final gotcha under IE6 is that Javascript datastructures should not contain a trailing comma on the last element. E.g. `t = [1, 2, 3];` not `t = [1, 2, 3,];` This is a quirk of the browser that seems to trip people up. If you are finding debugging under old versions of Internet Explorer frustrating, one thing you can do to help is [install the Microsoft Script Debugger](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=22185). You'll also want to enable debugging in the advanced options of the browser.
 
 ### Auto-launching your games ###
 
