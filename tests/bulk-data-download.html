@@ -1,0 +1,29 @@
+<html>
+	<head>
+		<script src='../js/network.js'></script>
+		<script>
+			function launch() {
+				var output = document.getElementById("results");
+				function out(msg) {
+					output.innerHTML += msg + "<br/>";
+				}
+				
+				network.bulkLoad([
+						"test1.json",
+						"test2.json",
+						"test3.json"
+					], function (urlsleft, received, url) {
+						out("-----------------------------------");
+						out("loaded: " + url);
+						out(urlsleft + " urls left to load");
+						out(received);
+					}, function () {
+						out("oops, network timed out.");
+					})
+			}
+		</script>
+	</head>
+<body onload='launch();'>
+	<pre id='results'></pre>
+</body>
+</html>

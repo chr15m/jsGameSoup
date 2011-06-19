@@ -70,23 +70,23 @@ network.makeRequest = function(url, callback, timeout_callback, type, data, time
 };
 
 /**
-	UNTESTED - Loads an array of urls and calls progresscallback(urls_left, received) each time a file has finished loading. The value in urls_left is the number of urls still to be loaded, whilst received is an associative array where the key is the url, and the value is the content at that url.
+	Bulk load data, e.g. tile or level data, from urls. Loads an array of urls and calls progresscallback(number_of_urls_left, data_received, url, all_data_loaded_from_all_calls) each time a url has finished loading. The value in number_of_urls_left is the number of urls still to be loaded, whilst data_received is the actual data loaded from a url, and url is that url. Finally, received is an associative array where the key is the url, and the value is the content at that url.
 	@param urls is an array of urls to fetch
-	@param progresscallback is called each time a url is successfully fetched with arguments (number-of-calls-remaining, received-data).
+	@param progresscallback is called each time a url is successfully fetched - see above for the meaning of the arguments.
 	@param timeoutcallback is called if a request times out.
 	@param timeout is the number of milliseconds to wait before timing out the request.
 */
 network.bulkLoad = function(urls, progresscallback, timeoutcallback, timeout) {
-	var loadcount = urls.length - 1;
+	var loadcount = 0;
 	var received = {};
 	for (var i=0; i<urls.length; i++) {
 		// construct the closure protected version of the callback function
 		var callbackfunc = function(inc) {
 			return function (response) {
 				received[urls[inc]] = response;
-				loadcount -= 1;
+				loadcount += 1;
 				if (progresscallback)
-					progresscallback(urls.length - loadcount - 1, received);
+					progresscallback(urls.length - loadcount, response, urls[inc], received);
 			}
 		}(i);
 		network.makeRequest(urls[i], callbackfunc, timeoutcallback, timeout);
