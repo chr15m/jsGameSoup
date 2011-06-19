@@ -1,4 +1,3 @@
-* make audio.js work
 * integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * fix internet explorer offset bug
 * socket.io demo

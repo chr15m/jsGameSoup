@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			height: 100%;
+			margin: 0;
+			margin-top: 20px;
+			overflow: hidden;
+			text-align: center;
+			font-family: arial;
+		}
+		
+		canvas {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body style="">
+<!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
+<script src="../js/jsgamesoup.js"></script>
+<script>
+function startGame(gs) {
+		// we're defining a new class called 'C' with a bunch of properties
+		function C() {
+			this.x = gs.random(0, gs.width);
+			this.y = gs.random(0, gs.height);
+			this.vx = gs.random(-3, 3);
+			this.vy = gs.random(-3, 3);
+			this.r = gs.random(10, 30);
+			this.c = gs.random(100, 200);
+			this.d = 0;
+		}
+		
+		// defined the update method on all objects of type C
+		C.prototype.update = function() {
+			this.y = (this.y + this.vy + gs.canvas.height) % gs.canvas.height;
+			this.x = (this.x + this.vx + gs.canvas.width) % gs.canvas.width;
+			// every 20 frames, change the draw method to a different method stored in the array 'drawfuncs'
+			if (!(gs.frameCount % 20)) {
+				this.d = (this.d + 1) % 2;
+				C.prototype.draw = drawfuncs[this.d];
+			}
+		}
+		
+		// two different draw methods stored in an array
+		drawfuncs = [
+			function(c, gs) {
+				c.fillStyle = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c) + ', ' + parseInt(this.c) + ', 1.0)';
+				c.beginPath();
+				c.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+				c.closePath();
+				c.fill();
+			},
+			function(c, gs) {
+				c.fillStyle = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c - 100) + ', ' + parseInt(this.c - 100) + ', 1.0)';
+				c.beginPath();
+				c.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+				c.closePath();
+				c.fill();
+			},
+		]
+		// set the default method of all objects of type C to be the first draw method
+		C.prototype.draw = drawfuncs[0];
+		
+		// add 20 objects of type C to our game
+		for (i=0; i<20; i++)
+			gs.addEntity(new C());
+}
+</script>
+<canvas id='surface' jsgs='startGame'></canvas>
+<div>Testing out object.prototype - modifying the .draw() method on all entities.</div>
+</body>
+</html>
+
