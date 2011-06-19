@@ -1,4 +1,4 @@
-SCRIPTS = jsgamesoup.js entity-reference.js sprite.js collisions.js random.js network.js cookies.js example-game.js
+SCRIPTS = jsgamesoup.js entity-reference.js sprite.js collisions.js random.js audio.js cookies.js network.js example-game.js
 TXTS = 
 HTMLS = $(TXTS:.txt=.html)
 ALLDOCS = $(HTMLS) index.html jsGameSoup.zip jsdocs demos tests js js/explorercanvas js/flashcanvas COPYING
