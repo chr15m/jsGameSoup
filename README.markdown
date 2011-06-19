@@ -1,9 +1,9 @@
-jsGameSoup v165
+jsGameSoup v166
 --------------
 
 A Free Software framework for making games for the web using Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher. Does not require any proprietary technologies like Flash or Silverlight.
 
-[Download jsGameSoup v165](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v165.zip) - jump down to the quickstart section to dive in.
+[Download jsGameSoup v166](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v166.zip) - jump down to the quickstart section to dive in.
 
 ![FallingGame screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame.png)
 
@@ -34,16 +34,16 @@ In an effort to keep this library minimal and focused on making games, here are 
 
  * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demo below)
  * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
- * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
- * 2D physics - [box2djs](http://box2d-js.sourceforge.net/) (see the demo below)
+ * 2D physics - [box2d.js](http://box2d-js.sourceforge.net/) (see the demo below)
  * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
+ * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
 
 ![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
 
 Download
 --------
 
-[Zipfile of jsGameSoup v165](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v165.zip)
+[Zipfile of jsGameSoup v166](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v166.zip)
 
 You probably also want one of the following for Internet Explorer compatibility:
 
@@ -89,6 +89,7 @@ Demos
  * [FallingGame](http://mccormick.cx/dev/blogref/FallingGame/)
  * [Box2d.js physics demo](http://mccormick.cx/projects/jsGameSoup/demos/box2d)
  * [sylvester.js vector demo](http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester)
+ * [Playing audio](http://mccormick.cx/projects/jsGameSoup/demos/audio.html)
  * [Demos page here](http://mccormick.cx/projects/jsGameSoup/demos)
  * [Not very well maintained test suite](http://mccormick.cx/projects/jsGameSoup/tests)
 

@@ -1,8 +1,15 @@
 #!/bin/sh
 
+if [ "$1" != "" ]
+then
+	message=$@
+else
+	message='Version bump for publish script'
+fi
+
 scripts/replace-version.sh js/jsgamesoup.js
 scripts/replace-version.sh README.markdown
-bzr commit -m 'Version bump for publish script'
+bzr commit -m "$message"
 make clean -C docs/
 make -C docs/
 rsync -avz docs/* chrism@mccormick.cx:~/mccormick.cx/projects/jsGameSoup/
