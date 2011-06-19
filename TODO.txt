@@ -1,6 +1,7 @@
 * integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * progress bars tutorial/demo (images, bulkLoad, sound?)
-* fix internet explorer offset bug
+* port Android canvas init stuff from SketchThing
 * socket.io demo
+* fix internet explorer offset bug
 * method to add a whole array of new entities
 * method to erase a whole array of entities
