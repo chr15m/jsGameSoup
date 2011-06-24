@@ -27,6 +27,15 @@ function JSGameSoup(canvas, framerate) {
 		// the caller has supplied the ID of a canvas
 		this.canvas = document.getElementById(canvas);
 	} else {
+		// attach new styles to our container or canvas object for android and iOS devices
+		/* disable callout sheet */
+		// canvas.style["-webkit-touch-callout"] = "none";
+		/* disable highlighting links when tapped */
+		// canvas.style["-webkit-tap-highlight-color"] = "rgba(0,0,0,0)";
+		/* prevent automatic resizing of text */
+		// canvas.style["-webkit-text-size-adjust"] = "none";
+		/* disable copy paste */
+		// canvas.style["-webkit-user-select"] = "none";
 		if (canvas.tagName.toLowerCase() == "canvas") {
 			// they have supplied their own canvas element
 			this.canvas = canvas;
