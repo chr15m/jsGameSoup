@@ -17,6 +17,16 @@ function AudioManager() {
 		if (typeof Audio == "undefined") {
 			var em = document.createElement('embed');
 			if( em != null ) {
+				// var embed=document.createElement('object');
+				// embed.setAttribute('type','audio/wav');
+				// embed.setAttribute('data', 'c:\test.wav');
+				// embed.setAttribute('autostart', true);
+				//document.getElementsByTagName('body')[0].appendChild(embed);
+				
+				// TODO:
+				// .addEventListener('load',foo,false);
+				// .attachEvent('load',foo,false);
+				
 				em.setAttribute("width","0");
 				em.setAttribute("height","0");
 				em.setAttribute("hidden","true");
@@ -40,6 +50,8 @@ function AudioManager() {
 			
 			// argh none of these work in webkit :(
 			// firefox works fine though
+			
+			// TODO: try "loaded" and "load" as event names
 			
 			//au.onload = function() { alert("onload: " + url);};
 			//au.onloadeddata = function() { alert('onloadeddata: ' + url); };
