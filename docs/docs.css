@@ -34,9 +34,12 @@ a:hover {
 #logo {
 	margin: 0px;
 	border: 0px solid black;
+	*visibility: hidden;
+}
+
+#logo-container {
+	width: 209px;
+	height: 144px;
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="jsGameSoup-logo.png", sizingMethod='scale');
 }
 
-#logo img {
-	*visibility: hidden;
-}

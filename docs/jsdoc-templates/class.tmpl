@@ -10,11 +10,17 @@
 		<style type="text/css">
 			{+include("static/default.css")+}
 			{+include("../docs.css")+}
+			
+			#logo-container {
+				width: 209px;
+				height: 144px;
+				filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../../jsGameSoup-logo.png", sizingMethod='scale');
+			}
 		</style>
 	</head>
 
 	<body>
-		<img id='logo' src='../../jsGameSoup-logo.png'>
+		<div id='logo-container'><img id='logo' src='../../jsGameSoup-logo.png'></div>
 
 
 <!-- ============================== header ================================= -->	

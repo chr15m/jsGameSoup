@@ -31,8 +31,6 @@ js:../js
 	rsync -avz ../js/ js
 
 js/explorercanvas js/flashcanvas:
-	echo 'YES'
-	#bzr export js ../js/
 	../scripts/fetch-externals.sh
 
 clean:
