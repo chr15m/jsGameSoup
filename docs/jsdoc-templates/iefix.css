@@ -1,0 +1,6 @@
+#logo-container {
+	width: 209px;
+	height: 144px;
+	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="../jsGameSoup-logo.png", sizingMethod='scale');
+}
+

@@ -1,3 +1,5 @@
+* increpare: suggestion to move demos higher
+* update FallingGame with audio and flashcanvas
 * integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * port Android canvas init stuff from SketchThing
 * try and get audio onload working on all platforms
