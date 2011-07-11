@@ -1,10 +1,13 @@
 * increpare: suggestion to move demos higher
+  * mini screenshot version of links to games and demos
 * update FallingGame with audio and flashcanvas
+* update AsteroidsTNG with audio and flashcanvas
+
+* socket.io demo
 * integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * port Android canvas init stuff from SketchThing
 * try and get audio onload working on all platforms
 * progress bars tutorial/demo (images, bulkLoad, sound?)
-* socket.io demo
 * fix internet explorer offset bug
 * method to add a whole array of new entities
 * method to erase a whole array of entities

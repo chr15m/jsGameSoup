@@ -17,22 +17,31 @@ function Sprite(anchor, frames, loadedcallback) {
 	
 	// load up all of the images
 	for (var a in frames) {
+		// replace string entries with Images, unless they already are
 		for (var f=0; f<frames[a].length; f++) {
-			loadcount += 1;
-			var img = new Image();
-			img.src = frames[a][f][0];
-			frames[a][f][0] = img;
-			img.onload = function () {
-				loadcount -= 1;
-				if (loadcount == 0) {
-					if (loadedcallback) {
-						sprite.loaded = true;
-						sprite.width = parseInt(img.width);
-						sprite.height = parseInt(img.height);
-						loadedcallback();
+			if (typeof(frames[a][f][0]) == "string") {
+				loadcount += 1;
+				var img = new Image();
+				img.src = frames[a][f][0];
+				frames[a][f][0] = img;
+				img.onload = function () {
+					loadcount -= 1;
+					if (loadcount == 0) {
+						if (loadedcallback) {
+							sprite.loaded = true;
+							sprite.width = parseInt(img.width);
+							sprite.height = parseInt(img.height);
+							loadedcallback();
+						}
 					}
 				}
 			}
+		}
+		if (loadcount == 0 && loadedcallback) {
+			sprite.loaded = true;
+			sprite.width = frames[a][f][0].width;
+			sprite.height = frames[a][f][0].height;
+			loadedcallback();
 		}
 	}
 	
