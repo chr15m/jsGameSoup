@@ -11,6 +11,7 @@ function Sprite(anchor, frames, loadedcallback) {
 	var framecount = -1;
 	var frame = 0;
 	var sprite = this;
+	var numframes = 0;
 	this.loaded = false;
 	this.width = 0;
 	this.height = 0;
@@ -77,6 +78,7 @@ function Sprite(anchor, frames, loadedcallback) {
 	**/
 	this.action = function(a, reset) {
 		action = a;
+		numframes = frames[a].length;
 		if (reset) {
 			framecount = frames[a][0][1];
 			frame = 0
@@ -96,6 +98,11 @@ function Sprite(anchor, frames, loadedcallback) {
 	/** Returns the current frame number being played. **/
 	this.get_frame = function() {
 		return frame;
+	}
+	
+	/** Returns the total number of frames. **/
+	this.get_num_frames = function() {
+		return numframes;
 	}
 	
 	/** Sets the animation frame to play **/
