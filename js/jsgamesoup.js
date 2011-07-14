@@ -3,9 +3,6 @@
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
- *	Major missing features:
- *	* Sound
- *
  */
 
 
@@ -231,7 +228,7 @@ function JSGameSoup(canvas, framerate) {
 		if (ev.touches) {
 			var touch = ev.touches[0];
 			mouseX = touch.clientX - canvas.offsetLeft;
-			mouseX = touch.clientY - canvas.offsetTop;
+			mouseY = touch.clientY - canvas.offsetTop;
 			this.pointerPosition = [mouseX, mouseY];
 			return this.pointerPosition;
 		} else {
