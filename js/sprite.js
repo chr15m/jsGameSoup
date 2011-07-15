@@ -12,6 +12,7 @@ function Sprite(anchor, frames, loadedcallback) {
 	var frame = 0;
 	var sprite = this;
 	var numframes = 0;
+	var loopcallback = null;
 	this.loaded = false;
 	this.width = 0;
 	this.height = 0;
@@ -75,8 +76,14 @@ function Sprite(anchor, frames, loadedcallback) {
 		Sets which named animation/action to play.
 		@param a is the name of the animation/action you defined on initialisation.
 		@param reset indicates whether the frame number should be reset to the start of the animation.
+		@param callback is called when the animation has completed one loop - receives parameter "action".
 	**/
-	this.action = function(a, reset) {
+	this.action = function(a, reset, callback) {
+		if (typeof(callback) == "undefined") {
+			loopcallback = null;
+		} else {
+			loopcallback = callback;
+		}
 		action = a;
 		numframes = frames[a].length;
 		if (reset) {
@@ -114,6 +121,9 @@ function Sprite(anchor, frames, loadedcallback) {
 	this._update = function() {
 		framecount -= 1;
 		if (framecount <= 0) {
+			if (loopcallback && (frame + 1 >= frames[action].length)) {
+				loopcallback(action);
+			}
 			frame = (frame + 1) % frames[action].length;
 			framecount = frames[action][frame][1];
 		}
