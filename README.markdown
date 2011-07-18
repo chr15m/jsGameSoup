@@ -1,7 +1,7 @@
 jsGameSoup v178
 --------------
 
-A Free Software framework for making games for the web using Javascript and HTML5. Abstract away some of the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher. Does not require any proprietary technologies like Flash or Silverlight.
+A Free Software framework for making games for the web using Javascript and open web technologies. Abstract away the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher.
 
 [Download jsGameSoup v178](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v178.zip) - jump down to the quickstart section to dive in.
 

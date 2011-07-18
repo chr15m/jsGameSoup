@@ -1,5 +1,10 @@
+* use twinhelix pngfix
+* external library demo links direct
 * increpare: suggestion to move demos higher
   * mini screenshot version of links to games and demos
+* double bufferring
+  * http://www.felinesoft.com/blog/index.php/2010/09/accelerated-game-programming-with-html5-and-canvas/
+  * FlashCanvas works fastest from inside same canvas - double canvas width and buffer from left-to-right
 * update FallingGame with audio and flashcanvas
 * update AsteroidsTNG with audio and flashcanvas
 
