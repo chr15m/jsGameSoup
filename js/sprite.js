@@ -167,9 +167,10 @@ function Sprite(anchor, frames, loadedcallback) {
 */
 Sprite.preload = function(images, completedcallback, progresscallback) {
 	var loadcount = images.length;
+	var img = [];
 	for (var i=0; i<images.length; i++) {
-		var img = new Image();
-		img.onload = function () {
+		img[i] = new Image();
+		img[i].onload = function () {
 			loadcount -= 1;
 			if (progresscallback)
 				progresscallback(loadcount);
@@ -177,6 +178,6 @@ Sprite.preload = function(images, completedcallback, progresscallback) {
 				completedcallback();
 			}
 		}
-		img.src = images[i];
+		img[i].src = images[i];
 	}
 }
