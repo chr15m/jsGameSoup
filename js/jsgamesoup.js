@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v178, Copyright 2009-2011 Chris McCormick
+ *	JSGameSoup v182, Copyright 2009-2011 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -401,6 +401,16 @@ function JSGameSoup(canvas, framerate) {
 	this.inEntities = function inEntities(e) {
 		// is this entity in our entity list?
 		return entities.indexOf(e) >= 0;
+	}
+	
+	/**
+		Deletes all entities the engine knows about.
+	*/
+	this.clearEntities = function clearEntities() {
+		for (var e=0; e<entities.length; e++) {
+			delEntities.push(entities[e]);
+		}
+		return entities.length > 0;
 	}
 	
 	/**

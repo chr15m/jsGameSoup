@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			height: 100%;
+			margin: 0;
+			margin-top: 20px;
+			overflow: hidden;
+			text-align: center;
+			font-family: arial;
+		}
+		
+		canvas {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body style="">
+<!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
+<script src="../js/jsgamesoup.js"></script>
+<script>
+function startGame(gs) {
+		// we're defining a new class called 'C' with a bunch of properties
+		function C(pos) {
+			this.priority = 2;
+			this.x = pos[0];
+			this.y = pos[1];
+			this.vx = gs.random(-3, 3);
+			this.vy = gs.random(-3, 3);
+			this.r = gs.random(10, 30);
+			this.c = gs.random(100, 200);
+			this.d = 0;
+			
+			this.pointerCircle = function() {
+				return [this.x, this.y, this.r];
+			}
+			
+			this.pointerDown = function() {
+				gs.delEntity(this);
+				return true;
+			}
+		}
+		
+		// defined the update method on all objects of type C
+		C.prototype.update = function() {
+			this.y = (this.y + this.vy + gs.canvas.height) % gs.canvas.height;
+			this.x = (this.x + this.vx + gs.canvas.width) % gs.canvas.width;
+		}
+		
+		C.prototype.draw = function(c, gs) {
+			c.fillStyle = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c) + ', ' + parseInt(this.c) + ', 1.0)';
+			c.beginPath();
+			c.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+			c.closePath();
+			c.fill();
+		}
+		
+		function World() {
+			this.priority = 1;
+			var c = 1;
+			
+			this.pointerDown = function() {
+				console.log(c);
+				if (gs.getTriggeredEntities().length) {
+					c--;
+				} else {
+					if (c++ < 5) {
+						gs.addEntity(new C(gs.pointerPosition));
+					} else {
+						gs.clearEntities();
+						gs.addEntity(this);
+						c = 0;
+					}
+				}
+			}
+			
+			this.pointerBox = function() {
+				return [0, 0, gs.width, gs.height];
+			}
+		}
+		
+		gs.addEntity(new World());
+		gs.addEntity(new C([gs.width / 2, gs.height / 2]));
+}
+</script>
+<canvas id='surface' jsgs='startGame'></canvas>
+<div>Testing out entity addition, deletion and clearing. Click in the box.</div>
+</body>
+</html>

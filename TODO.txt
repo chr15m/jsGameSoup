@@ -1,5 +1,9 @@
-* use twinhelix pngfix
-* external library demo links direct
+* make a method to get actual framerate
+* on addEntity() add methods to the object
+  * addEntity() method for objects to nest objects?
+  * set_priority() method for updating priority of an object?
+* use twinhelix pngfix on site
+* external library demo links direct in readme
 * increpare: suggestion to move demos higher
   * mini screenshot version of links to games and demos
 * double bufferring
