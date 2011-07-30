@@ -44,3 +44,15 @@ a:hover {
 	filter: progid:DXImageTransform.Microsoft.AlphaImageLoader(src="jsGameSoup-logo.png", sizingMethod='scale');
 }
 
+span#demos {
+	display: block;
+	width: 100%;
+	text-align: center;
+}
+
+span#demos a {
+}
+
+span#demos a img {
+	display: inline;
+}

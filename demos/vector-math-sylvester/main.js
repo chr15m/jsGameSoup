@@ -21,11 +21,20 @@ function Thing(gs, crowd) {
 	}
 	
 	this.draw = function(c, gs) {
+		c.fillStyle = "rgb(0, 0, 0)";
+		c.strokeStyle = "rgb(150, 150, 150)";
+		c.lineWidth = 2;
 		// every frame draw a circle with a radius equal to my mass
 		c.beginPath();
-		c.arc(this.position.e(1), this.position.e(2), this.mass, 0, Math.PI * 2, false);
+		c.arc(this.lastposition.e(1), this.lastposition.e(2), this.mass, 0, Math.PI * 2, false);
 		c.fill();
 		c.closePath();
+		var vec = this.position.subtract(this.lastposition).multiply(-5).add(this.lastposition);
+		c.beginPath();
+		c.moveTo(this.lastposition.e(1), this.lastposition.e(2));
+		c.lineTo(vec.e(1), vec.e(2));
+		c.closePath();
+		c.stroke();
 	}
 }
 
