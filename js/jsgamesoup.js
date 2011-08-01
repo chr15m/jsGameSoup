@@ -527,11 +527,9 @@ function JSGameSoup(canvas, framerate) {
 		// launch our custom loop
 		looping = setInterval(function() {
 			try {
-				GS.gameSoupLoop()
+				GS.gameSoupLoop();
 			} catch(e) {
 				clearInterval(looping);
-				if (typeof(console) != "undefined")
-					console.log(e);
 				throw(e);
 			}
 		}, 1000 / this.framerate);
