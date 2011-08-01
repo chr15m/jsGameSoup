@@ -1,4 +1,4 @@
-jsGameSoup v183
+jsGameSoup v185
 --------------
 
 A Free Software framework for making games for the web using Javascript and open web technologies. Modular components abstract away the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher.
@@ -26,7 +26,7 @@ A Free Software framework for making games for the web using Javascript and open
 [Sylvester]: http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester
 [Sylvester-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/Sylvester-thumbnail.png
 
-[Download jsGameSoup v183](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v183.zip) - jump down to the quickstart section to dive in.
+[Download jsGameSoup v185](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v185.zip) - jump down to the quickstart section to dive in.
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
@@ -50,47 +50,6 @@ Batteries included
 
 ![FallingGame screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame.png)
 
-Suggested companion libraries
------------------------------
-
-In an effort to keep this library minimal and focused on making games, here are some excellent 3rd party libraries and frameworks providing functionality you might need that is not included in jsGameSoup. Wherever possible these are single-file Javascript libraries that can just be dropped into your project along side jsGameSoup.
-
- * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demo below)
- * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
- * 2D physics - [box2d.js](http://box2d-js.sourceforge.net/) (see the demo below)
- * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
- * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
-
-![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
-
-Download
---------
-
-[Zipfile of jsGameSoup v183](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v183.zip)
-
-You probably also want one of the following for Internet Explorer compatibility:
-
- * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatibility, but it's a bit slower.
- * [FlashCanvas](http://flashcanvas.net/download) which provides better performance but depends upon the proprietary Flash plugin.
-
-See the Internet Explorer compatability section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
-
-Source code
------------
-
-Contribute or get the latest version of the code using [bazaar](http://bazaar-vcs.org/):
-
-	bzr co http://mccormick.cx/dev/jsgamesoup/
-
-Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
-
-Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
-
-
-[Patches welcome](mailto:chris@mccormick.cx)!
-
-![Numbeat screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/Numbeat.png)
-
 Documentation
 -------------
 
@@ -109,6 +68,48 @@ Documentation
  * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
 
  * [Very incomplete test suite](http://mccormick.cx/projects/jsGameSoup/tests)
+
+Download
+--------
+
+[Zipfile of jsGameSoup v185](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v185.zip)
+
+You probably also want one of the following for Internet Explorer compatibility:
+
+ * [excanvas.js](http://explorercanvas.googlecode.com/svn/trunk/excanvas.js) from the [excanvas homepage](http://code.google.com/p/explorercanvas/) for pure Javascript compatibility, but it's a bit slower.
+ * [FlashCanvas](http://flashcanvas.net/download) which provides better performance but depends upon the proprietary Flash plugin.
+
+See the Internet Explorer compatability section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
+
+![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
+
+Suggested companion libraries
+-----------------------------
+
+In an effort to keep this library minimal and focused on making games, here are some excellent 3rd party libraries and frameworks providing functionality you might need that is not included in jsGameSoup. Wherever possible these are single-file Javascript libraries that can just be dropped into your project along side jsGameSoup.
+
+ * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demo below)
+ * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
+ * 2D physics - [box2d.js](http://box2d-js.sourceforge.net/) (see the demo below)
+ * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
+ * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
+
+
+Source code
+-----------
+
+Contribute or get the latest version of the code using [bazaar](http://bazaar-vcs.org/):
+
+	bzr co http://mccormick.cx/dev/jsgamesoup/
+
+Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
+
+Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
+
+
+[Patches welcome](mailto:chris@mccormick.cx)!
+
+![Numbeat screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/Numbeat.png)
 
 Quick Start
 -----------

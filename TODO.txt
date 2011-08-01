@@ -1,22 +1,14 @@
 * make a method to get actual framerate
 * menu.js - creates a nice text menu
+* statemachine.js - turns an entity into a statemachine with multiple .draw .update etc.
 * use twinhelix pngfix on site
 * external library demo links direct in readme
-* increpare: suggestion to move demos higher
-  * mini screenshot version of links to games and demos
-  * OnePong
-  * AsteroidsTNG
-  * FallingGame
-  * MineAscender
-  * soupbox
-  * Vector demo
+* extend canvas with useful methods (like drawlines)
 * update FallingGame with audio and flashcanvas
 * update AsteroidsTNG with audio and flashcanvas
 * double buffering
   * http://www.felinesoft.com/blog/index.php/2010/09/accelerated-game-programming-with-html5-and-canvas/
   * FlashCanvas works fastest from inside same canvas - double canvas width and buffer from left-to-right
-* statemachine.js - turns an entity into a statemachine with multiple .draw .update etc.
-* extend canvas with useful methods (like drawlines)
 
 * on addEntity() add methods to the object
   * addEntity() method for objects to nest objects?
