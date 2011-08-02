@@ -94,6 +94,15 @@ In an effort to keep this library minimal and focused on making games, here are 
  * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
  * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
 
+Free game resources
+-------------------
+
+ * [SFXR sound effects tool](http://www.drpetter.se/project_sfxr.html) - also [BFXR in your browser](http://www.bfxr.net/)
+ * [Dan Cook's free game graphics](http://lunar.lostgarden.com/labels/free%20game%20graphics.html)
+ * [Philipp Lenssen's free sprites](http://blogoscoped.com/archive/2006-08-08-n51.html)
+ * [HasGraphics game graphics](http://hasgraphics.com/)
+ * [Reiner`s Tilesets](http://www.reinerstilesets.de/2d-grafiken/2d-environment/)
+ * [WidgetWorx SpriteLib](http://www.widgetworx.com/widgetworx/portfolio/spritelib.html)
 
 Source code
 -----------

@@ -50,7 +50,8 @@ span#demos {
 	text-align: center;
 }
 
-span#demos a {
+span#demos a:hover img {
+	border: 1px solid #f60;
 }
 
 span#demos a img {
