@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			height: 100%;
+			margin: 0;
+			margin-top: 20px;
+			overflow: hidden;
+			text-align: center;
+			font-family: arial;
+		}
+		
+		canvas {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body style="">
+<!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
+<script src="../js/jsgamesoup.js"></script>
+<script src="../js/statemachine.js"></script>
+<script>
+function startGame(gs) {
+		// we're defining a new class called 'C' with a bunch of properties
+		// there are two different draw and update functions for different states of C - "chill" and "antsy"
+		// entities of C randomly switch between "chill" and "antsy"
+		function C() {
+			// set a random position, velocity, radius, and shade
+			this.x = gs.random(0, gs.width);
+			this.y = gs.random(0, gs.height);
+			this.vx = gs.random(-3, 3);
+			this.vy = gs.random(-3, 3);
+			this.r = gs.random(10, 30);
+			this.c = gs.random(100, 200);
+			
+			// set the initial state to "chill"
+			this.init = function() {
+				this.set_state("chill");
+			}
+			
+			// be cool and calm in "chill" state
+			this.chill_update = function() {
+				// glide gracefully
+				this.y = (this.y + this.vy + gs.canvas.height) % gs.canvas.height;
+				this.x = (this.x + this.vx + gs.canvas.width) % gs.canvas.width;
+				// randomly switch to antsy state
+				if (Math.random() > 0.97) {
+					this.set_state("antsy");
+				}
+			}
+			
+			// jump around randomly in "antsy" state
+			this.antsy_update = function() {
+				// do a mad wiggle
+				this.y = (this.y + Math.random() * 2 - 1 + gs.canvas.height) % gs.canvas.height;
+				this.x = (this.x + Math.random() * 2 - 1 + gs.canvas.width) % gs.canvas.width;
+				// randomly switch to chill state
+				if (Math.random() > 0.97) {
+					this.set_state("chill");
+				}
+			}
+			
+			// in "chill" state we are grey coloured
+			this.chill_draw	= function(c, gs) {
+				c.fillStyle = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c) + ', ' + parseInt(this.c) + ', 1.0)';
+				this.draw_circle(c);
+			}
+			
+			// in "antsy" state we are red coloured
+			this.antsy_draw = function(c, gs) {
+				c.fillStyle = 'rgba(' + parseInt(this.c) + ', ' + parseInt(this.c - 100) + ', ' + parseInt(this.c - 100) + ', 1.0)';
+				this.draw_circle(c);
+			}
+			
+			// method to draw a circle representing us (both states)
+			this.draw_circle = function(c) {
+				c.beginPath();
+				c.arc(this.x, this.y, this.r, 0, Math.PI*2, true);
+				c.closePath();
+				c.fill();
+			}
+		}
+		
+		// add some entities of type C to our game, turning them into statemachines as we go
+		for (i=0; i<5; i++)
+			gs.addEntity(statemachine(new C()));
+}
+</script>
+<canvas id='surface' jsgs='startGame'></canvas>
+<div>Testing out finite state machines, that stop and get antsy every now and then.</div>
+</body>
+</html>
+
