@@ -1,4 +1,4 @@
-jsGameSoup v189
+jsGameSoup v192
 --------------
 
 A Free Software framework for making games for the web using Javascript and open web technologies. Modular components abstract away the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher.
@@ -26,7 +26,7 @@ A Free Software framework for making games for the web using Javascript and open
 [Sylvester]: http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester
 [Sylvester-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/Sylvester-thumbnail.png
 
-[Download jsGameSoup v189](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v189.zip) - jump down to the quickstart section to dive in.
+[Download jsGameSoup v192](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v192.zip) - jump down to the quickstart section to dive in.
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
@@ -46,6 +46,7 @@ Batteries included
  * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
  * Simple AJAX and bulk data loading with [network.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
  * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
+ * Simple finite state machine [statemachine.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/statemachine.html)
  * Optional auto-init to launch code attached to HTML canvases
 
 ![FallingGame screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame.png)
@@ -54,12 +55,6 @@ Documentation
 -------------
 
  * [All jsGameSoup API documentation](http://mccormick.cx/projects/jsGameSoup/jsdocs)
-   * [Sprite class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
-   * [AudioManager class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/AudioManager.html)
-   * [Collision API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
-   * [Seedable random number generator](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
-   * [Cookie handling](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
-   * [Network/ajax/bulkLoad request API](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
  * [JSGameSoup engine class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/JSGameSoup.html)
  * [Reference implementation of a jsGameSoup entity](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/ExampleEntity.html)
  * [Simple jsGameSoup example game](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/src/example-game.js.html)
@@ -67,12 +62,12 @@ Documentation
  * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
  * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
 
- * [Very incomplete test suite](http://mccormick.cx/projects/jsGameSoup/tests)
+ * [Some tests](http://mccormick.cx/projects/jsGameSoup/tests)
 
 Download
 --------
 
-[Zipfile of jsGameSoup v189](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v189.zip)
+[Zipfile of jsGameSoup v192](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v192.zip)
 
 You probably also want one of the following for Internet Explorer compatibility:
 
