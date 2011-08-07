@@ -3,7 +3,8 @@
 <script src='../js/random.js'></script>
 <script>
 var freq = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-var r = new SeedableRandom2d(101, 101);
+var r = new SeedableRandom();
+r.seed2d(101, 101);
 
 console.log("Starting 1000 random ints (0, 10)...");
 
@@ -41,7 +42,6 @@ for (var i=0; i<10; i++) {
 	adjacent.push(r.nextInt(0, 10));
 }
 console.log(adjacent);
-
 </script>
 </head>
 <body>
