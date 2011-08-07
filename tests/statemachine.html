@@ -34,6 +34,9 @@ function startGame(gs) {
 			this.r = gs.random(10, 30);
 			this.c = gs.random(100, 200);
 			
+			// turn this entity into a finite-state machine
+			statemachine(this);
+			
 			// set the initial state to "chill"
 			this.init = function() {
 				this.set_state("chill");
@@ -84,7 +87,7 @@ function startGame(gs) {
 		
 		// add some entities of type C to our game, turning them into statemachines as we go
 		for (i=0; i<5; i++)
-			gs.addEntity(statemachine(new C()));
+			gs.addEntity(new C());
 }
 </script>
 <canvas id='surface' jsgs='startGame'></canvas>
