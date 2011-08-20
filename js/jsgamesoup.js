@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v193, Copyright 2009-2011 Chris McCormick
+ *	JSGameSoup v194, Copyright 2009-2011 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -73,6 +73,10 @@ function JSGameSoup(canvas, framerate) {
 	this.width = parseInt(this.canvas.width);
 	this.height = parseInt(this.canvas.height);
 	
+	/*******************************
+		External includes
+	 *******************************/
+
 	/**
 		Include an external javascript file.
 		This is used internally to add functionality from separate files but you can also use it: JSGS.include("myjavascript.js", function(url){ alert(url + 'loaded'); });
@@ -91,9 +95,6 @@ function JSGameSoup(canvas, framerate) {
 		head.appendChild(script);
 	}
 	
-	/*******************************
-		External includes
-	 *******************************/
 	// figure out the baseurl of where javascript lives
 	//var scripts = document.getElementsByTagName("script");
 	//var mysrc = scripts[scripts.length-1].src;
@@ -104,6 +105,27 @@ function JSGameSoup(canvas, framerate) {
 	//this.include(baseurl + "/jsGameSoup/js/random.js");
 	// load the sprite manager
 	//this.include(baseurl + "/jsGameSoup/js/sprite.js");
+
+	/* ****************************
+	 	General helpers
+	 ******************************/
+	/** @namespace helpers */
+	
+	// store our scheduled callbacks
+	var scheduled = {};
+	/** Schedule a callback to be run after some number of frames.
+		@param frames is the number of frames to wait before running this callback. Must be > 1.
+		@param callback is the callback to be run when the given number of frames has elapsed.
+	*/
+	this.schedule = function(frames, callback) {
+		if (frames > 0) {
+			var when = this.frameCount + frames;
+			if (!(when in scheduled)) {
+				scheduled[when] = [];
+			}
+			scheduled[when].push(callback);
+		}
+	}
 	
 	/* ****************************
 	 	Graphics helpers
@@ -447,6 +469,15 @@ function JSGameSoup(canvas, framerate) {
 	
 	/** This is our main game loop, which gets launched automatically with the launch() method. */
 	this.gameSoupLoop = function gameSoupLoop() {
+		// do we have any scheduled callbacks waiting to run?
+		if (this.frameCount in scheduled) {
+			for (var s=0; s<scheduled[this.frameCount].length; s++) {
+				// run the callback
+				scheduled[this.frameCount][s](this);
+			}
+			delete scheduled[this.frameCount];
+		}
+		
 		// run .update() on every entity in our list
 		for (var o=0; o<entities.length; o++) {
 			if (entities[o].update) {
