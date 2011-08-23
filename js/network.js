@@ -7,11 +7,11 @@ network = {};
 /**
 	Make a single ajax request. Returns the request object. The default timeout is 30000 milliseconds. 
 	@param url is where to fetch data from.
-	@param callback gets called when the data arrives, taking arguments (response_data, http_request)
-	@param type is GET or POST (note that this may default to POST if any data is passed)
-	@param data is an associative array of data to send
-	@param timeout is how long in milliseconds to wait before registering a network request as failed.
-	@param timeout_callback gets called when
+	@param callback gets called when the data arrives, taking arguments (response_data, http_request).
+	@param timeout_callback gets called when the request times out.
+	@param type is GET or POST (note that this may default to POST on some platforms if data is passed).
+	@param data is an associative array of data to send (optional).
+	@param timeout is how long in milliseconds to wait before registering a network request as failed (and calling timeout_callback).
 */
 network.makeRequest = function(url, callback, timeout_callback, type, data, timeout) {
 	var http_request = false;
