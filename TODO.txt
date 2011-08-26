@@ -1,3 +1,4 @@
+* nesters.js - child and parent heirarchies
 * make a method to get actual framerate
 * menu.js - creates a nice text menu
 * statemachine.js - turns an entity into a statemachine with multiple .draw .update etc.

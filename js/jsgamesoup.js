@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v194, Copyright 2009-2011 Chris McCormick
+ *	JSGameSoup v196, Copyright 2009-2011 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -60,9 +60,9 @@ function JSGameSoup(canvas, framerate) {
 		// avoid errors by populating with empty function signatures.
 		this.width = 0;
 		this.height = 0;
-		this.random = function() {};
-		this.addEntity = function() {};
-		this.launch = function() {};
+		this.random = this.nullfunc;
+		this.addEntity = this.nullfunc;
+		this.launch = this.nullfunc;
 		return;
 	}
 	// stop the bug where lines on whole integers are blurred (processingjs fix)
@@ -111,8 +111,6 @@ function JSGameSoup(canvas, framerate) {
 	 ******************************/
 	/** @namespace helpers */
 	
-	// store our scheduled callbacks
-	var scheduled = {};
 	/** Schedule a callback to be run after some number of frames.
 		@param frames is the number of frames to wait before running this callback. Must be > 1.
 		@param callback is the callback to be run when the given number of frames has elapsed.
@@ -126,6 +124,11 @@ function JSGameSoup(canvas, framerate) {
 			scheduled[when].push(callback);
 		}
 	}
+	// store our scheduled callbacks
+	var scheduled = {};
+	
+	/** A null function to assign non-implemented callbacks to. */
+	this.nullfunc = function() {};
 	
 	/* ****************************
 	 	Graphics helpers
