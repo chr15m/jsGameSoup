@@ -1,5 +1,5 @@
 /*
- *	JSGameSoup v196, Copyright 2009-2011 Chris McCormick
+ *	JSGameSoup v197, Copyright 2009-2011 Chris McCormick
  *	
  *	LGPL version 3 (see COPYING for details)
  *	
@@ -22,32 +22,33 @@ function JSGameSoup(canvas, framerate) {
 	// where we will output the graphics
 	if (typeof canvas == "string") {
 		// the caller has supplied the ID of a canvas
-		this.canvas = document.getElementById(canvas);
-	} else {
-		// attach new styles to our container or canvas object for android and iOS devices
-		/* disable callout sheet */
-		// canvas.style["-webkit-touch-callout"] = "none";
-		/* disable highlighting links when tapped */
-		// canvas.style["-webkit-tap-highlight-color"] = "rgba(0,0,0,0)";
-		/* prevent automatic resizing of text */
-		// canvas.style["-webkit-text-size-adjust"] = "none";
-		/* disable copy paste */
-		// canvas.style["-webkit-user-select"] = "none";
-		if (canvas.tagName.toLowerCase() == "canvas") {
-			// they have supplied their own canvas element
-			this.canvas = canvas;
-		} else {
-			// they have passed a container element
-			// insert a canvas of the same size inside it
-			var container = canvas;
-			canvas = document.createElement("canvas");
-			// set the width and height of our canvas to be the same as the container element
-			canvas.style.width = canvas.width = (container.offsetWidth + 1);
-			canvas.style.height = canvas.height = (container.offsetHeight + 1);
-			container.appendChild(canvas);
-			this.canvas = canvas;
-		}
+		canvas = document.getElementById(canvas);
 	}
+
+	// attach new styles to our container or canvas object for android and iOS devices
+	/* disable callout sheet */
+	// canvas.style["-webkit-touch-callout"] = "none";
+	/* disable highlighting links when tapped */
+	// canvas.style["-webkit-tap-highlight-color"] = "rgba(0,0,0,0)";
+	/* prevent automatic resizing of text */
+	// canvas.style["-webkit-text-size-adjust"] = "none";
+	/* disable copy paste */
+	// canvas.style["-webkit-user-select"] = "none";
+	if (canvas.tagName.toLowerCase() == "canvas") {
+		// they have supplied their own canvas element
+		this.canvas = canvas;
+	} else {
+		// they have passed a container element
+		// insert a canvas of the same size inside it
+		var container = canvas;
+		canvas = document.createElement("canvas");
+		// set the width and height of our canvas to be the same as the container element
+		canvas.style.width = canvas.width = (container.offsetWidth + 1);
+		canvas.style.height = canvas.height = (container.offsetHeight + 1);
+		container.appendChild(canvas);
+		this.canvas = canvas;
+	}
+	
 	// apply IE fix
 	if (typeof(G_vmlCanvasManager) != "undefined")
 		G_vmlCanvasManager.initElement(canvas);
