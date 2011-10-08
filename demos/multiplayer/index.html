@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<style>
+		body {
+			height: 100%;
+			margin: 0;
+			margin-top: 20px;
+			overflow: hidden;
+			text-align: center;
+			font-family: arial;
+		}
+		
+		canvas {
+			border: 1px solid gray;
+		}
+	</style>
+</head>
+<body>
+<!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
+<script src="../js/jsgamesoup.js"></script>
+<script src="multiplayer.js"></script>
+<script>
+function startGame(gs) {
+	// represents a local or remote player in the world
+	function Player() {
+		// this client's state, including position
+		// of pointer and whether pointer is active/clicking right now
+		this.state = {
+			"down": false,
+			"position": [0, 0]
+		};
+		
+		// draw a circle representing this player
+		this.draw = function(c) {
+			c.fillStyle = this.state.down ? "rgb(255,0,0)" : "rgb(0,0,0)";
+			c.beginPath();
+			c.arc(this.state.position[0], this.state.position[1], gs.width / 20, 0, Math.PI*2, true);
+			c.closePath();
+			c.fill();
+		}
+		
+		// update the state of this player/circle
+		this.set_state = function(newstate) {
+			this.state = newstate;
+		}
+	}
+	
+	// the world the player entities inhabit
+	function World(player) {
+		this.init = function() {
+			// a list of all other players, by ID
+			var clients = {};
+			
+			// connection to the server
+			this.c = multiplayer.connect();
+			
+			// when a client's permanent state is updated
+			this.c.on("client_state", function(data) {
+				console.log("STQATE", data);
+				if (!clients[data.id]) {
+					clients[data.id] = gs.addEntity(new Player());
+				}
+				clients[data.id].set_state(data.state);
+			});
+			
+			// when another client has been removed from the server
+			this.c.on("client_disconnected", function(id) {
+				if (clients[id]) {
+					gs.delEntity(clients[id]);
+					delete clients[id];
+				}
+			});
+		}
+		
+		// if the player clicks anywhere inside the box
+		this.pointerBox = function() {
+			return [0, 0, gs.width, gs.height];
+		}
+		
+		this.pointerDown = function() {
+			var data = {"down": true, "position": gs.pointerPosition};
+			this.c.set_state(data);
+			player.set_state(data);
+		}
+		
+		this.pointerMove = function() {
+			if (gs.pointerDown && (gs.pointerPosition[0] != player.state.position[0] || gs.pointerPosition[1] != player.state.position[1])) {
+				var data = {"down": true, "position": gs.pointerPosition};
+				this.c.set_state(data);
+				player.set_state(data);
+			}
+		}
+		
+		this.pointerUp = function() {
+			var data = {"down": false, "position": gs.pointerPosition};
+			this.c.set_state(data);
+			player.set_state(data);
+		}
+
+	}
+	
+	// add the player
+	var me = new Player();
+	gs.addEntity(me);
+	// add the world with the player to the world
+	gs.addEntity(new World(me));
+}
+</script>
+<canvas id='surface' jsgs='startGame'></canvas>
+<div>Testing out the multiplayer server.<br/>Run this like: `node example-server.js`<br/>Then browse to <a href='http://localhost:8000/'>http://localhost:8000/</a></div>
+</body>
+</html>

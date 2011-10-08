@@ -1,18 +1,43 @@
+* RSS feed in 
 * nesters.js - child and parent heirarchies
 * make a method to get actual framerate
-* menu.js - creates a nice text menu
-* statemachine.js - turns an entity into a statemachine with multiple .draw .update etc.
+* menu.js - creates a nice full-screen text menu
+* piemenu.js - creates a piemenu
 * use twinhelix pngfix on site
 * external library demo links direct in readme
 * extend canvas with useful methods (like drawlines)
-* update FallingGame with audio and flashcanvas
-* update AsteroidsTNG with audio and flashcanvas
+* update FallingGame with audio and flashcanvas, includes, etc.
+* update AsteroidsTNG with audio and flashcanvas, includes, etc.
 * double buffering
   * http://www.felinesoft.com/blog/index.php/2010/09/accelerated-game-programming-with-html5-and-canvas/
   * FlashCanvas works fastest from inside same canvas - double canvas width and buffer from left-to-right
+* multiplayer server + examples + documentation
+* Wojtek/vibrant's "canvas passthrough" camera method for a camera.js class
+* resize code from "Lynx" on tigsource:
+
+    // When the window is resized, expand the canvas to fit
+    var resizeHandler = function(ev) {
+      var canvas = gs.canvas;
+      var width = window.innerWidth;
+      var height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      canvas.style.width = width;
+      canvas.style.height = height;
+      gs.width = width;
+      gs.height = height;
+    }
+    if (window.addEventListener) {
+      window.addEventListener('resize', resizeHandler, false);
+    } else if (document.body.attachEvent) {
+      document.body.attachEvent('onresize', resizeHandler);
+    } else if(document.body.onresize) {
+      document.body.onresize = resizeHandler;
+    }
 
 * on addEntity() add methods to the object
   * addEntity() method for objects to nest objects?
+    * canvas coordinate passhthrough optionally?
   * set_priority() method for updating priority of an object?
 * socket.io demo
 * integrate Nick's resize code http://onetwenty.org/upload/soupbox/
