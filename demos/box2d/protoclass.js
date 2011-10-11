@@ -31,8 +31,7 @@ var Class = {
 
     return klass;
   },
-  emptyFunction:function () {},
-
+  emptyFunction:function () {}
 };
 
 Class.Methods = {
