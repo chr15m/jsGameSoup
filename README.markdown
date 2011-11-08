@@ -1,4 +1,4 @@
-jsGameSoup v197
+jsGameSoup v201
 --------------
 
 A Free Software framework for making games for the web using Javascript and open web technologies. Modular components abstract away the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher.
@@ -12,26 +12,26 @@ A Free Software framework for making games for the web using Javascript and open
 </span>
 
 [FallingGame]: http://mccormick.cx/dev/blogref/FallingGame/
-[FallingGame-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame-thumbnail.png
+[FallingGame-thumbnail]: http://jsgamesoup.net/screenshots/FallingGame-thumbnail.png
 
 [AsteroidsTNG]: http://mccormick.cx/dev/blogref/AsteroidsTNG/
-[AsteroidsTNG-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG-thumbnail.png
+[AsteroidsTNG-thumbnail]: http://jsgamesoup.net/screenshots/AsteroidsTNG-thumbnail.png
 
-[SoupBox]: http://mccormick.cx/projects/jsGameSoup/demos/box2d
-[SoupBox-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/SoupBox-thumbnail.png
+[SoupBox]: http://jsgamesoup.net/demos/box2d
+[SoupBox-thumbnail]: http://jsgamesoup.net/screenshots/SoupBox-thumbnail.png
 
-[AudioDemo]: http://mccormick.cx/projects/jsGameSoup/demos/audio.html
-[AudioDemo-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/AudioDemo-thumbnail.png
+[AudioDemo]: http://jsgamesoup.net/demos/audio.html
+[AudioDemo-thumbnail]: http://jsgamesoup.net/screenshots/AudioDemo-thumbnail.png
 
-[Sylvester]: http://mccormick.cx/projects/jsGameSoup/demos/vector-math-sylvester
-[Sylvester-thumbnail]: http://mccormick.cx/projects/jsGameSoup/screenshots/Sylvester-thumbnail.png
+[Sylvester]: http://jsgamesoup.net/demos/vector-math-sylvester
+[Sylvester-thumbnail]: http://jsgamesoup.net/screenshots/Sylvester-thumbnail.png
 
-[Download jsGameSoup v197](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v197.zip) - jump down to the quickstart section to dive in.
+[Download jsGameSoup v201](http://jsgamesoup.net/jsGameSoup-v201.zip) - jump down to the quickstart section to dive in.
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
 
-Copyright Chris McCormick, 2009-2011, and LGPL licensed. Please see the file [COPYING](http://mccormick.cx/projects/jsGameSoup/COPYING) for details.
+Copyright Chris McCormick, 2009-2011, and LGPL licensed. Please see the file [COPYING](http://jsgamesoup.net/COPYING) for details.
 
 [Using jsGameSoup for your game? Hire me as a consultant.](mailto:chris@mccormickit.com)
 
@@ -40,34 +40,34 @@ Batteries included
 
  * Cross browser event handling (keyboard, mouse, touch)
  * Game entity management
- * Sprite management [sprite.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/Sprite.html)
- * Sound effects playback with [audio.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/AudioManager.html)
- * Rudimentary polygon, box, circle collision detection [collisions.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/collide.html)
- * Fast, deterministic random number generator [random.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/SeedableRandom.html)
- * Simple AJAX and bulk data loading with [network.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/network.html)
- * Basic cookie management [cookies.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/cookies.html)
- * Simple finite state machine [statemachine.js](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/statemachine.html)
+ * Sprite management [sprite.js](http://jsgamesoup.net/jsdocs/symbols/Sprite.html)
+ * Sound effects playback with [audio.js](http://jsgamesoup.net/jsdocs/symbols/AudioManager.html)
+ * Rudimentary polygon, box, circle collision detection [collisions.js](http://jsgamesoup.net/jsdocs/symbols/collide.html)
+ * Fast, deterministic random number generator [random.js](http://jsgamesoup.net/jsdocs/symbols/SeedableRandom.html)
+ * Simple AJAX and bulk data loading with [network.js](http://jsgamesoup.net/jsdocs/symbols/network.html)
+ * Basic cookie management [cookies.js](http://jsgamesoup.net/jsdocs/symbols/cookies.html)
+ * Simple finite state machine [statemachine.js](http://jsgamesoup.net/jsdocs/symbols/statemachine.html)
  * Optional auto-init to launch code attached to HTML canvases
 
-![FallingGame screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/FallingGame.png)
+![FallingGame screenshot](http://jsgamesoup.net/screenshots/FallingGame.png)
 
 Documentation
 -------------
 
- * [All jsGameSoup API documentation](http://mccormick.cx/projects/jsGameSoup/jsdocs)
- * [JSGameSoup engine class](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/JSGameSoup.html)
- * [Reference implementation of a jsGameSoup entity](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/ExampleEntity.html)
- * [Simple jsGameSoup example game](http://mccormick.cx/projects/jsGameSoup/jsdocs/symbols/src/example-game.js.html)
+ * [All jsGameSoup API documentation](http://jsgamesoup.net/jsdocs)
+ * [JSGameSoup engine class](http://jsgamesoup.net/jsdocs/symbols/JSGameSoup.html)
+ * [Reference implementation of a jsGameSoup entity](http://jsgamesoup.net/jsdocs/symbols/ExampleEntity.html)
+ * [Simple jsGameSoup example game](http://jsgamesoup.net/jsdocs/symbols/src/example-game.js.html)
 
  * [Canvas cheatsheet](http://www.nihilogic.dk/labs/canvas_sheet/HTML5_Canvas_Cheat_Sheet.png)
  * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
 
- * [Some tests](http://mccormick.cx/projects/jsGameSoup/tests)
+ * [Some tests](http://jsgamesoup.net/tests)
 
 Download
 --------
 
-[Zipfile of jsGameSoup v197](http://mccormick.cx/projects/jsGameSoup/jsGameSoup-v197.zip)
+[Zipfile of jsGameSoup v201](http://jsgamesoup.net/jsGameSoup-v201.zip)
 
 You probably also want one of the following for Internet Explorer compatibility:
 
@@ -76,7 +76,7 @@ You probably also want one of the following for Internet Explorer compatibility:
 
 See the Internet Explorer compatability section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
 
-![AsteroidsTNG screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/AsteroidsTNG.png)
+![AsteroidsTNG screenshot](http://jsgamesoup.net/screenshots/AsteroidsTNG.png)
 
 Suggested companion libraries
 -----------------------------
@@ -113,7 +113,7 @@ Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git rep
 
 [Patches welcome](mailto:chris@mccormick.cx)!
 
-![Numbeat screenshot](http://mccormick.cx/projects/jsGameSoup/screenshots/Numbeat.png)
+![Numbeat screenshot](http://jsgamesoup.net/screenshots/Numbeat.png)
 
 Quick Start
 -----------

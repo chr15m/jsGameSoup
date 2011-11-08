@@ -12,7 +12,7 @@ scripts/replace-version.sh README.markdown
 bzr commit -m "$message"
 make clean -C docs/
 make -C docs/
-rsync -avz docs/* chrism@mccormick.cx:~/mccormick.cx/projects/jsGameSoup/
+rsync -avz docs/* jsgamesoup.net:/var/www/jsgamesoup.net/
 
 # push changes to Google Code
 bzr push https://mccormix@jsgamesoup.googlecode.com/svn/jsgamesoup/
