@@ -57,7 +57,6 @@ function startGame(gs) {
 			
 			// when a client's permanent state is updated
 			this.c.on("client_state", function(data) {
-				console.log("STQATE", data);
 				if (!clients[data.id]) {
 					clients[data.id] = gs.addEntity(new Player());
 				}
@@ -66,6 +65,15 @@ function startGame(gs) {
 			
 			// when another client has been removed from the server
 			this.c.on("client_disconnected", function(id) {
+				if (clients[id]) {
+					gs.delEntity(clients[id]);
+					delete clients[id];
+				}
+			});
+			
+			// when another client has been removed from the server
+			this.c.on("client_left", function(id) {
+				console.log('LEFT: ' + id);
 				if (clients[id]) {
 					gs.delEntity(clients[id]);
 					delete clients[id];

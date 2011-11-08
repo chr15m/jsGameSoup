@@ -93,8 +93,9 @@ function Client(id) {
 	var forget_me = null;
 	// representation of this client's state data 
 	this.state = null;
-	// TODO: maintain a last_friends_list to send disconnect/connect
+	// maintain a last_friends_list to send disconnect/connect
 	// when the friends list changes on state/message
+	this.old_friends = [];
 	
 	// push new notifications onto the queue
 	// wait will stop the send attempt
@@ -120,7 +121,7 @@ function Client(id) {
 	// kill off a particular client
 	this.kill = function() {
 		// tell all other clients this client is gone
-		for (c in server.get_friends(this)) {
+		for (var c in this.get_friends()) {
 			clients[c].push({"type": "client_disconnected"}, id);
 		}
 		// if we have a current poller (should never happen) disconnect it in case
@@ -133,12 +134,59 @@ function Client(id) {
 		log_num_clients();
 	}
 	
+	// get a list of friends of this client
+	// if the friend list has changed tells old and new friends
+	this.get_friends = function(ignore) {
+		// get a new list of our current friends
+		var friends = server.get_friends(this);
+		// list of friends who also need to check if we are still their friend
+		var notify = {};
+		
+		// find friends who are in old_friends but no longer friends
+		for (var c in this.old_friends) {
+			if (!(c in friends)) {
+				// tell this client those friends which have left
+				this.push({"type": "client_left"}, c, true);
+				// we want the friend to also check if we are still in their list
+				notify[c] = this.old_friends[c];
+			}
+		}
+		
+		// we want state from new friends
+		for (var c in friends) {
+			if (!(c in this.old_friends)) {
+				// the state of this friend
+				var friend_state = friends[c].state;
+				// only send their state if they have one
+				if (friend_state != null) {
+					// push this out but don't close the socket just yet
+					this.push({"type": "client_state", "state": friend_state}, c, true);
+					// we want the friend to also check if we are still in their list
+					notify[c] = friends[c];
+				}				
+			}
+		}
+		
+		// remember the list of our current friends
+		this.old_friends = friends;
+		
+		// run get_friends on the friends who we noticed changed so they will notice us change
+		for (var c in notify) {
+			if (c != ignore) {
+				// make sure we do not get re-checked on the rebound
+				notify[c].get_friends(id);
+			}
+		}
+		
+		return friends;
+	}
+	
 	// save up the last poller from this connection
 	this.set_poller = function(req, res) {
 		// if they have never polled before send them initial state of other clients
 		if (poll_start == 0) {
 			// list of our friends
-			for (c in server.get_friends(this)) {
+			for (var c in this.get_friends()) {
 				// the state of this friend
 				var friend_state = clients[c].state;
 				// only send their state if they have one
@@ -214,7 +262,7 @@ function Client(id) {
 		// set our new state
 		this.state = new_state;
 		// send the new state to all of our friends
-		for (c in server.get_friends(this)) {
+		for (var c in this.get_friends()) {
 			// tell them our own new state
 			clients[c].push({"type": "client_state", "state": this.state}, id);
 		}
@@ -270,7 +318,7 @@ app.post('/c/broadcast/:id', function(req, res) {
 		// this sender is still active
 		sender.touch();
 		// add the data to every client's outgoing queue
-		for (c in server.get_friends(sender)) {
+		for (var c in sender.get_friends()) {
 			// don't bother sending a broadcast back to ourselves
 			if (c != req.params.id) {
 				var outgoing = JSON.parse(req.body.p);
@@ -306,7 +354,7 @@ function start_checks() {
 	// check for old long polls and close them
 	setInterval(function() {
 		// check every client to see if it has expired and close the connection if so
-		for (c in clients) {
+		for (var c in clients) {
 			if (clients[c].has_poll_expired()) {
 				server.log(" -> Poll reset: " + c);
 				// close this poller
@@ -318,7 +366,7 @@ function start_checks() {
 	// check for dead clients and close them down
 	setInterval(function() {
 		// check every client to see if it has expired and close the connection if so
-		for (c in clients) {
+		for (var c in clients) {
 			if (clients[c].is_dead()) {
 				clients[c].kill();
 			}

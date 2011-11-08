@@ -8,5 +8,11 @@ console.log("Clients: " + s.clients);
 s.get_friends = function(client) {
 	// return some subset of s.clients that can be seen by client
 	// you can access client.state to filter clients
-	return s.clients;
+	var friends = {};
+	for (var c in s.clients) {
+		if (s.clients[c].state && client.state && (Math.floor(s.clients[c].state.position[0] / 150) == Math.floor(client.state.position[0] / 150))) {
+			friends[c] = s.clients[c];
+		}
+	}
+	return friends;
 }

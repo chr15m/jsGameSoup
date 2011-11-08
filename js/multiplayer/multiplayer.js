@@ -133,6 +133,8 @@ multiplayer.MultiplayerClient = function() {
 									me.call("client_state", raw[p]);
 								} else if (raw[p].type == "client_disconnected") {
 									me.call("client_disconnected", raw[p].id);
+								} else if (raw[p].type == "client_left") {
+									me.call("client_left", raw[p].id);
 								} else {
 									console.log("Dropped message: " + raw[p]);
 								}

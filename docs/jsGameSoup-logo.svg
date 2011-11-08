@@ -35,7 +35,7 @@
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
      inkscape:zoom="0.35"
-     inkscape:cx="-3467.6532"
+     inkscape:cx="-3461.9389"
      inkscape:cy="-2328.255"
      inkscape:document-units="px"
      inkscape:current-layer="layer1"
@@ -521,14 +521,14 @@
        style="fill:#1a1a1a;fill-opacity:1;stroke:none"
        inkscape:connector-curvature="0" />
     <rect
-       style="fill:none;fill-opacity:0.73333333000000001;stroke:none;stroke-width:2;stroke-linecap:square;stroke-linejoin:round;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none"
+       style="fill:none;stroke:none"
        id="rect3285"
-       width="940"
-       height="940"
+       width="940.25"
+       height="940.25"
        x="-3720"
-       y="2806.3623"
-       inkscape:export-filename="/home/chrism/dev/games/jsGameSoup/docs/favicon.ico.png"
-       inkscape:export-xdpi="1.5256763"
-       inkscape:export-ydpi="1.5256763" />
+       y="2806.1123"
+       inkscape:export-filename="/home/chrism/dev/games/jsGameSoup/docs/jsGameSoup-logo-14.png"
+       inkscape:export-xdpi="1.3400693"
+       inkscape:export-ydpi="1.3400693" />
   </g>
 </svg>
