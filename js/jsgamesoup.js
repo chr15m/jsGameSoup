@@ -286,15 +286,14 @@ function JSGameSoup(canvas, framerate) {
 	}
 	this.attachEvent("touchstart");
 	
-	this.ontouchstop = function ontouchstop(ev) {
-		alert('touchstop');
+	this.ontouchend = function ontouchend(ev) {
 		var ev = (ev) ? ev : window.event;
 		JSGS.pointInEntitiesCall(JSGS.getSetPointerPosition(ev), "pointerUp", ev.touches.length);
 		JSGS.cancelEvent(ev);
 		JSGS.pointerDown = false;
 		return false;
 	}
-	this.attachEvent("touchstop");
+	this.attachEvent("touchend");
 	
 	this.onmove = function onmove(ev, idx) {
 		var ev = (ev) ? ev : window.event;

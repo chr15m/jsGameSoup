@@ -118,7 +118,7 @@ Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git rep
 Quick Start
 -----------
 
-Start in an empty working directoy. First get the jsGameSoup source in a sub-directory called 'jsGameSoup'.
+Start in an empty working directory. First get the jsGameSoup source in a sub-directory called 'jsGameSoup'.
 
 Now create a file called index.html that will contain a basic HTML page, with a window-filling div tag that will become our game canvas.
 
