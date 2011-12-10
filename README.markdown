@@ -1,4 +1,4 @@
-jsGameSoup v202
+jsGameSoup v204
 --------------
 
 A Free Software framework for making games for the web using Javascript and open web technologies. Modular components abstract away the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher.
@@ -26,7 +26,7 @@ A Free Software framework for making games for the web using Javascript and open
 [Sylvester]: http://jsgamesoup.net/demos/vector-math-sylvester
 [Sylvester-thumbnail]: http://jsgamesoup.net/screenshots/Sylvester-thumbnail.png
 
-[Download jsGameSoup v202](http://jsgamesoup.net/jsGameSoup-v202.zip) - jump down to the quickstart section to dive in.
+[Download jsGameSoup v204](http://jsgamesoup.net/jsGameSoup-v204.zip) - jump down to the quickstart section to dive in.
 
  * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
  * [Mailing list](http://groups.google.com/group/jsgamesoup)
@@ -67,7 +67,7 @@ Documentation
 Download
 --------
 
-[Zipfile of jsGameSoup v202](http://jsgamesoup.net/jsGameSoup-v202.zip)
+[Zipfile of jsGameSoup v204](http://jsgamesoup.net/jsGameSoup-v204.zip)
 
 You probably also want one of the following for Internet Explorer compatibility:
 
