@@ -94,10 +94,11 @@ Free game resources
 
  * [SFXR sound effects tool](http://www.drpetter.se/project_sfxr.html) - also [BFXR in your browser](http://www.bfxr.net/)
  * [Dan Cook's free game graphics](http://lunar.lostgarden.com/labels/free%20game%20graphics.html)
+ * [Oryx's LOFI fantasy tiles and sprites](http://forums.tigsource.com/index.php?topic=8970.0)
+ * [WidgetWorx SpriteLib](http://www.widgetworx.com/widgetworx/portfolio/spritelib.html)
  * [Philipp Lenssen's free sprites](http://blogoscoped.com/archive/2006-08-08-n51.html)
  * [HasGraphics game graphics](http://hasgraphics.com/)
  * [Reiner`s Tilesets](http://www.reinerstilesets.de/2d-grafiken/2d-environment/)
- * [WidgetWorx SpriteLib](http://www.widgetworx.com/widgetworx/portfolio/spritelib.html)
 
 Source code
 -----------
