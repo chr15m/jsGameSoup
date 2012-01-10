@@ -70,7 +70,8 @@ function init(gs)
 			"draw" : function(c, gs) {
 				c.fillStyle = this.fs;
 				c.beginPath();
-				c.arc(this.body.m_position.x, this.body.m_position.y, this.r, 0, Math.PI*2, true);				c.closePath();
+				c.arc(this.body.m_position.x, this.body.m_position.y, this.r, 0, Math.PI*2, true);
+				c.closePath();
 				c.fill();
 			},
 		});
