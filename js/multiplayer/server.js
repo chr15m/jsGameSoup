@@ -27,12 +27,12 @@ app.configure(function(){
 
 /* Statically serve multiplayer.js and test page ****************************************************/
 
-// get an ID for this client
+// statically serve the client side multiplayer library
 app.get('/multiplayer.js', function(req, res) {
 	res.sendfile(__dirname + '/multiplayer.js');
 });
 
-// get an ID for this client
+// statically serve the test page
 app.get('/test', function(req, res) {
 	res.sendfile(__dirname + '/test.html');
 });
@@ -145,7 +145,7 @@ function Client(id) {
 		// find friends who are in old_friends but no longer friends
 		for (var c in this.old_friends) {
 			if (!(c in friends)) {
-				// tell this client those friends which have left
+				// tell this client those friends which have left (don't close socket yet)
 				this.push({"type": "client_left"}, c, true);
 				// we want the friend to also check if we are still in their list
 				notify[c] = this.old_friends[c];
@@ -177,6 +177,9 @@ function Client(id) {
 				notify[c].get_friends(id);
 			}
 		}
+		
+		// finally, try to do the send of all data we pushed
+		this.try_send();
 		
 		return friends;
 	}

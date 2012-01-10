@@ -1,3 +1,11 @@
+/*
+ *	jsGameSoup Multiplayer Client
+ *	Copyright 2009-2011 Chris McCormick
+ *	
+ *	AGPL version 3 (see COPYING for details)
+ *	
+ */
+
 /** Client side code for the multiplayer server. **/
 
 var multiplayer = {

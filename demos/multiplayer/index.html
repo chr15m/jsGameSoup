@@ -65,6 +65,7 @@ function startGame(gs) {
 			
 			// when another client has been removed from the server
 			this.c.on("client_disconnected", function(id) {
+				console.log('DISCONNECTED: ' + id);
 				if (clients[id]) {
 					gs.delEntity(clients[id]);
 					delete clients[id];
