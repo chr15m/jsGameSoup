@@ -770,3 +770,7 @@ if (!Array.prototype.remove) {
 	}
 }
 
+/* Non-buggy modulus that works correctly on negative numbers. */
+Number.prototype.mod = function(n) {
+	return ((this%n)+n)%n;
+}
