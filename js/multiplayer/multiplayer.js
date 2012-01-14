@@ -231,11 +231,15 @@ multiplayer.makeRequest = function(url, callback, timeout_callback, type, data, 
 	}, timeout);
 };
 
-// ugly backup for JSON parsing on missing platforms
-if (!JSON.parse) {
+// ugly and dangerous backup for JSON parsing on missing platforms
+if (typeof(JSON) == "undefined") {
+	JSON = {};
+}
+
+if (typeof(JSON.parse) == "undefined") {
 	JSON.parse = function(str) {
 		var jprse = null;
-		eval("jprse=" + str);
+		eval("jprse=" + str + ";");
 		return jprse;
 	};
 }
