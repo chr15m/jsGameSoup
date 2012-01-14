@@ -1,5 +1,7 @@
+* put json2.js fetch into the documentation generation Makefile externals
+* test multiplayer demo with all three browsers at the same time for a while
+* in internet explorer, "caller" is not defined perhaps - check multiplayer code & grep for others
 * perlin & simplex noise - https://gist.github.com/304522
-* A* Path finding - http://46dogs.blogspot.com/2009/10/star-pathroute-finding-javascript-code.html
 * Make a 'vanilla' project people can start from (with Android/iPhone default stuff + flashcanvas)
 * RSS feed on site
 * update FallingGame with audio
