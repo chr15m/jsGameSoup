@@ -3,9 +3,17 @@
  *	Copyright 2009-2011 Chris McCormick
  *	
  *	AGPL version 3 (see COPYING for details)
+ * 
+ * 	Note: this depends upon json2.js on platforms that don't have JSON.stringify()
  *	
  */
 
+// check for JSON and barf if not found. Probably you will be using IE if this happens.
+if (typeof(JSON) == "undefined" || typeof(JSON.stringify) == "undefined" || typeof(JSON.parse) == "undefined") {
+	alert("JSON.stringify() not found. Try https://raw.github.com/douglascrockford/JSON-js/master/json2.js");
+};
+
+var isIE = navigator.userAgent.indexOf("MSIE") != -1;
 /** Client side code for the multiplayer server. **/
 
 var multiplayer = {
@@ -27,7 +35,6 @@ multiplayer.MultiplayerClient = function() {
 		// default URL is where our server is
 		url = seturl || document.location.href.split("/").slice(0, -1).join("/") + "/c";
 		
-		//console.log('starT');
 		var me = this;
 		// make the ID request first
 		multiplayer.makeRequest(url + "/id", function(data) {
@@ -149,8 +156,8 @@ multiplayer.MultiplayerClient = function() {
 							}
 						}
 					}
-					// start a new poll
-					me.poll();
+					// start a new poll - doing it in a setTimeout prevents stackoverflow on IE
+					setTimeout(function() { me.poll(); }, 0);
 				}
 			}, function() {
 				// timeout callback - initial connection failed
@@ -205,6 +212,10 @@ multiplayer.makeRequest = function(url, callback, timeout_callback, type, data, 
 		}
 	};
 	
+	// annoying hack to make IE not cache stuff stupidly, gah i hate you IE
+	if (isIE) {
+		url += ((url.indexOf("?") == -1 ? "?" : "&") + "uniq=" + Math.random());
+	}
 	// asynchronous request
 	http_request.open(type, url, true);
 	
@@ -230,16 +241,3 @@ multiplayer.makeRequest = function(url, callback, timeout_callback, type, data, 
 		}
 	}, timeout);
 };
-
-// ugly and dangerous backup for JSON parsing on missing platforms
-if (typeof(JSON) == "undefined") {
-	JSON = {};
-}
-
-if (typeof(JSON.parse) == "undefined") {
-	JSON.parse = function(str) {
-		var jprse = null;
-		eval("jprse=" + str + ";");
-		return jprse;
-	};
-}
