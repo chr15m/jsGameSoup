@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<style>
+			body, html, table {
+				width: 100%;
+				height: 100%;				
+				padding: 0px;
+				margin: 0px;
+			}
+			
+			td {
+				border: 1px solid gray;
+			}
+			
+			td.closed {
+				background: black;
+			}
+			
+			td.visited {
+				background: red;
+			}
+		</style>
+	</head>
+	<body>
+		<script src="../js/a_star.js"></script>
+		<script>
+		// AStar implementation Copyright (C) 2009 by Benjamin Hardin
+		// http://46dogs.blogspot.com/2009/10/star-pathroute-finding-javascript-code.html
+		
+		// Set the number of rows and columns for the board
+		var rows = 20;
+		var columns = 20;
+		
+		// Create the board, setting random squares to be obstacles
+		var board = [];
+		for (var x = 0; x < columns; x++)
+		{
+			board[x] = [];
+
+			for (var y = 0; y < rows; y++)
+			{
+				// Give each square a 25% chance of being an obstacle
+				var square = Math.floor(Math.random()*4);
+
+				// 0 = open, 1 = obstacle
+				if (square == 0)
+					board[x][y] = 1;
+				else
+					board[x][y] = 0;
+			}
+		}
+		
+		// Set the start and destination squares (and guarantee they're not an obstacle)
+		var start = [1, 1];
+		board[1][1] = 0;
+		var destination = [18, 18];
+		board[18][18] = 0;
+		
+		// Dynamically create the table
+		document.write("<table>");
+		for (var y = 0; y < rows; y++)
+		{
+			document.write("<tr>");
+			
+			for (var x = 0; x < columns; x++)		
+			{
+				document.write("<td id='board_"+x+"_"+y+"' class='" + (board[x][y] == 0 ? "open" : "closed") + "'></td>");
+			}
+
+			document.write("</tr>");
+		}
+		document.write("</table>");
+		
+		// Use A* to see if there's a path between them
+		var finder = new AStar(board);
+		var path = finder.find_path(start, destination);
+		
+		// Highlight the path
+		for (var i = 0; i < path.length; i++) {
+			document.getElementById("board_" + path[i].x + "_" + path[i].y).setAttribute("class", "visited");
+		}
+		</script>
+	</body>
+</html>

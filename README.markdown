@@ -42,11 +42,12 @@ Batteries included
  * Game entity management
  * Sprite management [sprite.js](http://jsgamesoup.net/jsdocs/symbols/Sprite.html)
  * Sound effects playback with [audio.js](http://jsgamesoup.net/jsdocs/symbols/AudioManager.html)
- * Rudimentary polygon, box, circle collision detection [collisions.js](http://jsgamesoup.net/jsdocs/symbols/collide.html)
+ * Rudimentary polygon, AABB-box, circle collision detection [collisions.js](http://jsgamesoup.net/jsdocs/symbols/collide.html)
  * Fast, deterministic random number generator [random.js](http://jsgamesoup.net/jsdocs/symbols/SeedableRandom.html)
  * Simple AJAX and bulk data loading with [network.js](http://jsgamesoup.net/jsdocs/symbols/network.html)
  * Basic cookie management [cookies.js](http://jsgamesoup.net/jsdocs/symbols/cookies.html)
  * Simple finite state machine [statemachine.js](http://jsgamesoup.net/jsdocs/symbols/statemachine.html)
+ * AStar path finding on a 2d board of squares [a_star.js](http://jsgamesoup.net/jsdocs/symbols/AStar.html)
  * Optional auto-init to launch code attached to HTML canvases
 
 ![FallingGame screenshot](http://jsgamesoup.net/screenshots/FallingGame.png)
