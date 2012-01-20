@@ -18,7 +18,7 @@
 function URL(url) {
 	// inspired by some of the RegExp found here: http://rodneyrehm.de/t/url-regex.html
 	// The raw array of data extracted from the URL passed in.
-	var exploded = (new RegExp(/^(.*):\/\/((.*?)(:(.*?))@){0,1}([^/$.?#].[^\s]*?)(:(\d+)){0,1}([\/].*?){0,1}([\?].*?){0,1}([#](.*)){0,1}$/i)).exec(url);
+	var exploded = (new RegExp(/^(.*):\/\/((.*?)(:(.*?))@){0,1}([^/$.?#].[^\s]*?){0,1}(:(\d+)){0,1}([\/].*?){0,1}([\?].*?){0,1}([#](.*)){0,1}$/i)).exec(url);
 	
 	/** Object containing an associative array of the components extracted from the URL (scheme, host, port, user, pass, path, hash, (raw) querystring). */
 	this.components = {
