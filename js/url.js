@@ -24,7 +24,7 @@ function URL(url) {
 	this.components = {
 		"scheme": exploded[1] || null,
 		"host": exploded[6] || null,
-		"port": exploded[8] ? parseInt(this.exploded[8]) : null,
+		"port": exploded[8] ? parseInt(exploded[8]) : null,
 		"user": exploded[3] || null,
 		"pass": exploded[5] || null,
 		"path": exploded[9] || null,
