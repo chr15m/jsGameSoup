@@ -1,9 +1,14 @@
 /**
 	@class A fast, deterministic, seedable random number generator.
 	@description Unlike the native random number generator built into most browsers, this one is deterministic, and so it will produce the same sequence of outputs each time it is given the same seed. By default it is seeded with the current time, which means the output is effectively non-deterministic. To make the output deterministic (e.g. the same each time) you should seed it with your own number. This code is based on George Marsaglia's MWC algorithm from the v8 Javascript engine.
+	@param seed is an optional number to set the initial seed.
 */
 
-function SeedableRandom() {
+function SeedableRandom(seed) {
+	// seed with the current time by default
+	/** The last value the random number generator was seeded with. */
+	this.last_seed = null;
+	
 	/**
 		Get the next random number between 0 and 1 in the current sequence.
 	*/
@@ -20,6 +25,11 @@ function SeedableRandom() {
 		this.y = this.nextY();
 		return ((this.x << 16) + (this.y & 0xFFFF)) / 0xFFFFFFFF + 0.5;
 	}
+	
+	/**
+		@description Alias for next();
+	*/
+	this.random = this.next;
 	
 	this.nextX = function() {
 		return 36969 * (this.x & 0xFFFF) + (this.x >> 16);
@@ -48,6 +58,7 @@ function SeedableRandom() {
 		@param x The seed.
 	*/
 	this.seed = function(x) {
+		this.last_seed = x;
 		this.x = x * 3253;
 		this.y = this.nextX();
 	}
@@ -58,6 +69,7 @@ function SeedableRandom() {
 		@param y Second seed.
 	*/
 	this.seed2d = function seed(x, y) {
+		this.last_seed = [x, y];
 		this.x = x * 2549 + y * 3571;
 		this.y = y * 2549 + x * 3571;
 	}
@@ -69,10 +81,11 @@ function SeedableRandom() {
 		@param z Third seed.
 	*/
 	this.seed3d = function seed(x, y, z) {
+		this.last_seed = [x, y, z];
 		this.x = x * 2549 + y * 3571 + z * 3253;
 		this.y = x * 3253 + y * 2549 + z * 3571;
 	}
 	
-	// seed with the current time by default
-	this.seed((new Date()).getTime());
+	// seed the generator with the seed we were passed, or the time as a last resort
+	this.seed(seed == null ? (new Date()).getTime() : seed);
 }
