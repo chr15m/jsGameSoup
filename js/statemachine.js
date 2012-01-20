@@ -1,5 +1,5 @@
-/**	@class Method to turns an entity into a simple finite state machine.
-	@description Allows you to give an game entity multiple update, draw, and event handling routines, and switch between them quickly and easily. Furnishes your entity with a new method "set_state(name)" which sets the state and methods to that name. For example, if you have a method running_draw() and a method standing_draw(), when you call set_state("running") the running_draw() method will be set as the main draw() method. This is true of any method prefixed with "running_" e.g. running_update() and running_keyDown_37() for example.
+/**	@class Method to turn an entity into a simple finite state machine.
+	@description Allows you to give any game entity multiple update, draw, and event handling routines, and switch between them quickly and easily. Furnishes your entity with a new method "set_state(name)" which sets the state and methods to that name. For example, if you have a method running_draw() and a method standing_draw(), when you call set_state("running") the running_draw() method will be set as the main draw() method. This is true of any method prefixed with "running_" e.g. running_update() and running_keyDown_37() for example.
 	@param entity is the game entity you want to turn into a finite state machine.
 */
 function statemachine(entity) {
