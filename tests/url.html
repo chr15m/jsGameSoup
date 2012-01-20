@@ -1,0 +1,56 @@
+<!doctype html>
+<html>
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8">
+	<script src='../js/url.js'></script>
+	<script>
+	// URLs from here: http://rodneyrehm.de/t/url-regex.html
+	
+	urls = [
+		'http://foo.com/blah_blah',
+		'http://foo.com/blah_blah/',
+		'http://foo.com/blah_blah_(wikipedia)',
+		'http://foo.com/blah_blah_(wikipedia)_(again)',
+		'http://www.example.com/wpstyle/?test=true',
+		'https://www.example.com/foo/?bar=baz&inga=42&quux&test=true',
+		'https://test.com/hello/?test=true&thing=1&thing=2&yeah=what#verycool',
+		'http://✪df.ws/123',
+		'http://userid:password@example.com:8080',
+		'http://userid:password@example.com:8080/',
+		'http://userid@example.com',
+		'http://userid@example.com/',
+		'http://userid@example.com:8080',
+		'http://userid@example.com:8080/',
+		'http://userid:password@example.com',
+		'http://userid:password@example.com/',
+		'http://192.168.1.1/',
+		'http://192.168.1.1:8080/',
+		'http://➡.ws/䨹',
+		'http://⌘.ws',
+		'http://⌘.ws/',
+		'http://foo.com/blah_(wikipedia)#cite-1',
+		'http://foo.com/blah_(wikipedia)_blah#cite-1',
+		'http://foo.com/unicode_(✪)_in_parens',
+		'http://foo.com/(something)?after=parens&test=true',
+		'http://☺.damowmow.com/',
+		'http://code.example.com/events/#&product=browser',
+		'http://j.mp',
+		'ftp://foo.bar/baz',
+		'torrent://foo.bar/baz',
+		'image://foo.bar:993',
+		'irc://foo.bar:6667',
+		// test everything possible
+		'https://chris:hello@test.com:8080/hello/this/is/path_(what)?thing=1&thing=2&yeah=what&test=true#verycool'
+	];
+	for (u=0; u<urls.length; u++) {
+		var parsed = new URL(urls[u]);
+		console.log(urls[u]);
+		console.log(parsed.exploded);
+		console.log(parsed.components);
+		console.log(parsed.get("test"));
+	}
+	</script>
+</head>
+<body>
+</body>
+</html>
