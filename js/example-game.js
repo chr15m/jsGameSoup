@@ -10,7 +10,7 @@ function ExampleGame(gs) {
 	X_SEPARATION = 300;
 	Y_SEPARATION = 150;
 	
-	/*** The player class ***/
+	/* The player class */
 	function Player(world) {
 		this.type = 'player';
 		// constants
@@ -35,7 +35,7 @@ function ExampleGame(gs) {
 			p.action("stand");
 		});
 		
-		/*** Concurrency stuff ***/
+		/* Concurrency stuff */
 		
 		// draw the player's sprite every frame
 		this.draw = function(c) {
@@ -69,14 +69,14 @@ function ExampleGame(gs) {
 			}
 		}
 		
-		/*** collision stuff ***/
+		/* collision stuff */
 		
 		// return the bounding box of our sprite for the collision test
 		this.get_collision_aabb = function() {
 			return p.aabb(pos);
 		}
 		
-		/*** input events stuff ***/
+		/* input events stuff */
 		this.keyDown_37 = function () {
 			this.updateanimation();
 			vx = -WALK_VX;
@@ -135,7 +135,7 @@ function ExampleGame(gs) {
 		}*/
 	}
 	
-	/*** A prop in the world. ***/
+	/* A prop in the world. */
 	function Prop(world, platform) {
 		this.type = 'prop';
 		var propfile = null;
@@ -163,7 +163,7 @@ function ExampleGame(gs) {
 		}
 	}
 	
-	/*** Platform ***/
+	/* Platform */
 	function Platform(world, pos) {
 		this.type = 'platform';
 		// the list of props sitting on this platform
@@ -214,7 +214,7 @@ function ExampleGame(gs) {
 		}
 	}
 	
-	/*** World ***/
+	/* World */
 	function World() {
 		// how much gravity to apply to objects each frame
 		this.gravity = 0.4;
@@ -268,7 +268,7 @@ function ExampleGame(gs) {
 			this.upspeed += 0.001;
 		}
 		
-		/*** mouse/finger detection ***/
+		/* mouse/finger detection */
 
 		this.pointerDown = function() {
 			if (gs.pointerPosition[0] < gs.width / 2) {
