@@ -9,6 +9,9 @@
 	code public if you run this server on a public network).
 */
 
+// TODO: server side filter for state data (user supplied function)
+// TODO: example of server which updates client states
+// TODO: try and get keepalive working on ff
 // TODO: create private/public ID map to prevent cheating (or just strip random number?)
 
 var express = require('express');

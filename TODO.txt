@@ -1,11 +1,13 @@
-* put json2.js fetch into the documentation generation Makefile externals
+* migrate site to php
+* move lineOnLine and pointInPoly out of the global namespace
 * test multiplayer demo with all three browsers at the same time for a while
-* in internet explorer, "caller" is not defined perhaps - check multiplayer code & grep for others
-* perlin & simplex noise - https://gist.github.com/304522
 * Make a 'vanilla' project people can start from (with Android/iPhone default stuff + flashcanvas)
+* put json2.js fetch into the documentation generation Makefile externals
 * RSS feed on site
 * update FallingGame with audio
 * update AsteroidsTNG with audio
+
+* in internet explorer, "caller" is not defined perhaps - check multiplayer code & grep for others
 
 * nesters.js - child and parent heirarchies
 * Wojtek/vibrant's "canvas passthrough" camera method for a camera.js class
@@ -65,4 +67,3 @@
 * integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * try and get audio onload working on all platforms
 * fix internet explorer offset bug
-
