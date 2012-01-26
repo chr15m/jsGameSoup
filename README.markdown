@@ -109,7 +109,7 @@ Source code
 
 Contribute or get the latest version of the code using [bazaar](http://bazaar-vcs.org/):
 
-	bzr co http://mccormick.cx/dev/jsgamesoup/
+	bzr co http://jsgamesoup.net/
 
 Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
 
