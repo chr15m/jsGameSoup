@@ -6,5 +6,5 @@ jsdocs: $(SCRIPTS:^:../)
 	cd ../js && jsdoc -t=../website/jsdoc-templates $(SCRIPTS) && mv jsdocs ../website && cd ../website
 
 clean:
-	rm -rf $(ALLDOCS)
+	rm -rf jsdocs
 

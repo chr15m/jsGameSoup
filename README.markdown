@@ -3,10 +3,10 @@ jsGameSoup
 
 A Free Software framework for making games using Javascript and open web technologies.
 
- * Free and Open Source
- * Modular - each component works standalone
- * Uses Open web technologies like Canvas
- * Firefox (Gecko), Safari/Chrome (WebKit), Internet Explorer 6+ supported
+ * Free and Open Source.
+ * Modular - component javascript files work standalone.
+ * Uses Open web technologies like Canvas.
+ * Runs on Firefox (Gecko), Safari/Chrome (WebKit), Internet Explorer 6+, and Android + iOS browsers.
 
 <!-- TODO: icon set showing browser support -->
 
@@ -19,19 +19,19 @@ A Free Software framework for making games using Javascript and open web technol
 </span>
 
 [FallingGame]: http://mccormick.cx/dev/blogref/FallingGame/
-[FallingGame-thumbnail]: http://jsgamesoup.net/screenshots/FallingGame-thumbnail.png
+[FallingGame-thumbnail]: http://jsgamesoup.net/website/screenshots/FallingGame-thumbnail.png
 
 [AsteroidsTNG]: http://mccormick.cx/dev/blogref/AsteroidsTNG/
-[AsteroidsTNG-thumbnail]: http://jsgamesoup.net/screenshots/AsteroidsTNG-thumbnail.png
+[AsteroidsTNG-thumbnail]: http://jsgamesoup.net/website/screenshots/AsteroidsTNG-thumbnail.png
 
 [SoupBox]: http://jsgamesoup.net/demos/box2d
-[SoupBox-thumbnail]: http://jsgamesoup.net/screenshots/SoupBox-thumbnail.png
+[SoupBox-thumbnail]: http://jsgamesoup.net/website/screenshots/SoupBox-thumbnail.png
 
 [AudioDemo]: http://jsgamesoup.net/demos/audio.html
-[AudioDemo-thumbnail]: http://jsgamesoup.net/screenshots/AudioDemo-thumbnail.png
+[AudioDemo-thumbnail]: http://jsgamesoup.net/website/screenshots/AudioDemo-thumbnail.png
 
 [Sylvester]: http://jsgamesoup.net/demos/vector-math-sylvester
-[Sylvester-thumbnail]: http://jsgamesoup.net/screenshots/Sylvester-thumbnail.png
+[Sylvester-thumbnail]: http://jsgamesoup.net/website/screenshots/Sylvester-thumbnail.png
 
 Copyright Chris McCormick, 2009-2011, and LGPL licensed. Please see the file [COPYING.txt](http://jsgamesoup.net/COPYING.txt) for details. Basically you can use this in a commercial product but if you make modifications to the library itself you should publish them.
 
@@ -53,7 +53,7 @@ Batteries included
  * Ken Perlin's noise algorithms [noise.js](http://jsgamesoup.net/jsdocs/symbols/noise.SimplexNoise.html)
  * Optional auto-init to launch code attached to HTML canvases
 
-![FallingGame screenshot](http://jsgamesoup.net/screenshots/FallingGame.png)
+![FallingGame screenshot](http://jsgamesoup.net/website/screenshots/FallingGame.png)
 
 Documentation
 -------------
@@ -81,7 +81,7 @@ You probably also want one of the following for Internet Explorer compatibility:
 
 See the Internet Explorer compatability section below for instructions on getting your jsGameSoup game to work in Internet Explorer 6 and higher.
 
-![AsteroidsTNG screenshot](http://jsgamesoup.net/screenshots/AsteroidsTNG.png)
+![AsteroidsTNG screenshot](http://jsgamesoup.net/website/screenshots/AsteroidsTNG.png)
 
 Suggested companion libraries
 -----------------------------
@@ -117,7 +117,7 @@ Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SV
 
 [Patches welcome](mailto:chris@mccormick.cx)!
 
-![Numbeat screenshot](http://jsgamesoup.net/screenshots/Numbeat.png)
+![Numbeat screenshot](http://jsgamesoup.net/website/screenshots/Numbeat.png)
 
 Quick Start
 -----------
@@ -168,8 +168,7 @@ Now edit main.js with a little test code to get you started:
 	}
 	
 	function startGame() {
-		var surface = document.getElementById("surface");
-		var gs = new JSGameSoup(surface, 30);
+		var gs = new JSGameSoup("surface", 30);
 		gs.addEntity(new Dot(gs));
 		gs.launch();
 	}

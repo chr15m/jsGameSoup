@@ -2,7 +2,7 @@
 
 make clean -C website/
 make -C website/
-rsync -avz website/* jsgamesoup.net:/var/www/jsgamesoup.net/
+rsync -avz website/jsdocs jsgamesoup.net:/var/www/jsgamesoup.net/website/
 ssh jsgamesoup.net "cd /var/www/jsgamesoup.net/; bzr up"
 
 # push changes to Google Code
