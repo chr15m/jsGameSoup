@@ -1,18 +1,9 @@
 #!/bin/sh
 
-if [ "$1" != "" ]
-then
-	message=$@
-else
-	message='Version bump for publish script'
-fi
-
-scripts/replace-version.sh js/jsgamesoup.js
-scripts/replace-version.sh README.markdown
-bzr commit -m "$message"
-make clean -C docs/
-make -C docs/
-rsync -avz docs/* jsgamesoup.net:/var/www/jsgamesoup.net/
+make clean -C website/
+make -C website/
+rsync -avz website/* jsgamesoup.net:/var/www/jsgamesoup.net/
+ssh jsgamesoup.net "cd /var/www/jsgamesoup.net/; bzr up"
 
 # push changes to Google Code
 bzr push https://mccormix@jsgamesoup.googlecode.com/svn/jsgamesoup/

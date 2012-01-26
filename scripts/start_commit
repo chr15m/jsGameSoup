@@ -1,4 +1,0 @@
-#!/bin/sh
-# This should be executed as a pre_commit_hook
-scripts/replace-version.sh js/jsgamesoup.js
-scripts/replace-version.sh README

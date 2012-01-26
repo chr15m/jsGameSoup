@@ -1,4 +1,5 @@
 body {
+	margin: 0px;
 	padding-left: 20%;
 	padding-right: 20%;
 	padding-top: 30px;
@@ -56,4 +57,37 @@ span#demos a:hover img {
 
 span#demos a img {
 	display: inline;
+}
+
+div#menu {
+	float: right;	
+	position: relative;
+	top: -150px;
+}
+
+div#menu a {
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+div#version {
+	float: right;
+}
+
+div#download {
+	float: right;
+	font-size: 1.5em;
+	margin-top: -160px;
+	text-align: right;
+}
+
+div#download img {
+	border: 0px;
+}
+
+a#download-link {
+	text-decoration: none;
+}
+
+a#download-link:hover {
 }

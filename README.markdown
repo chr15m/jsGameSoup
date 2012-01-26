@@ -1,7 +1,14 @@
-jsGameSoup v212
---------------
+jsGameSoup
+----------
 
-A Free Software framework for making games for the web using Javascript and open web technologies. Modular components abstract away the complexity of developing Javascript games for multiple browsers. Currently runs under new versions of Firefox (Gecko), Safari/Chrome (WebKit), and Internet Explorer 6 and higher.
+A Free Software framework for making games using Javascript and open web technologies.
+
+ * Free and Open Source
+ * Modular - each component works standalone
+ * Uses Open web technologies like Canvas
+ * Firefox (Gecko), Safari/Chrome (WebKit), Internet Explorer 6+ supported
+
+<!-- TODO: icon set showing browser support -->
 
 <span id='demos'>
 [![FallingGame demo][FallingGame-thumbnail]][FallingGame]
@@ -26,12 +33,7 @@ A Free Software framework for making games for the web using Javascript and open
 [Sylvester]: http://jsgamesoup.net/demos/vector-math-sylvester
 [Sylvester-thumbnail]: http://jsgamesoup.net/screenshots/Sylvester-thumbnail.png
 
-[Download jsGameSoup v212](http://jsgamesoup.net/jsGameSoup-v212.zip) - jump down to the quickstart section to dive in.
-
- * [Blog](http://mccormick.cx/news/tags/jsgamesoup)
- * [Mailing list](http://groups.google.com/group/jsgamesoup)
-
-Copyright Chris McCormick, 2009-2011, and LGPL licensed. Please see the file [COPYING](http://jsgamesoup.net/COPYING) for details.
+Copyright Chris McCormick, 2009-2011, and LGPL licensed. Please see the file [COPYING.txt](http://jsgamesoup.net/COPYING.txt) for details. Basically you can use this in a commercial product but if you make modifications to the library itself you should publish them.
 
 [Using jsGameSoup for your game? Hire me as a consultant.](mailto:chris@mccormickit.com)
 
@@ -48,6 +50,7 @@ Batteries included
  * Basic cookie management [cookies.js](http://jsgamesoup.net/jsdocs/symbols/cookies.html)
  * Simple finite state machine [statemachine.js](http://jsgamesoup.net/jsdocs/symbols/statemachine.html)
  * AStar path finding on a 2d board of squares [a_star.js](http://jsgamesoup.net/jsdocs/symbols/AStar.html)
+ * Ken Perlin's noise algorithms [noise.js](http://jsgamesoup.net/jsdocs/symbols/noise.SimplexNoise.html)
  * Optional auto-init to launch code attached to HTML canvases
 
 ![FallingGame screenshot](http://jsgamesoup.net/screenshots/FallingGame.png)
@@ -64,11 +67,12 @@ Documentation
  * [Canvas tag documentation](http://www.whatwg.org/specs/web-apps/current-work/multipage/the-canvas-element.html#the-canvas-element)
 
  * [Some tests](http://jsgamesoup.net/tests)
+ * [Some demos](http://jsgamesoup.net/demos)
 
 Download
 --------
 
-[Zipfile of jsGameSoup v212](http://jsgamesoup.net/jsGameSoup-v212.zip)
+[Visit the download page](http://jsgamesoup.net/download.php)
 
 You probably also want one of the following for Internet Explorer compatibility:
 
@@ -87,8 +91,6 @@ In an effort to keep this library minimal and focused on making games, here are 
  * Vector and matrix math - [sylvester.js](http://sylvester.jcoglan.com/) (see the demo below)
  * Server side and/or multiplayer code [Node.js + socket.io](http://socket.io/)
  * 2D physics - [box2d.js](http://box2d-js.sourceforge.net/) (see the demo below)
- * Basic Ajax/network calls - [XMLHttpRequest.js](http://code.google.com/p/xmlhttprequest/)
- * Cookie management - [cookies-js](http://code.google.com/p/cookie-js/source/browse/trunk/cookie.js) or [roll your own](http://www.quirksmode.org/js/cookies.html)
 
 Free game resources
 -------------------
@@ -100,6 +102,7 @@ Free game resources
  * [Philipp Lenssen's free sprites](http://blogoscoped.com/archive/2006-08-08-n51.html)
  * [HasGraphics game graphics](http://hasgraphics.com/)
  * [Reiner`s Tilesets](http://www.reinerstilesets.de/2d-grafiken/2d-environment/)
+ * [Freesound archive](http://www.freesound.org/)
 
 Source code
 -----------
@@ -108,10 +111,9 @@ Contribute or get the latest version of the code using [bazaar](http://bazaar-vc
 
 	bzr co http://mccormick.cx/dev/jsgamesoup/
 
-Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
-
 Or check the [Github page](https://github.com/chr15m/jsGameSoup) for the git repository.
 
+Or check the [Google Code page](http://code.google.com/p/jsgamesoup/) for the SVN repository.
 
 [Patches welcome](mailto:chris@mccormick.cx)!
 
