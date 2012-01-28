@@ -775,6 +775,18 @@ if (!Array.prototype.remove) {
 	}
 }
 
+/* jQuery style 'each' method */
+if (!Array.prototype.each) {
+	Array.prototype.each = function(fn) {
+		var newarray = [];
+		this.fn = fn;
+		for (var idx=0; idx<this.length; idx++) {
+			newarray[idx] = this.fn(idx, this[idx]);
+		}
+		return newarray;
+	}
+}
+
 /* Non-buggy modulus that works correctly on negative numbers. */
 Number.prototype.mod = function(n) {
 	return ((this%n)+n)%n;
