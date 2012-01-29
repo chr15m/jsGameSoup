@@ -29,21 +29,23 @@ function Sprite(anchor, frames, loadedcallback) {
 				img.onload = function () {
 					loadcount -= 1;
 					if (loadcount == 0) {
+						sprite.width = parseInt(img.width);
+						sprite.height = parseInt(img.height);
 						if (loadedcallback) {
 							sprite.loaded = true;
-							sprite.width = parseInt(img.width);
-							sprite.height = parseInt(img.height);
 							loadedcallback();
 						}
 					}
 				}
 			}
 		}
-		if (loadcount == 0 && loadedcallback) {
-			sprite.loaded = true;
+		if (loadcount == 0) {
 			sprite.width = frames[a][f][0].width;
 			sprite.height = frames[a][f][0].height;
-			loadedcallback();
+			if (loadedcallback) {
+				sprite.loaded = true;
+				loadedcallback();
+			}
 		}
 	}
 	
@@ -95,6 +97,7 @@ function Sprite(anchor, frames, loadedcallback) {
 		sprite.update = sprite._update;
 		sprite.draw = sprite._draw;
 		sprite.aabb = sprite._aabb;
+		return this;
 	}
 	
 	/** Returns the current action being played. **/
