@@ -51,6 +51,7 @@ Batteries included
  * Simple finite state machine [statemachine.js](http://jsgamesoup.net/jsdocs/symbols/statemachine.html)
  * AStar path finding on a 2d board of squares [a_star.js](http://jsgamesoup.net/jsdocs/symbols/AStar.html)
  * Ken Perlin's noise algorithms [noise.js](http://jsgamesoup.net/jsdocs/symbols/noise.SimplexNoise.html)
+ * URL and querystring parsing [url.js](http://jsgamesoup.net/website/jsdocs/symbols/URL.html)
  * Optional auto-init to launch code attached to HTML canvases
 
 ![FallingGame screenshot](http://jsgamesoup.net/website/screenshots/FallingGame.png)
