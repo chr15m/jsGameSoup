@@ -781,7 +781,7 @@ if (!Array.prototype.each) {
 		var newarray = [];
 		this.fn = fn;
 		for (var idx=0; idx<this.length; idx++) {
-			newarray[idx] = this.fn(idx, this[idx]);
+			newarray[idx] = this.fn(this[idx], idx);
 		}
 		return newarray;
 	}
