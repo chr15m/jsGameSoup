@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en-us" xml:lang="en-us" >
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<title>jsGameSoup: a 2d video game library for Javascript and Canvas</title>
+	<title>jsGameSoup: A Free Software framework for making games using Javascript and open web technologies.</title>
 	<link rel="stylesheet" type="text/css" href="website/jsgamesoup.css" />
 	<link rel="alternate" type="application/rss+xml" title="jsGameSoup Feed" href="http://mccormick.cx/news/tags/jsgamesoup.rss" />
 </head>
