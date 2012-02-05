@@ -251,7 +251,7 @@ function JSGameSoup(canvas, framerate) {
 	// get the position of the triggered event
 	this.getSetPointerPosition = function getSetPointerPosition(ev) {
 		// was this a touch?
-		if (ev.touches) {
+		if (ev.touches && ev.touches.length) {
 			var touch = ev.touches[0];
 			mouseX = touch.clientX - canvas.offsetLeft;
 			mouseY = touch.clientY - canvas.offsetTop;
@@ -491,7 +491,7 @@ function JSGameSoup(canvas, framerate) {
 		// get all the events out of the event queue and execute the event method on it's entity
 		var ev = null;
 		entitiesTriggered = [];
-		while (ev = entityEventQueue.pop()) {
+		while (ev = entityEventQueue.shift()) {
 			if (ev[0][ev[1]](ev[2])) {
 				entitiesTriggered.push(ev[0]);
 			}
