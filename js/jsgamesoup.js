@@ -794,36 +794,46 @@ Number.prototype.mod = function(n) {
 
 /* console.log statement should work on platforms that do not support it. this is pretty awful. */
 if (typeof(console) == "undefined") {
-	function getDocHeight() {
-		var D = document;
-		return Math.max(
-			Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
-			Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
-			Math.max(D.body.clientHeight, D.documentElement.clientHeight)
-		);
-	}
-	
-	var logarea = document.createElement("pre");
-	logarea.style.width = "100%";
-	logarea.style.position = "absolute";
-	logarea.style.top = (getDocHeight() - 100) + "px";
-	logarea.style.height = "50px";
-	logarea.style.left = "0px";
-	logarea.style.filter = "alpha(opacity=50)";
-	logarea.style.opacity = "0.5";
-	logarea.style.margin = "0";
-	logarea.style.padding = "0";
-	logarea.style.overflow = "hidden";
-	logarea.style.textAlign = "left";
-	logarea.style.borderTop = "1px solid black";
-	logarea.style.display = "none";
-	
-	document.getElementsByTagName("body")[0].appendChild(logarea);
-	
-	window.console = {
-		"log": function(msg) {
-			logarea.style.display = "block";
-			logarea.innerHTML += msg + "\r\n";
+	var body = document.getElementsByTagName("body");
+	if (body.length) {
+		function getDocHeight() {
+			var D = document;
+			return Math.max(
+				Math.max(D.body.scrollHeight, D.documentElement.scrollHeight),
+				Math.max(D.body.offsetHeight, D.documentElement.offsetHeight),
+				Math.max(D.body.clientHeight, D.documentElement.clientHeight)
+			);
 		}
-	};
+		
+		var logarea = document.createElement("pre");
+		logarea.style.width = "100%";
+		logarea.style.position = "absolute";
+		logarea.style.top = (getDocHeight() - 100) + "px";
+		logarea.style.height = "50px";
+		logarea.style.left = "0px";
+		logarea.style.filter = "alpha(opacity=50)";
+		logarea.style.opacity = "0.5";
+		logarea.style.margin = "0";
+		logarea.style.padding = "0";
+		logarea.style.overflow = "hidden";
+		logarea.style.textAlign = "left";
+		logarea.style.borderTop = "1px solid black";
+		logarea.style.display = "none";
+		
+		body[0].appendChild(logarea);
+		
+		window.console = {
+			"log": function(msg) {
+				logarea.style.display = "block";
+				logarea.innerHTML += msg + "\r\n";
+			}
+		};
+	} else {
+		window.console = {
+			"log": function(msg) {
+				// yikes!
+				// alert(msg);
+			}
+		};
+	}
 }
