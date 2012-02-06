@@ -31,8 +31,8 @@ function Sprite(anchor, frames, loadedcallback) {
 					if (loadcount == 0) {
 						sprite.width = parseInt(img.width);
 						sprite.height = parseInt(img.height);
+						sprite.loaded = true;
 						if (loadedcallback) {
-							sprite.loaded = true;
 							loadedcallback();
 						}
 					}
@@ -40,10 +40,13 @@ function Sprite(anchor, frames, loadedcallback) {
 			}
 		}
 		if (loadcount == 0) {
-			sprite.width = frames[a][f][0].width;
-			sprite.height = frames[a][f][0].height;
+			// they passed in images. set our width and height to the first image
+			if (frames[a].length && frames[a][0].length) {
+				sprite.width = frames[a][0][0].width;
+				sprite.height = frames[a][0][0].height;
+			}
+			sprite.loaded = true;
 			if (loadedcallback) {
-				sprite.loaded = true;
 				loadedcallback();
 			}
 		}
@@ -128,7 +131,10 @@ function Sprite(anchor, frames, loadedcallback) {
 				loopcallback(action);
 			}
 			frame = (frame + 1) % frames[action].length;
-			framecount = frames[action][frame][1];
+			var fimg = frames[action][frame]
+			framecount = fimg[1];
+			this.width = fimg[0].width;
+			this.height = fimg[0].height;
 		}
 	}
 	
