@@ -42,6 +42,11 @@ function AudioManager() {
 				document.body.appendChild(em);
 				samples[name] = em;
 			}
+		// see if phonegap is available to play sound on Android
+		} else if (window["PhoneGap"] && window["device"] && device.platform == "Android") {
+			var au = new Media("/android_asset/www/" + url);
+			au._play = function() {	au.play(); };
+			samples[name] = au;
 		} else {
 			var au = new Audio();
 			/*console.log(au.canPlayType("audio/mpeg"));
