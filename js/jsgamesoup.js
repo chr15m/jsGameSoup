@@ -24,7 +24,7 @@ function JSGameSoup(canvas, framerate) {
 		// the caller has supplied the ID of a canvas
 		canvas = document.getElementById(canvas);
 	}
-
+	
 	// attach new styles to our container or canvas object for android and iOS devices
 	/* disable callout sheet */
 	// canvas.style["-webkit-touch-callout"] = "none";
@@ -45,6 +45,8 @@ function JSGameSoup(canvas, framerate) {
 		// set the width and height of our canvas to be the same as the container element
 		canvas.style.width = canvas.width = (container.offsetWidth + 1);
 		canvas.style.height = canvas.height = (container.offsetHeight + 1);
+		// empty out the container before appending our new canvas to it
+		container.innerHTML = "";
 		container.appendChild(canvas);
 		this.canvas = canvas;
 	}
@@ -656,6 +658,10 @@ function JSGameSoup(canvas, framerate) {
 		(outside JSGameSoup definition)
 	 *******************************************/
 
+JSGameSoup.ready = function(fn) {
+	JSGameSoup.ready_function = fn;
+}
+
 /**
  *	Helper function which is automatically called to launch JSGameSoup on a canvas.
  *
@@ -668,7 +674,7 @@ function JSGameSoup(canvas, framerate) {
  *
  */
 
-function FindAndLaunchCanvasJSGS() {
+function _FindAndLaunchCanvasJSGS() {
 	var canvases = document.getElementsByTagName("canvas");
 	for ( var i = 0; i < canvases.length; i++ ) {
 		var launchfn = null;
@@ -692,54 +698,125 @@ function FindAndLaunchCanvasJSGS() {
 	}
 }
 
+// do not run until stylesheets have been applied
+// this hack is neccessary because styled divs into
+// which the canvas is inserted will break horribly
+// on webkit at random.
+function _JSGS_test_applied_stylesheets() {
+	// insert a styled div into our document body that we will test the width of
+	var divtest = document.createElement('div');
+	document.body.appendChild(divtest);
+	divtest.style.position = "absolute";
+	divtest.style.width = "100%";
+	divtest.style.height = "100%";
+	
+	// keep checking whether the div we created is the right size yet
+	var checkdiv = function() {
+		if (parseInt(divtest.offsetWidth) == 0) {
+			// console.log('delayed start');
+			setTimeout(checkdiv, 13);
+		} else {
+			// one it's the right size do the launch
+			document.body.removeChild(divtest);
+			delete divtest;
+			// MAIN LAUNCH
+			if (JSGameSoup["ready_function"]) {
+			JSGameSoup.ready_function();
+			}
+			_FindAndLaunchCanvasJSGS();
+		}
+	}
+	// start the check loop
+	checkdiv();
+}
+
 // Crossplatform document.ready from here:
 // http://dean.edwards.name/weblog/2006/06/again/#comment335794
-function JSGS_init() {
+function _JSGS_init() {
   if (arguments.callee.done) return;
   arguments.callee.done = true;
-  // MAIN LAUNCH
-  FindAndLaunchCanvasJSGS();
+  _JSGS_test_applied_stylesheets();
 }
 
-if (document.addEventListener) {
-  document.addEventListener('DOMContentLoaded', JSGS_init, false);
+/* Copied from jQuery source */
+
+// Mozilla, Opera and webkit nightlies currently support this event
+if ( document.addEventListener ) {
+	// Use the handy event callback
+	document.addEventListener( "DOMContentLoaded", function(){
+		document.removeEventListener( "DOMContentLoaded", arguments.callee, false );
+		_JSGS_init();
+	}, false );
+// If IE event model is used
+} else if ( document.attachEvent ) {
+	// ensure firing before onload,
+	// maybe late but safe also for iframes
+	document.attachEvent("onreadystatechange", function(){
+		if ( document.readyState === "complete" ) {
+			document.detachEvent( "onreadystatechange", arguments.callee );
+			_JSGS_init();
+		}
+	});
+	
+	// If IE and not an iframe
+	// continually check to see if the document is ready
+	if ( document.documentElement.doScroll && window == window.top ) (function(){
+		if ( _JSGS_init.done ) return;
+		
+		try {
+			// If IE is used, use the trick by Diego Perini
+			// http://javascript.nwbox.com/IEContentLoaded/
+			document.documentElement.doScroll("left");
+		} catch( error ) {
+			setTimeout( arguments.callee, 0 );
+			return;
+		}
+
+		// and execute any waiting functions
+		_JSGS_init();
+	})();
 }
-(function() {
-  /*@cc_on
-  if (document.body) {
-    try {
-      document.createElement('div').doScroll('left');
-      return JSGS_init();
-    } catch(e) {}
-  }
-  /*@if (false) @*/
-  if (/loaded|complete/.test(document.readyState)) return JSGS_init();
-  /*@end @*/
-  if (!JSGS_init.done) setTimeout(arguments.callee, 50);
-})();
+
+// onload fallback
 _prevOnload = window.onload;
 window.onload = function() {
-  if (typeof _prevOnload === 'function') _prevOnload();
-  JSGS_init();
+	if (typeof _prevOnload === 'function') _prevOnload();
+	_JSGS_init();
 };
 
-// cross platform multiple onload event attach as a last resort
-// from http://simonwillison.net/2004/May/26/addLoadEvent/
-var oldonload = window.onload;
-if (typeof window.onload != 'function') {
-	window.onload = func;
-} else {
-	window.onload = function() {
-		if (oldonload) {
-			oldonload();
+/* *************************************
+	Sweet methods.
+   *************************************/
+
+/**
+	jQuery style 'each' method (but with the arguments reversed! So you can do e.g. `ar.each(Math.round);)`
+	@param function to call on each element of the array. Function should take two arguments: element, index
+*/
+if (!Array.prototype.each) {
+	Array.prototype.each = function(fn) {
+		var newarray = [];
+		this.fn = fn;
+		for (var idx=0; idx<this.length; idx++) {
+			newarray[idx] = this.fn(this[idx], idx);
 		}
-		JSGS_init();
+		return newarray;
 	}
 }
 
-/*
+/** 
+	Non-buggy modulus that works correctly on negative numbers.
+	@param number to mod against
+*/
+Number.prototype.mod = function(n) {
+	return ((this%n)+n)%n;
+}
+
+
+/* *************************************
  *	Random stuff to support IE.
- */
+ * *************************************/
+
+// indexOf
 // this is from here:
 // https://developer.mozilla.org/en/Core_JavaScript_1.5_Reference/Global_Objects/Array/indexOf
 if (!Array.prototype.indexOf)
@@ -765,7 +842,10 @@ if (!Array.prototype.indexOf)
   };
 }
 
-/* Python style remove function */
+/**
+	Python style array remove element method 
+	@param element to find and remove
+*/
 if (!Array.prototype.remove) {
 	Array.prototype.remove = function(el) {
 		var p = this.indexOf(el);
@@ -773,23 +853,6 @@ if (!Array.prototype.remove) {
 			this.splice(p, 1);
 		}
 	}
-}
-
-/* jQuery style 'each' method */
-if (!Array.prototype.each) {
-	Array.prototype.each = function(fn) {
-		var newarray = [];
-		this.fn = fn;
-		for (var idx=0; idx<this.length; idx++) {
-			newarray[idx] = this.fn(this[idx], idx);
-		}
-		return newarray;
-	}
-}
-
-/* Non-buggy modulus that works correctly on negative numbers. */
-Number.prototype.mod = function(n) {
-	return ((this%n)+n)%n;
 }
 
 /* console.log statement should work on platforms that do not support it. this is pretty awful. */
