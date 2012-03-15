@@ -1,0 +1,89 @@
+<html>
+<head>
+	<!-- ***** a very simple demo - a block that wobbles around on the screen ***** -->
+	
+	<script src="js/jsgamesoup.js"></script>
+	<script>
+	function Dot(gs) {
+		var x = 0.5;
+		var y = 0.5;
+		var r = 0.1;
+		
+		this.update = function() {
+			// wobble around - update is automatically called every frame
+			x += 0.01 * (Math.random() - 0.5);
+			y += 0.01 * (Math.random() - 0.5);
+		}
+		
+		this.draw = function(c) {
+			// draw the square - automatically called every frame
+			c.fillRect(x * gs.width - r * gs.width / 2, y * gs.height - r * gs.height / 2, r * gs.width, r * gs.height);
+		}
+	}
+	
+	function startGame() {
+		// use the DIV tag with Id of 'surface' as our game surface
+		var gs = new JSGameSoup("surface", 30);
+		// add an instance of the 'Dot' entity class above to our game
+		gs.addEntity(new Dot(gs));
+		// launch the game
+		gs.launch();
+	}
+	</script>
+	
+	<!-- ***** basic style for our demo page to fill the screen ***** -->
+	<style>
+		html, body {
+			margin: 0px;
+			padding: 0px;
+			overflow: hidden;
+		}
+		div {
+			width: 100%;
+			height: 100%;
+			position: absolute;
+			top: -1px;
+			left: -1px;
+		}
+	</style>
+
+	<!-- ***** Load flashcanvas for Internet Explorer compatability ***** -->
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="flashcanvas/bin/flashcanvas.js"></script>
+	<![endif]-->
+
+	<!-- ***** iPod/iPad and Android compatability ***** -->
+
+	<!-- icon for the ipod -->
+	<link rel="apple-touch-icon" href="ipod-icon.png">
+	<!-- this is a web app -->
+	<meta name="apple-mobile-web-app-capable" content="yes">
+	<!-- default size apple viewport -->
+	<meta name="viewport" content="width=850">
+	<!-- app style status bar -->
+	<meta name="apple-mobile-web-app-status-bar-style" content="black">
+	<style type="text/css">
+	<!--
+		* {
+			/* disable callout sheet */
+			-webkit-touch-callout: none;
+			/* disable highlighting links when tapped */
+			-webkit-tap-highlight-color: rgba(0,0,0,0);
+			/* prevent automatic resizing of text */
+			-webkit-text-size-adjust: none;
+			/* disable copy paste */
+			-webkit-user-select: none;
+		}
+		
+		/* allow copy paste for some elements */
+		.copypaste {
+			-webkit-user-select: text;
+		}
+	-->
+	</style>
+</head>
+<body onload='startGame()'>
+	<div id='surface'></div>
+</body>
+</html>
