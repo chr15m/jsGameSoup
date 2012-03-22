@@ -21,11 +21,10 @@ var app = express.createServer();
 var client_dir = process.cwd();
 
 // static serve our files
-app.configure(function(){
+app.configure(function() {
 	app.use(express.bodyParser());
 	app.use(express.logger({ format: ':url :method' }));
 	app.use(express.errorHandler({ dumpExceptions: true, showStack: true }));
-	app.use(express.static(client_dir));
 });
 
 /* Statically serve multiplayer.js and test page ****************************************************/
@@ -39,6 +38,9 @@ app.get('/multiplayer.js', function(req, res) {
 app.get('/test', function(req, res) {
 	res.sendfile(__dirname + '/test.html');
 });
+
+// give the user access to the express app itself
+this.app = app;
 
 /* dynamic ajaxy stuff for client ****************************************************************/
 
