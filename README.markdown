@@ -4,7 +4,7 @@ jsGameSoup
 A Free Software framework for making games using Javascript and open web technologies.
 
  * Free and Open Source.
- * Modular - component javascript files work standalone.
+ * Modular - component javascript files also work standalone.
  * Uses Open web technologies like Canvas.
  * Runs on Firefox (Gecko), Safari/Chrome (WebKit), Internet Explorer 6+, and Android + iOS browsers.
 
@@ -191,6 +191,12 @@ To use FlashCanvas:
 See the Download section above for links to these libraries.
 
 One final gotcha under IE6 is that Javascript datastructures should not contain a trailing comma on the last element. E.g. `t = [1, 2, 3];` not `t = [1, 2, 3,];` This is a quirk of the browser that seems to trip people up. If you are finding debugging under old versions of Internet Explorer frustrating, one thing you can do to help is [install the Microsoft Script Debugger](http://www.microsoft.com/download/en/details.aspx?displaylang=en&id=22185). You'll also want to enable debugging in the advanced options of the browser.
+
+### Performance tips ###
+
+ * Generally the larger screen area your game fills the slower it will draw. Try using window.open to launch your game in it's own window of fixed size.
+
+ * If you have an operation drawing lots of repeating shapes on Canvas, do them inside one big c.beginPath() and c.closePath() instead of lots of little ones.
 
 ### Auto-launching your games ###
 
