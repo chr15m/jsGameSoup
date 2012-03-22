@@ -21,14 +21,14 @@
 		}
 	}
 	
-	function startGame() {
+	JSGameSoup.ready(function() {
 		// use the DIV tag with Id of 'surface' as our game surface
 		var gs = new JSGameSoup("surface", 30);
 		// add an instance of the 'Dot' entity class above to our game
 		gs.addEntity(new Dot(gs));
 		// launch the game
 		gs.launch();
-	}
+	});
 	</script>
 	
 	<!-- ***** basic style for our demo page to fill the screen ***** -->
@@ -83,7 +83,7 @@
 	-->
 	</style>
 </head>
-<body onload='startGame()'>
+<body>
 	<div id='surface'></div>
 </body>
 </html>
