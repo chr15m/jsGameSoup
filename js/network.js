@@ -66,8 +66,8 @@ network.makeRequest = function(url, callback, timeout_callback, type, data, time
 	// make sure we cancel everything if we reach the timeout
 	setTimeout(function() {
 		if (http_request.readyState != 4) {
-			if (caller.network_timeout)
-				caller.network_timeout(http_request, this);
+			if (timeout_callback)
+				timeout_callback(http_request, this);
 			http_request = false;
 			requestComplete = true;
 		}
