@@ -52,10 +52,11 @@ function JSGameSoup(canvas, framerate) {
 	}
 	
 	// apply IE fix
-	if (typeof(G_vmlCanvasManager) != "undefined")
+	if (typeof(G_vmlCanvasManager) != "undefined") {
 		G_vmlCanvasManager.initElement(canvas);
-	// set the cursor to the pointer for IE to stop the flickering text cursor problem
-	this.canvas.style.cursor = "default";
+		// set the cursor to the pointer for IE to stop the flickering text cursor problem
+		this.canvas.style.cursor = "default";
+	}
 	if (this.canvas && this.canvas.getContext) {
 		this.ctx = this.canvas.getContext('2d');
 	} else {
