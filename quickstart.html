@@ -1,6 +1,15 @@
 <html>
 <head>
+
 	<!-- ***** a very simple demo - a block that wobbles around on the screen ***** -->
+
+	<!-- ***** Load flashcanvas for Internet Explorer compatibility ***** -->
+
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="flashcanvas/bin/flashcanvas.js"></script>
+	<![endif]-->
+		
+	<!-- ***** load the jsGameSoup library and define our game objects and launch function ***** -->
 	
 	<script src="js/jsgamesoup.js"></script>
 	<script>
@@ -47,13 +56,7 @@
 		}
 	</style>
 
-	<!-- ***** Load flashcanvas for Internet Explorer compatability ***** -->
-
-	<!--[if lt IE 9]>
-		<script type="text/javascript" src="flashcanvas/bin/flashcanvas.js"></script>
-	<![endif]-->
-
-	<!-- ***** iPod/iPad and Android compatability ***** -->
+	<!-- ***** iPod/iPad and Android compatibility ***** -->
 
 	<!-- icon for the ipod -->
 	<link rel="apple-touch-icon" href="ipod-icon.png">
