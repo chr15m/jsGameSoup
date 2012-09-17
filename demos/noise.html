@@ -1,114 +1,152 @@
 <!DOCTYPE html>
 <html>
 	<head>
+	    <title>Noise Generator used to produce Random Landscape</title>
 		<style>
-			body, html, table {
-				width: 100%;
-				height: 100%;				
-				padding: 0px;
-				margin: 0px;
-				font-family: Arial;
-			}
-			
-			table {
-				border-spacing: 0px;
-			}
-			
-			td {
-				border: 0px solid gray;
-				padding: 0px;
-				margin: 0px;
-			}
-			
-			td.water {
-				background: #9999ff;
-			}
-			
-			td.road {
-				background: #333333;
-			}
-			
-			td.sand {
-				background: #ffff00;
-			}
-			
-			td.trees {
-				background: #99ff99;
-			}
-			
-			td.grass {
-				background: #00aa00;
-			}
-			
-			div#notice {
-				position: absolute;
-				background: white;
-				border: 2px solid #333333;
-				padding: 5px;
-			}
+body, html {
+    width: 100%;
+    height: 100%;
+    padding: 0px;
+    margin: 0px;
+    font-family: Arial;
+}
+
+table {
+    border-spacing: 0px;
+    border-collapse: collapse;
+}
+
+/* 
+ * Table cells are the grid cells of our landscape. Change the size here to
+ * change the visual size of our map.
+ */
+td {
+    border: 0px solid gray;
+    padding: 0px;
+    margin: 0px;
+    height: 10px;
+    width: 10px;
+}
+
+/* Colors for our defined landscape features. */
+td.water {
+    background: #34D1B2;
+}
+td.road {
+    background: #a69a00;
+}
+td.sand {
+    background: #D4F870;
+}
+td.trees {
+    background: #228D00;
+}
+td.grass {
+    background: #34D800;
+}
+
+div#notice {
+    background: white;
+    border: 2px solid #333333;
+    padding: 5px;
+}
 		</style>
-		<script src="../js/noise.js"></script>
+		<!-- Load the seedable, random number generator. -->
 		<script src="../js/random.js"></script>
+		<!-- 
+		    Load the noise generator which we use to generate our landscape. 
+		-->
+        <script src="../js/noise.js"></script>
+        <!-- 
+            Load the url parser with which we use to save/restore our random
+            seed if we wish to regenerate the same landscape.
+        --> 
 		<script src="../js/url.js"></script>
+        <script>
+window.onload = function() {
+    // Get the random number seed if we've passed it in via the URL.
+    // Allows for generation of the same map.
+    var u = new URL(document.location.href);
+    var url_seed = parseFloat(u.get("seed"));
+    var r = new SeedableRandom(isNaN(url_seed) ? null : url_seed);
+    
+    // Dimensions of the landscape.
+    var tilesHeight = 60;
+    var tilesWidth = 60;
+
+    // Used to generate our landscape.
+    var p = new noise.SimplexNoise(r);
+    
+    // Make whatever seed was used available for future use.
+    var seed = r.last_seed;
+    
+    // Gather our HTML template as an array of strings for output.
+    var html = [];
+    
+    html.push("<table>");
+    for (var y = 0; y < tilesHeight; y++) {
+        html.push("<tr>");
+        
+        for (var x = 0; x < tilesWidth; x++) {
+            var detail = Math.abs(p.noise(x / 300.0, y / 300.0));
+            var desert1 = -p.noise(x / 100.0, y / 100.0);
+            var desert2 = p.noise(x / 10.0, y / 10.0);
+            var desertp = desert1 * detail + desert2 * (1.0 - detail);
+            
+            var waterp = p.noise(x / 150.0, y / 150.0);
+            var roadsp = (Math.abs(p.noise(x / 50.0, y / 50.0)));
+            
+            var treep = Math.max(0, p.noise(x / 300.0, y / 300.0)) + p.noise(x / 3.0, y / 3.0);
+            
+            // water
+            var oasis = desertp > 0.95;
+            var lake = desertp < -0.6;
+            var river = desert1 < 0.6 && Math.abs(waterp) < 0.075;
+            // desert
+            var desert = desertp > 0.6 && desertp < 1.0 || desert1 > 0.8;
+            // roads
+            var roads = Math.abs(roadsp) < 0.05;
+            var riversideRoads = desertp < 0.6 && Math.abs(waterp) < 0.11 && Math.abs(waterp > 0.08);
+            // trees
+            var trees = treep > 1.15;
+            
+            if (lake || river || oasis) {
+                terrain = "water";
+            }
+            else if (roads || riversideRoads) {
+                terrain = "road";
+            } 
+            else if (desert) {
+                terrain = "sand";
+            } 
+            else if (trees) {
+                terrain = "trees";
+            } 
+            else {
+                terrain = "grass";
+            }
+            
+            // Add our landscape tile to the grid (table) output.
+            html.push("<td class='" + terrain + "'> </td>");
+        }
+
+        html.push("</tr>");
+    }
+    html.push("</table>");
+    
+    // Draw the map.
+    document.getElementById("map").innerHTML += html.join("");
+
+    // After the map has updated, allow the user to save the seed to 
+    // regenerate the map, or simply create a new map.
+    document.getElementById("notice").innerHTML = "seed = <a href='?seed=" + seed + "'>" 
+        + seed + "</a> " 
+        + "<a href='" + document.location.href.split("?")[0] + "'>new</a>";
+};
+        </script>
 	</head>
 	<body>
 		<div id='notice'>Generating a map</div>
-		<script>
-			var u = new URL(document.location.href);
-			var url_seed = parseFloat(u.get("seed"));
-			var r = new SeedableRandom(isNaN(url_seed) ? null : url_seed);
-			var p = new noise.SimplexNoise(r);
-			var seed = r.last_seed;
-			
-			document.write("<table>");
-			for (var y = 0; y < 60; y++)
-			{
-				document.write("<tr>");
-				
-				for (var x = 0; x < 120; x++)		
-				{
-					var detail = Math.abs(p.noise(x / 300.0, y / 300.0))
-					var desert1 = -p.noise(x / 100.0, y / 100.0)
-					var desert2 = p.noise(x / 10.0, y / 10.0)
-					var desertp = desert1 * detail + desert2 * (1.0 - detail)
-					
-					var waterp = p.noise(x / 150.0, y / 150.0)
-					var roadsp = (Math.abs(p.noise(x / 50.0, y / 50.0)))
-					
-					var treep = Math.max(0, p.noise(x / 300.0, y / 300.0)) + p.noise(x / 3.0, y / 3.0)
-					
-					// water bits
-					var oasis = desertp > 0.95
-					var lake = desertp < -0.6
-					var river = desert1 < 0.6 && Math.abs(waterp) < 0.075
-					// desert
-					var desert = desertp > 0.6 && desertp < 1.0 || desert1 > 0.8
-					// roads
-					var roads = Math.abs(roadsp) < 0.05
-					var riversideRoads = desertp < 0.6 && Math.abs(waterp) < 0.11 && Math.abs(waterp > 0.08)
-					// trees
-					var trees = treep > 1.15
-					
-					if (lake || river || oasis) {
-						terrain = "water"
-					} else if (roads || riversideRoads) {
-						terrain = "road"
-					} else if (desert) {
-						terrain = "sand"
-					} else if (trees) {
-						terrain = "trees"
-					} else {
-						terrain = "grass"
-					}
-					
-					document.write("<td class='" + terrain + "'></td>");
-				}
-
-				document.write("</tr>");
-			}
-			document.write("</table>");
-			
-			document.getElementById("notice").innerHTML = "seed = <a href='?seed=" + seed + "'>" + seed + "</a> <a href='" + document.location.href.split("?")[0] + "'>new</a>";
-		</script>
+		<div id='map'></div>
 	</body>
 </html>
