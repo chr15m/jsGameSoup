@@ -250,31 +250,56 @@ function JSGameSoup(canvas, framerate) {
 		}
 	}
 	
-	// get the position of the triggered event
-	this.getSetPointerPosition = function getSetPointerPosition(ev) {
-		// was this a touch?
-		if (ev.touches && ev.touches.length) {
-			var touch = ev.touches[0];
-			mouseX = touch.clientX - canvas.offsetLeft;
-			mouseY = touch.clientY - canvas.offsetTop;
-			this.pointerPosition = [mouseX, mouseY];
-			return this.pointerPosition;
-		} else {
-			// Get the mouse position relative to the canvas element.
-			if (ev.layerX || ev.layerX == 0) { // Firefox
-				mouseX = ev.layerX - canvas.offsetLeft;
-				mouseY = ev.layerY - canvas.offsetTop;
-			} else if (ev.offsetX || ev.offsetX == 0) { // Opera
-				mouseX = ev.offsetX;
-				mouseY = ev.offsetY;
-			} else {
-				mouseX = ev.clientX - canvas.offsetLeft + scrollX;
-				mouseY = ev.clientY - canvas.offsetTop + scrollY;
-			}
-			this.pointerPosition = [mouseX, mouseY];
-			return this.pointerPosition;
-		}
-	}
+    /**
+     * Utility to get the page offset position of the canvas element
+     * which allows for positioning of our game within a positioning parent
+     * other than the body.
+     * @private
+     */
+    this._getCanvasPageOffset = function() {
+        // Thanks to jQuery for this code!
+        var w = window;
+        var d = document;
+        var box = canvas.getBoundingClientRect();
+        var clientTop  = d.documentElement.clientTop  || d.body.clientTop  || 0;
+        var clientLeft = d.documentElement.clientLeft || d.body.clientLeft || 0;
+        var scrollTop  = w.pageYOffset || d.documentElement.scrollTop;
+        var scrollLeft = w.pageXOffset || d.documentElement.scrollLeft;
+        var canvasTop  = box.top  + scrollTop  - clientTop;
+        var canvasLeft = box.left + scrollLeft - clientLeft;
+        return { top: canvasTop, left: canvasLeft };
+    };
+    
+    // get the position of the triggered event
+    this.getSetPointerPosition = function(ev) {
+        var mouseX, 
+            mouseY, 
+            touch,
+            canvasOffset = this._getCanvasPageOffset();
+
+        // was this a touch?
+        if (ev.touches && ev.touches.length) {
+            touch = ev.touches[0];
+            mouseX = touch.pageX - canvasOffset.left;
+            mouseY = touch.pageY - canvasOffset.top;
+        } 
+        else {
+            // Correct pageX/pageY if necessary.
+            if (ev.pageX === undefined) {
+                ev.pageX = ev.clientX + document.body.scrollLeft
+                    + document.documentElement.scrollLeft;
+                ev.pageY = ev.clientY + document.body.scrollTop
+                    + document.documentElement.scrollTop;
+            }
+  
+            // Get the mouse position relative to the canvas element.
+            mouseX = ev.pageX - canvasOffset.left;
+            mouseY = ev.pageY - canvasOffset.top;
+        }
+        this.pointerPosition = [mouseX, mouseY];
+        return this.pointerPosition;
+    };
+
 	
 	/* ** Actual event handlers ** */
 	
