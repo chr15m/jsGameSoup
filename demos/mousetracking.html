@@ -13,22 +13,19 @@ body, html {
     color: white;
 }
         </style>
+	<!--[if lt IE 9]>
+		<script type="text/javascript" src="../js/flashcanvas/bin/flashcanvas.js"></script>
+	<![endif]-->
         <script src="../js/jsgamesoup.js"></script>
         <script>
 // Nomenclature and style
 // g -> if used, refers to a local reference to the JSGameSoup class.
 // c -> if used, refers to a local reference to the Canvas drawing context.
 window.onload = function() {
-    // Early warning if in an old browser that doesn't support 
-    // document.querySelector.
-    if (!document.querySelector) {
-        alert("this example needs a newer browser that supports document.querySelector.");
-    }
-    
     // The "world" provides the background, as well as the tracking area
     // for the mouse.
     var World = function() {
-        var canvas = document.querySelector("#game");
+        var canvas = document.getElementById("game");
         this.width = canvas.width;
         this.height = canvas.height;
     };
@@ -44,8 +41,8 @@ window.onload = function() {
     // Our mouse tracker is not shown as part of the canvas, but we take
     // advantage of the update method to update our mouse coords.
     var MouseCoords = function() {
-        this.domX = document.querySelector("#pointer-coords .x");
-        this.domY = document.querySelector("#pointer-coords .y");
+        this.domX = document.getElementById("x");
+        this.domY = document.getElementById("y");
     };
     // The update method "draws" the coordinates into the DOM.
     MouseCoords.prototype.update = function() {
@@ -93,7 +90,7 @@ window.onload = function() {
 
 
     // Initialize the game objects and run the game.
-    var game = new JSGameSoup(document.querySelector("#game"), 40);
+    var game = new JSGameSoup(document.getElementById("game"), 40);
     game.addEntity(new World());
     game.addEntity(new MouseCoords());
     game.addEntity(new Crosshair());
@@ -103,8 +100,8 @@ window.onload = function() {
     </head>
     <body>
         <div id="pointer-coords">
-            X: <span class="x"></span>
-            Y: <span class="y"></span>
+            X: <span id="x"></span>
+            Y: <span id="y"></span>
             (coordinates of mouse relative to the game field canvas)
         </div>
         <canvas id='game' width="600" height="600"></canvas>
