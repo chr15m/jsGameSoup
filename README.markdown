@@ -5,7 +5,7 @@ A Free Software framework for making games using Javascript and open web technol
 
  * Free and Open Source.
  * Modular - component javascript files also work standalone.
- * Uses Open web technologies like Canvas.
+ * Uses Open web technologies like Canvas and HTML5.
  * Runs on Firefox (Gecko), Safari/Chrome (WebKit), Internet Explorer 6+, and Android + iOS browsers.
 
 <!-- TODO: icon set showing browser support -->
