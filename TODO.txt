@@ -1,9 +1,18 @@
-* migrate site to php
+ * Start doing unit tests = http://qunitjs.com/
+ * download page - allow user to assemble minified thing from component parts
+ * remove dependencies from the project and make the get sucked in some other way
+ * RSS feed on site
+ * Resize event
+   * callback on all entities
+   * look at Nick's resize code http://onetwenty.org/upload/soupbox/
+   * re-jig the canvas size to make it still fit it's container
+
+old note
+--------
+
 * move lineOnLine and pointInPoly out of the global namespace
 * test multiplayer demo with all three browsers at the same time for a while
-* Make a 'vanilla' project people can start from (with Android/iPhone default stuff + flashcanvas)
 * put json2.js fetch into the documentation generation Makefile externals
-* RSS feed on site
 * update FallingGame with audio
 * update AsteroidsTNG with audio
 
@@ -64,6 +73,5 @@
   * http://www.felinesoft.com/blog/index.php/2010/09/accelerated-game-programming-with-html5-and-canvas/
   * FlashCanvas works fastest from inside same canvas - double canvas width and buffer from left-to-right
 
-* integrate Nick's resize code http://onetwenty.org/upload/soupbox/
 * try and get audio onload working on all platforms
 * fix internet explorer offset bug

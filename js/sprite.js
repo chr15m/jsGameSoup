@@ -4,8 +4,9 @@
 	@param anchor selects which side of the sprite's rectangle to 'anchor' the animation to. e.g. ["center", "bottom"] will anchor the sprite to the ground (side view) whilst ["right", "center"] would anchor it to the right hand side.
 	@param frames is a dictionary containing all actions and their associated set of images and the number of frames to show each image for. For instance: {"stand": [["img/stand.png", 0],], "walk": [["img/walk1.png", 3], ["img/walk2.png", 3],]} where each walk frame is shown for three frames.
 	@param loadedcallback is a function that is called once all of the frames in all action animations are successfully loaded.
+	@param scale is a floating point number that will scale the sprite in size.
 */
-function Sprite(anchor, frames, loadedcallback) {
+function Sprite(anchor, frames, loadedcallback, scale) {
 	var loadcount = 0;
 	var action = "";
 	var framecount = -1;
@@ -16,6 +17,7 @@ function Sprite(anchor, frames, loadedcallback) {
 	this.loaded = false;
 	this.width = 0;
 	this.height = 0;
+	var scale = scale ? scale : 1.0;
 	
 	// load up all of the images
 	for (var a in frames) {
@@ -33,7 +35,7 @@ function Sprite(anchor, frames, loadedcallback) {
 						sprite.height = parseInt(img.height);
 						sprite.loaded = true;
 						if (loadedcallback) {
-							loadedcallback();
+							loadedcallback(sprite);
 						}
 					}
 				}
@@ -47,7 +49,7 @@ function Sprite(anchor, frames, loadedcallback) {
 			}
 			sprite.loaded = true;
 			if (loadedcallback) {
-				loadedcallback();
+				loadedcallback(sprite);
 			}
 		}
 	}
@@ -58,10 +60,10 @@ function Sprite(anchor, frames, loadedcallback) {
 			return 0;
 		},
 		"right": function(frame) {
-			return frame.width;
+			return frame.width * scale;
 		},
 		"center": function(frame) {
-			return frame.width / 2;
+			return frame.width * scale / 2;
 		}
 	}
 	
@@ -70,10 +72,10 @@ function Sprite(anchor, frames, loadedcallback) {
 			return 0;
 		},
 		"bottom": function(frame) {
-			return frame.height;
+			return frame.height * scale;
 		},
 		"center": function(frame) {
-			return frame.height / 2;
+			return frame.height * scale / 2;
 		}
 	}
 	
@@ -123,6 +125,11 @@ function Sprite(anchor, frames, loadedcallback) {
 		frame = newframe;
 	}
 	
+	/** Gets the current size of the current frame, scaled appropriately. **/
+	this.get_size = function() {
+		return [this.width * scale, this.height * scale];
+	}
+	
 	// increment frame counter etc.
 	this._update = function() {
 		framecount -= 1;
@@ -141,13 +148,13 @@ function Sprite(anchor, frames, loadedcallback) {
 	// draw this sprite on canvas c at position with respect to the anchor specified
 	this._draw = function(c, pos) {
 		var i = frames[action][frame][0];
-		c.drawImage(i, pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i));
+		c.drawImage(i, pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), scale * this.width, scale * this.height);
 	}
 	
 	// returns the axis-aligned bounding-box of this sprite	for the current frame
 	this._aabb = function(pos) {
 		var i = frames[action][frame][0];
-		return [pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), i.width, i.height];
+		return [pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), i.width * scale, i.height * scale];
 	}
 	
 	/** Call this method from inside the owner entity's update() method. */
@@ -165,6 +172,12 @@ function Sprite(anchor, frames, loadedcallback) {
 		@param pos is the position to get the aabb relative to (factors the anchor point in too).
 	**/
 	this.aabb = function() { return [0, 0, 0, 0]; };
+	
+	// set the action to the first one available by default
+	for (var a in frames) {
+		this.action(a);
+		break;
+	}
 }
 
 /**
