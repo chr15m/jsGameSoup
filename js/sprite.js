@@ -14,6 +14,7 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 	var sprite = this;
 	var numframes = 0;
 	var loopcallback = null;
+	var angle = 0;
 	this.loaded = false;
 	this.width = 0;
 	this.height = 0;
@@ -105,6 +106,11 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 		return this;
 	}
 	
+	/** Set the angle the sprite to should drawn at (in radians). **/
+	this.angle = function(a) {
+		angle = a;
+	}
+	
 	/** Returns the current action being played. **/
 	this.get_action = function() {
 		return action;
@@ -148,7 +154,13 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 	// draw this sprite on canvas c at position with respect to the anchor specified
 	this._draw = function(c, pos) {
 		var i = frames[action][frame][0];
-		c.drawImage(i, pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), scale * this.width, scale * this.height);
+		if (angle) {
+			c.translate(pos[0], pos[1]);
+			c.rotate(angle);
+			c.drawImage(i, -calc_x[anchor[0]](i), -calc_y[anchor[1]](i), scale * this.width, scale * this.height);
+		} else {
+			c.drawImage(i, pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), scale * this.width, scale * this.height);
+		}
 	}
 	
 	// returns the axis-aligned bounding-box of this sprite	for the current frame

@@ -16,6 +16,7 @@
 		var s = new Sprite(["center", "center"], {"default": [["plane-1.png", 3], ["plane-2.png", 3], ["plane-3.png", 3]]});
 		
 		this.update = function() {
+			s.angle((Math.cos(gs.frameCount * 0.05) ) * 0.25);
 			s.update();
 		}
 		
@@ -25,16 +26,14 @@
 	}
 	
 	function SmallPlane(gs) {
-		var x = 0.5;
-		var y = 0.5;
-		var s = new Sprite(["center", "center"], {"default": [["planeb-1.png", 3], ["planeb-2.png", 3]]}, false, 0.5);
+		var s = new Sprite(["center", "center"], {"default": [["planeb-1.png", 3], ["planeb-2.png", 3]]}, false, 0.75);
 		
 		this.update = function() {
 			s.update();
 		}
 		
 		this.draw = function(c) {
-			s.draw(c, [gs.width / 2.0, gs.height / 3.0]);
+			s.draw(c, [gs.width / 2.0, gs.height * 0.25]);
 		}
 	}
 	
