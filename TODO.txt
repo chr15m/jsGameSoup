@@ -1,14 +1,14 @@
  * Start doing unit tests = http://qunitjs.com/
  * download page - allow user to assemble minified thing from component parts
- * remove dependencies from the project and make the get sucked in some other way
+ * remove dependencies from the project and make them get sucked in some other way
  * RSS feed on site
  * Resize event
    * callback on all entities
    * look at Nick's resize code http://onetwenty.org/upload/soupbox/
    * re-jig the canvas size to make it still fit it's container
 
-old note
---------
+old notes
+---------
 
 * move lineOnLine and pointInPoly out of the global namespace
 * test multiplayer demo with all three browsers at the same time for a while
