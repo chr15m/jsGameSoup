@@ -1,5 +1,12 @@
-/** Gives an Array vector operation methods, which are all in-place. */
+/**
+        @class Method to vectorize an array.
+        @description Turns any array into a vector with basic, fast, in-place vector operations.
+        @param x is the array that you wish to treat as a vector.
+*/
 function vectorize(x) {
+	/** The is_vector property lets you know if an array has been turned into a vector. */
+	x.is_vector = true;
+	
 	// this is what sylvester uses
 	var precision = 1e-6;
 	
@@ -18,6 +25,7 @@ function vectorize(x) {
 		return equal;
 	}
 	
+	/** Add another vector to this one. */
 	x.add = function(b) {
 		for (var i=0; i<this.length; i++) {
 			this[i] += b[i];
@@ -25,6 +33,7 @@ function vectorize(x) {
 		return this;
 	}
 	
+	/** Subtract another vector from this one. */
 	x.subtract = function(b) {
 		for (var i=0; i<this.length; i++) {
 			this[i] -= b[i];
@@ -32,10 +41,12 @@ function vectorize(x) {
 		return this;
 	}
 	
+	/** Turn this vector into a unit vector. */
 	x.unit = function(b) {
 		return this.divide(this.abs());
 	}
 	
+	/** Return the absolute value of this vector. */
 	x.abs = function() {
 		var total = 0;
 		for (var i=0; i<this.length; i++) {
@@ -44,6 +55,7 @@ function vectorize(x) {
 		return Math.sqrt(total);
 	}
 	
+	/** Multiply this vector by a scalar. */
 	x.multiply = function(b) {
 		if (typeof(b) == typeof(1)) {
 			for (var i=0; i<this.length; i++) {
@@ -53,6 +65,7 @@ function vectorize(x) {
 		return this;
 	}
 	
+	/** Divide this vector by a scalar. */
 	x.divide = function(b) {
 		if (typeof(b) == typeof(1)) {
 			for (var i=0; i<this.length; i++) {
@@ -62,6 +75,7 @@ function vectorize(x) {
 		return this;
 	}
 	
+	/** Find the dot product of this vector and another vector. */
 	x.dot = function(b) {
 		var total = 0;
 		for (var i=0; i<this.length; i++) {

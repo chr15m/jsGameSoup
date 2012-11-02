@@ -22,4 +22,5 @@
 	<a href='jsdocs'>Documentation</a> -
 	<a href='http://groups.google.com/group/jsgamesoup'>Mailinglist</a>
 </div> -->
-<div id='version'>Latest release: v<? system("bzr revno"); ?></div>
+<? $revno = rtrim(`git log | grep -e '^commit [0-9a-z]' | wc -l`); ?>
+<div id='version'>Latest release: v<?= $revno; ?></div>
