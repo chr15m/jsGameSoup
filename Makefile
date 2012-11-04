@@ -12,9 +12,12 @@ jsdocs: $(SCRIPTS:^:../)
 
 # all dependencies
 
-dependencies: $(DEPENDENCIES)
+dependencies: js/contrib $(DEPENDENCIES)
 
 # how to specifically fetch each of the dependencies
+
+js/contrib:
+	mkdir js/contrib
 
 js/contrib/box2d.js js/contrib/protoclass.js:
 	curl -s http://mrdoob.com/projects/chromeexperiments/ball-pool/js/`basename $@` > js/contrib/`basename $@`
