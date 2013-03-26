@@ -689,8 +689,12 @@ function JSGameSoup(canvas, framerate) {
 		(outside JSGameSoup definition)
 	 *******************************************/
 
+var jsgs_has_launched = false;
 JSGameSoup.ready = function(fn) {
 	JSGameSoup.ready_function = fn;
+	if (jsgs_has_launched) {
+		JSGameSoup.ready_function(JSGameSoup);
+	}
 }
 
 /**
@@ -752,8 +756,9 @@ function _JSGS_test_applied_stylesheets() {
 			delete divtest;
 			// MAIN LAUNCH
 			if (JSGameSoup["ready_function"]) {
-			JSGameSoup.ready_function();
+				JSGameSoup.ready_function(JSGameSoup);
 			}
+			jsgs_has_launched = true;
 			_FindAndLaunchCanvasJSGS();
 		}
 	}
@@ -764,9 +769,9 @@ function _JSGS_test_applied_stylesheets() {
 // Crossplatform document.ready from here:
 // http://dean.edwards.name/weblog/2006/06/again/#comment335794
 function _JSGS_init() {
-  if (arguments.callee.done) return;
-  arguments.callee.done = true;
-  _JSGS_test_applied_stylesheets();
+	if (arguments.callee.done) return;
+	arguments.callee.done = true;
+	_JSGS_test_applied_stylesheets();
 }
 
 /* Copied from jQuery source */
