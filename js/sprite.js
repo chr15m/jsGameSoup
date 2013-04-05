@@ -133,7 +133,8 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 	
 	/** Gets the current size of the current frame, scaled appropriately. **/
 	this.get_size = function() {
-		return [this.width * scale, this.height * scale];
+		var i = frames[action][frame][0];
+		return [i.width * scale, i.height * scale];
 	}
 	
 	// increment frame counter etc.
@@ -157,9 +158,9 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 		if (angle) {
 			c.translate(pos[0], pos[1]);
 			c.rotate(angle);
-			c.drawImage(i, -calc_x[anchor[0]](i), -calc_y[anchor[1]](i), scale * this.width, scale * this.height);
+			c.drawImage(i, -calc_x[anchor[0]](i), -calc_y[anchor[1]](i), scale * i.width, scale * i.height);
 		} else {
-			c.drawImage(i, pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), scale * this.width, scale * this.height);
+			c.drawImage(i, pos[0] - calc_x[anchor[0]](i), pos[1] - calc_y[anchor[1]](i), scale * i.width, scale * i.height);
 		}
 	}
 	
