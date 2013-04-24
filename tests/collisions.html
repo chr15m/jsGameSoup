@@ -3,17 +3,19 @@
 <head>
 <!--[if IE]><script src="../js/explorercanvas/excanvas.js"></script><![endif]-->
 <script src="../js/jsgamesoup.js"></script>
+<script src="../js/collisions.js"></script>
 <script>
-function startAsteroids(gs) {
-	function TestEntity() {
+function startCollisions(gs) {
+	function TestEntity(fast) {
 		this.points = [[0, -20], [20, 0], [0, 20], [-20, 0]];
 		this.poly = [];
-		this.x = gs.random(0, gs.width);
+		this.x = gs.width / 4 * (!fast + 1);
+		this.vx = 0.5 + (fast * 0.5);
 		this.y = gs.height / 2;
 		this.color = 'rgba(255, 255, 255, 1.0)';
 		
 		// We implement this method to detect pointer/touch/mouse collisions with a polygon
-		this.collisionPoly = function () {
+		this.get_collision_poly = function () {
 			return this.poly;
 		}
 		
@@ -22,6 +24,7 @@ function startAsteroids(gs) {
 			// draw our circle
 			c.strokeStyle = this.color;
 			gs.polygon(this.poly);
+			this.color = 'rgba(255, 255, 255, 1.0)';
 		}
 		
 		this.update = function() {
@@ -29,29 +32,37 @@ function startAsteroids(gs) {
 			for (n=0; n<this.points.length; n++) {
 				this.poly[n] = [this.points[n][0] + this.x, this.points[n][1] + this.y];
 			}
-			this.color = 'rgba(255, 255, 255, 1.0)';
+		}
+		
+		// This gets called when we collide with something
+		this.collided = function(other) {
+			this.color = 'rgba(255, 0, 0, 1.0)';
+			other.color = 'rgba(255, 0, 0, 1.0)';
 		}
 	}
 	
-	function World() {
+	function World(gs) {
+		var diamonds = [];
+		
+		this.init = function() {
+			// add two diamond entities
+			diamonds.push(gs.addEntity(new TestEntity(0)));
+			diamonds.push(gs.addEntity(new TestEntity(1)));
+		}
+		
 		this.draw = function() {
 			gs.clear();
 			gs.background('rgba(100, 100, 100, 1.0)');
 		}
+		
+		this.update = function() {
+			// test for collisions between all entities in the diamonds array
+			// and all other entities in the diamonds array
+			collide.polys(diamonds, diamonds)
+		}
 	}
 	
-	t1 = new TestEntity();
-	t1.vx = gs.random(0.5, 0.75);
-	t2 = new TestEntity();
-	t2.vx = gs.random(0.75, 1);
-	// This gets called when we collide with something
-	t2.collided = function(other) {
-		this.color = 'rgba(255, 0, 0, 1.0)';
-		other.color = 'rgba(255, 0, 0, 1.0)';
-	}
-	gs.addEntity(new World());
-	gs.addEntity(t1);
-	gs.addEntity(t2);
+	gs.addEntity(new World(gs));
 }
 </script>
 <style>
@@ -87,7 +98,7 @@ div#content {
 	<div id="distance"></div>
 	<div id="content">
 		<!-- absolutely centered content -->
-		<canvas id='asteroids' jsgs="startAsteroids" fps="40" width="480" height="320"></canvas>
+		<canvas id='asteroids' jsgs="startCollisions" fps="40" width="480" height="320"></canvas>
 	</div>
 </body>
 </html>
