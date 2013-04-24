@@ -479,6 +479,13 @@ function JSGameSoup(canvas, framerate) {
 		return entitiesTriggered;
 	}
 	
+	/**
+		Get all entities.
+	*/
+	this.getEntities = function() {
+		return entities;
+	}
+	
 	this.addEntityToSpecialistLists = function addEntityToSpecialistLists(e) {
 		// add this object to any specialist list to which it belongs
 		for (var method in e) {
