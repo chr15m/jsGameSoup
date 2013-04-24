@@ -1,6 +1,6 @@
 /** 
 	@namespace
-	Test for collisions between arrays of entities. Each collision method accept two arrays of entities. Every entity in the first array will be tested for collisions against every entity in the second array. The two arrays can also be the same to test every entity against every other. When a collision is found between two entities, the collide_xxxx() method will be called on each entity involved in the collision, where "xxxx" is the type of collision (e.g. collide_aabb(), collide_circle(), collide_polygon()). The first argument is the other entity in the collision, and the second argument is the result returned from the collision, which depends on the type of collision (e.g. might be penetration depth or points or just boolean).
+	Test for collisions between arrays of entities. Each collision method - collide.aabb(), collide.circles(), collide.polys() - accepts two arrays of entities. Every entity in the first array will be tested for collisions against every entity in the second array. The two arrays can also be the same to test every entity against every other. When a collision is found between two entities, the entity.collide_xxxx() method and the entity.collided() methods will be called on each entity involved in the collision, where "xxxx" is the type of collision (e.g. entity.collide_aabb(other, collision_result), entity.collide_circle(other, collision_result), entity.collide_polygon(other, collision_result)). The first argument is the other entity in the collision, and the second argument is the result returned from the collision, which depends on the type of collision (e.g. might be penetration depth or points or just boolean).
 */
 
 collide = {}
@@ -20,6 +20,10 @@ collide.collideall = function(fn, calltype) {
 							ae[fnname](be, collisionresult);
 						if (be[fnname])
 							be[fnname](ae, collisionresult);
+						if (ae["collided"])
+							ae.collided(be, collisionresult);
+						if (be["collided"])
+							be.collided(ae, collisionresult);
 					}
 				}
 			}
@@ -76,7 +80,9 @@ var pointInPoly = function(pos, poly) {
 	Tells us if the point is in this polygon */
 	cn = 0
 	pts = poly.slice();
-	pts.push([poly[0][0], poly[0][1]]);
+	if (poly.length) {
+		pts.push([poly[0][0], poly[0][1]]);
+	}
 	for (var i=0; i<poly.length; i++)
 		if (((pts[i][1] <= pos[1]) && (pts[i+1][1] > pos[1])) || ((pts[i][1] > pos[1]) && (pts[i+1][1] <= pos[1])))
 			if (pos[0] < pts[i][0] + (pos[1] - pts[i][1]) / (pts[i+1][1] - pts[i][1]) * (pts[i+1][0] - pts[i][0]))
