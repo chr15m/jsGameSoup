@@ -6,9 +6,9 @@
  */
 
 
-/**	@class The core jsGameSoup library for entity and event management. You can either pass your own canvas like this: var gs = new JSGameSoup(mycanvas, 30); myGameFunction(gs); gs.launch(); or else when the jsgamesoup.js script is loaded, it will attach a `new JSGameSoup()` instantiation to every canvas tag which has an attribute 'jsgs'. The attribute 'jsgs' specifies the name of the function which should be called to launch the game script associated with that canvas. The 'fps' attribute specifies the desired frame rate of the game engine for that canvas. Once the jsGameSoup engine has been attached to the canvas it starts running immediately. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
+/**	@class The core jsGameSoup library for entity and event management. You can pass your own canvas like this: `var gs = new JSGameSoup(mycanvas, 30); myGameFunction(gs); gs.launch();` where mycanvas is a canvas object, a div that you want a canvas to be automatically inserted into, or the string ID of one of those. The second parameter is the number of frames per second you'd like - omitting it will make the game run as fast as possible. The jsGameSoup engine keeps a list of objects to update and draw every frame. In order to make things happen in your game, you should create objects and add them to the engine with the addEntity() method.
 	@param canvas can be a canvas element object, or the ID of the canvas element which this instance of JSGameSoup should attach itself to. If you pass another type of object, for example a <div> tag, a canvas of the same size will be created automatically.
-	@param framerate The number of frames per second the game will try to run at on this canvas.
+	@param framerate The number of frames per second the game will try to run at on this canvas. If omitted the game will run as fast as possible.
 */
 function JSGameSoup(canvas, framerate) {
 	/** The number of frames that the app has been running for */
@@ -78,6 +78,8 @@ function JSGameSoup(canvas, framerate) {
 	this.height = parseInt(this.canvas.height);
 	// access the offset position of the canvas
 	this.pageOffset = null;
+	// time of the previous frame
+	var last_frame_time = 0;
 	
 	/*******************************
 		External includes
@@ -511,12 +513,16 @@ function JSGameSoup(canvas, framerate) {
 	 **********************/
 	
 	/** This is our main game loop, which gets launched automatically with the launch() method. */
-	this.gameSoupLoop = function gameSoupLoop() {
+	this.gameSoupLoop = function gameSoupLoop(time) {
+		// how long has elapsed between the last frame and this one?
+		var elapsed = time - last_frame_time;
+		last_frame_time = time;
+		
 		// do we have any scheduled callbacks waiting to run?
 		if (this.frameCount in scheduled) {
 			for (var s=0; s<scheduled[this.frameCount].length; s++) {
 				// run the callback
-				scheduled[this.frameCount][s](this);
+				scheduled[this.frameCount][s](this, elapsed);
 			}
 			delete scheduled[this.frameCount];
 		}
@@ -524,7 +530,7 @@ function JSGameSoup(canvas, framerate) {
 		// run .update() on every entity in our list
 		for (var o=0; o<entities.length; o++) {
 			if (entities[o].update) {
-				entities[o].update(this);
+				entities[o].update(this, elapsed);
 			}
 		}
 		
@@ -551,10 +557,10 @@ function JSGameSoup(canvas, framerate) {
 			entities.push(addEntities[o]);
 			this.addEntityToSpecialistLists(addEntities[o]);
 			if (addEntities[o].init) {
-				addEntities[o].init(this);
+				addEntities[o].init(this, elapsed);
 			}
 			if (addEntities[o].update) {
-				addEntities[o].update(this);
+				addEntities[o].update(this, elapsed);
 			}
 		}
 		// sort entities by priority after adding new entities
@@ -587,7 +593,7 @@ function JSGameSoup(canvas, framerate) {
 		for (var o=0; o<entities.length; o++) {
 			if (entities[o].draw) {
 				this.ctx.save();
-				entities[o].draw(this.ctx, this);
+				entities[o].draw(this.ctx, this, elapsed);
 				this.ctx.restore();
 			}
 		}
@@ -595,27 +601,36 @@ function JSGameSoup(canvas, framerate) {
 		this.frameCount += 1;
 	}
 	
+
+	
+
+	
 	/** Launch an instance of jsGameSoup (generally happens automatically). */
 	this.launch = function launch() {
-		var GS = this;
-		// launch our custom loop
-		if (navigator.userAgent.indexOf("MSIE") == -1) {
-			var looping = setInterval(function() {
-				try {
-					GS.gameSoupLoop();
-				} catch(e) {
-					clearInterval(looping);
-					throw(e);
-				}
-			}, 1000 / this.framerate);
-		} else {
-			// internet explorer is too hard to debug with try/catch as it forgets the stack :(
-			var looping = setInterval(function() { GS.gameSoupLoop(); }, 1000 / this.framerate);
+		// run the loop enclosed
+		var innerloop = function(time) {
+			JSGS.gameSoupLoop(time);
 		}
-		// DEBUG:
-		//setInterval(function() { for (var e=0; e<entities.length; e++) console.log(entities[e].x + ", " + entities[e].y); }, 1000);
-		//setInterval(function() { console.log(entities.length) }, 1000);
-		//setInterval(function() { console.log(entitiesColliders.length) }, 1000);
+		
+		// run it fast
+		var fast_innerloop = function(time) {
+			setTimeout(function() {
+				window.requestAnimationFrame(innerloop);
+				fast_innerloop();
+			}, 0);
+		}
+		
+		if (!this.framerate) {
+			// don't block the flow
+			fast_innerloop();
+		} else {
+			// launch our custom loop
+			var looping = setInterval(function() { window.requestAnimationFrame(innerloop); }, 1000 / this.framerate);
+			// DEBUG:
+			//setInterval(function() { for (var e=0; e<entities.length; e++) console.log(entities[e].x + ", " + entities[e].y); }, 1000);
+			//setInterval(function() { console.log(entities.length) }, 1000);
+			//setInterval(function() { console.log(entitiesColliders.length) }, 1000);
+		}
 	}
 	
 	/**
@@ -854,6 +869,35 @@ Number.prototype.mod = function(n) {
 	return ((this%n)+n)%n;
 }
 
+/*
+	Request animation frame shim
+	http://paulirish.com/2011/requestanimationframe-for-smart-animating/
+*/
+
+(function() {
+	var lastTime = 0;
+	var vendors = ['webkit', 'moz'];
+	for(var x = 0; x < vendors.length && !window.requestAnimationFrame; ++x) {
+		window.requestAnimationFrame = window[vendors[x]+'RequestAnimationFrame'];
+		window.cancelAnimationFrame = window[vendors[x]+'CancelAnimationFrame'] || window[vendors[x]+'CancelRequestAnimationFrame'];
+	}
+
+	if (!window.requestAnimationFrame) {
+		window.requestAnimationFrame = function(callback, element) {
+			var currTime = new Date().getTime();
+			var timeToCall = Math.max(0, 16 - (currTime - lastTime));
+			var id = window.setTimeout(function() { callback(currTime + timeToCall); }, timeToCall);
+			lastTime = currTime + timeToCall;
+			return id;
+		};
+	}
+
+	if (!window.cancelAnimationFrame) {
+		window.cancelAnimationFrame = function(id) {
+			clearTimeout(id);
+		};
+	}
+}());
 
 /* *************************************
  *	Random stuff to support IE.

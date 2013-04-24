@@ -18,16 +18,18 @@ function ExampleEntity() {
 		Called every frame to draw this entity.
 		@param c The canvas context which you can draw on. See the mozilla canvas documentation for examples of how to do this. You can use the Sprite() class and Sprite.draw() if you are just drawing sprites.
 		@param gs The instance of jsGameSoup which is running this entity.
+		@param elapsed The time that has elapsed since the last frame (use for timing animations etc.)
 	*/
-	this.draw = function (c, gs) {
+	this.draw = function (c, gs, elapsed) {
 		// Do your drawing stuff in here
 	}
 	
 	/**
 		Called every frame to update the state or position, or whatever, of this entity. You should put any code which updates this entity's state inside this method.
 		@param gs The instance of jsGameSoup which is running this entity.
+		@param elapsed The time that has elapsed since the last frame (use for timing animations etc.)
 	*/
-	this.update = function (gs) {
+	this.update = function (gs, elapsed) {
 		// Do your updating stuff here
 	}
 	
