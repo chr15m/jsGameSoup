@@ -137,6 +137,11 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 		return [i.width * scale, i.height * scale];
 	}
 	
+	/** Dynamically set the scale of this sprite. **/
+	this.set_scale = function(new_scale) {
+		scale = new_scale;
+	}
+	
 	// increment frame counter etc.
 	this._update = function() {
 		framecount -= 1;
