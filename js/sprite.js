@@ -213,7 +213,7 @@ Sprite.preload = function(images, completedcallback, progresscallback) {
 		img[i].onload = function () {
 			loadcount -= 1;
 			if (progresscallback)
-				progresscallback(loadcount);
+				progresscallback(loadcount, this);
 			if (loadcount == 0 && completedcallback) {
 				completedcallback();
 			}
