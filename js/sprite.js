@@ -5,10 +5,11 @@
 	@param frames is a dictionary containing all actions and their associated set of images and the number of frames to show each image for. For instance: {"stand": [["img/stand.png", 0],], "walk": [["img/walk1.png", 3], ["img/walk2.png", 3],]} where each walk frame is shown for three frames.
 	@param loadedcallback is a function that is called once all of the frames in all action animations are successfully loaded.
 	@param scale is a floating point number that will scale the sprite in size.
+	@param errorcallback is called if one of the images of the sprite fails to load
 */
-function Sprite(anchor, frames, loadedcallback, scale) {
+function Sprite(anchor, frames, loadedcallback, scale, errorcallback) {
 	var loadcount = 0;
-	var action = "";
+	var action = null;
 	var framecount = -1;
 	var frame = 0;
 	var sprite = this;
@@ -19,41 +20,6 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 	this.width = 0;
 	this.height = 0;
 	var scale = scale ? scale : 1.0;
-	
-	// load up all of the images
-	for (var a in frames) {
-		// replace string entries with Images, unless they already are
-		for (var f=0; f<frames[a].length; f++) {
-			if (typeof(frames[a][f][0]) == "string") {
-				loadcount += 1;
-				var img = new Image();
-				img.src = frames[a][f][0];
-				frames[a][f][0] = img;
-				img.onload = function () {
-					loadcount -= 1;
-					if (loadcount == 0) {
-						sprite.width = parseInt(img.width);
-						sprite.height = parseInt(img.height);
-						sprite.loaded = true;
-						if (loadedcallback) {
-							loadedcallback(sprite);
-						}
-					}
-				}
-			}
-		}
-		if (loadcount == 0) {
-			// they passed in images. set our width and height to the first image
-			if (frames[a].length && frames[a][0].length) {
-				sprite.width = frames[a][0][0].width;
-				sprite.height = frames[a][0][0].height;
-			}
-			sprite.loaded = true;
-			if (loadedcallback) {
-				loadedcallback(sprite);
-			}
-		}
-	}
 	
 	// calculate offsets (center, right, left, top, bottom)
 	var calc_x = {
@@ -87,11 +53,7 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 		@param callback is called when the animation has completed one loop - receives parameter "action".
 	**/
 	this.action = function(a, reset, callback) {
-		if (typeof(callback) == "undefined") {
-			loopcallback = null;
-		} else {
-			loopcallback = callback;
-		}
+		loopcallback = callback;
 		action = a;
 		numframes = frames[a].length;
 		if (reset) {
@@ -147,7 +109,7 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 		framecount -= 1;
 		if (framecount <= 0) {
 			if (loopcallback && (frame + 1 >= frames[action].length)) {
-				loopcallback(action);
+				loopcallback.call(this, action);
 			}
 			frame = (frame + 1) % frames[action].length;
 			var fimg = frames[action][frame]
@@ -191,10 +153,64 @@ function Sprite(anchor, frames, loadedcallback, scale) {
 	**/
 	this.aabb = function() { return [0, 0, 0, 0]; };
 	
-	// set the action to the first one available by default
+	// every time an image from this sprite is loaded we should check if we got them all yet
+	function decrement_and_check_images_loaded(img) {
+		loadcount -= 1;
+		if (loadcount == 0) {
+			sprite.loaded = true;
+			// set the default action
+			if (!action) {
+				sprite.action(a);
+			}
+			// get the first frame width and height
+			var i = frames[action][0][0];
+			sprite.width = parseInt(i.width);
+			sprite.height = parseInt(i.height);
+			// run the callback
+			if (loadedcallback) {
+				loadedcallback.call(sprite);
+			}
+		}
+	}
+	
+	// compute our final loadcount first
 	for (var a in frames) {
-		this.action(a);
-		break;
+		loadcount += frames[a].length;
+	}
+	
+	// load up all of the images
+	for (var a in frames) {
+		// replace string entries with Images, unless they already are
+		for (var f=0; f<frames[a].length; f++) {
+			var img = null;
+			var imgurl = "";
+			if (typeof(frames[a][f][0]) == "string") {
+				img = new Image();
+				imgurl = frames[a][f][0];
+				frames[a][f][0] = img;
+			} else {
+				// already loaded, use the one we have
+				img = frames[a][f][0];
+				imgurl = img.src;
+			}
+			// listen out for the image being loaded
+			if (img.addEventListener) {
+				img.addEventListener("load", function() {
+					decrement_and_check_images_loaded();
+				}, false);
+				img.addEventListener("error", function() {
+					errorcallback.call(this);
+					decrement_and_check_images_loaded();
+				}, false);
+			} else {
+				img.attachEvent("onload", decrement_and_check_images_loaded);
+				img.attachEvent("onerror", function() {
+					errorcallback.call(this);
+					decrement_and_check_images_loaded();
+				});
+			}
+			img.src = imgurl;
+		}
 	}
 }
 
