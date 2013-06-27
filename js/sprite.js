@@ -182,34 +182,34 @@ function Sprite(anchor, frames, loadedcallback, scale, errorcallback) {
 	for (var a in frames) {
 		// replace string entries with Images, unless they already are
 		for (var f=0; f<frames[a].length; f++) {
-			var img = null;
+			// bug in chrome forces us to create a new image each time
+			// http://code.google.com/p/chromium/issues/detail?id=7731#c14
+			var img = new Image();
 			var imgurl = "";
 			if (typeof(frames[a][f][0]) == "string") {
-				img = new Image();
 				imgurl = frames[a][f][0];
-				frames[a][f][0] = img;
 			} else {
 				// already loaded, use the one we have
-				img = frames[a][f][0];
-				imgurl = img.src;
+				imgurl = frames[a][f][0].src;
 			}
 			// listen out for the image being loaded
 			if (img.addEventListener) {
 				img.addEventListener("load", function() {
-					decrement_and_check_images_loaded();
+					decrement_and_check_images_loaded(this);
 				}, false);
 				img.addEventListener("error", function() {
 					errorcallback.call(this);
-					decrement_and_check_images_loaded();
+					decrement_and_check_images_loaded(this);
 				}, false);
 			} else {
 				img.attachEvent("onload", decrement_and_check_images_loaded);
 				img.attachEvent("onerror", function() {
 					errorcallback.call(this);
-					decrement_and_check_images_loaded();
+					decrement_and_check_images_loaded(this);
 				});
 			}
 			img.src = imgurl;
+			frames[a][f][0] = img;
 		}
 	}
 }
