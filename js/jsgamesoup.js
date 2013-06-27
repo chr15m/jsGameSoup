@@ -598,6 +598,7 @@ function JSGameSoup(canvas, framerate) {
 	/** Launch an instance of jsGameSoup (generally happens automatically). */
 	this.launch = function launch() {
 		var GS = this;
+		function rethrow(e) { throw e; }
 		// launch our custom loop
 		if (navigator.userAgent.indexOf("MSIE") == -1) {
 			var looping = setInterval(function() {
@@ -605,7 +606,7 @@ function JSGameSoup(canvas, framerate) {
 					GS.gameSoupLoop();
 				} catch(e) {
 					clearInterval(looping);
-					throw(e);
+					rethrow(e);
 				}
 			}, 1000 / this.framerate);
 		} else {
