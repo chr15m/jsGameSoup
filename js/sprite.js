@@ -221,3 +221,54 @@ Sprite.preload = function(images, completedcallback, progresscallback) {
 		img[i].src = images[i];
 	}
 }
+
+/**
+	@method loadframes
+	@description Given a particular url such as a directory listing, extracts image files and turns them into the right datastructure to be passed as Sprite() frames. Images should be named as action-framenum-duration_ms.png and multiple actions can occupy a single page.
+	@param url is the URL of the page to load.
+	@param callback is the function that will be called and passed the sprite datastructure with all images.
+	@param error_callback is the function that will be called if there is a problem fetching the URL.
+*/
+Sprite.loadframes = function(url, callback, error_callback) {
+	var xmlhttp;
+	
+	if (window.XMLHttpRequest) {
+		// code for IE7+, Firefox, Chrome, Opera, Safari
+		xmlhttp = new XMLHttpRequest();
+	} else {
+		// code for IE6, IE5
+		xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+	}
+	
+	// one we get the result back
+	xmlhttp.onreadystatechange = function() {
+		// check for error codes
+		if (xmlhttp.readyState == 4 && xmlhttp.status == 200) {
+			var result = xmlhttp.responseText;
+			// our resulting frames datastructure for loading
+			var frames = {};
+			// regular expression we'll use to find URLs
+			var img_re = /(([=:]\ *['"]|^)([^"'>]*.(png|jpg|gif|jpeg|svg)))['"]/mgi;
+			var r = null;
+			while (r = img_re.exec(result)) {
+				console.log(r);
+				var img_url = r[3];
+				var filename = img_url.split("/").pop();
+				var parts = filename.split("-");
+				
+				if (!frames[parts[0]]) {
+					frames[parts[0]] = [];
+				}
+				frames[parts[0]].push([img_url, parseInt(parts[2].split(".").shift())]);
+			}
+			callback(frames);
+		} else {
+			if (error_callback) {
+				error_callback("Error fetching sprites from " + url);
+			}
+		}
+	}
+	
+	xmlhttp.open("GET", url, true);
+	xmlhttp.send();
+}
