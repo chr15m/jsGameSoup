@@ -42,14 +42,14 @@ Batteries included
  * Sound effects playback with [audio.js](http://jsgamesoup.net/jsdocs/symbols/AudioManager.html)
  * Rudimentary polygon, AABB-box, circle collision detection [collisions.js](http://jsgamesoup.net/jsdocs/symbols/collide.html)
  * Fast, deterministic random number generator [random.js](http://jsgamesoup.net/jsdocs/symbols/SeedableRandom.html)
- * Simple AJAX and bulk data loading with [network.js](http://jsgamesoup.net/jsdocs/symbols/network.html)
- * Basic cookie management [cookies.js](http://jsgamesoup.net/jsdocs/symbols/cookies.html)
  * Simple finite state machine [statemachine.js](http://jsgamesoup.net/jsdocs/symbols/statemachine.html)
  * AStar path finding on a 2d board of squares [a_star.js](http://jsgamesoup.net/jsdocs/symbols/AStar.html)
  * Simplex and Perlin noise algorithms [noise.js](http://jsgamesoup.net/jsdocs/symbols/noise.SimplexNoise.html)
- * URL and querystring parsing [url.js](http://jsgamesoup.net/jsdocs/symbols/URL.html)
  * Fast, in-place vector library for Javascript arrays [vectorize.js](http://jsgamesoup.net/jsdocs/symbols/vectorize.html)
  * Isometric to screen space helper library [isometric.js](http://jsgamesoup.net/jsdocs/symbols/Isometric.html)
+ * Simple AJAX and bulk data loading with [network.js](http://jsgamesoup.net/jsdocs/symbols/network.html)
+ * Basic cookie management [cookies.js](http://jsgamesoup.net/jsdocs/symbols/cookies.html)
+ * URL and querystring parsing [url.js](http://jsgamesoup.net/jsdocs/symbols/URL.html)
 
 ![FallingGame screenshot](http://jsgamesoup.net/website/screenshots/FallingGame.png)
 
