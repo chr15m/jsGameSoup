@@ -4,6 +4,10 @@
 */
 function statemachine(entity) {
 	entity.state = "";
+	/**
+		@method To switch between named states.
+		@param newstate is the string specifying the name of the state you want the entity to switch to.
+	*/
 	entity.set_state = function(newstate) {
 		// loop through every method and find the ones we want to change to
 		for (var m in this) {
@@ -20,5 +24,12 @@ function statemachine(entity) {
 			this[newstate + "_init"]();
 		}
 	}
+	
+	/**
+		@method A particular method that exists in state "statename" where the base method name in this case is 'xxx'. e.g. state "running" with method "draw".
+		@param params Whatever parameters would normally be passed to the 'draw' method that this will become.
+	*/
+	entity.statename_xxx = function(params) {}
+	
 	return entity;
 }
