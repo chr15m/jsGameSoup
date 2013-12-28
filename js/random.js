@@ -17,8 +17,8 @@ function SeedableRandom(seed) {
 		// Got this from the v8 js engine
 		
 		// don't let them get stuck
-		if (this.x == 0) this.x == -1;
-		if (this.y == 0) this.y == -1;
+		if (this.x == 0) this.x = -1;
+		if (this.y == 0) this.y = -1;
 		
 		// Mix the bits.
 		this.x = this.nextX();
